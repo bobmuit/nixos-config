@@ -94,6 +94,10 @@
     # pciutils # lspci
     # usbutils # lsusb
   ];
+  
+  imports = [
+    ../../home/programs/browsers.nix
+  ];
 
   # basic configuration of git, please change to your own
   programs.git = {
@@ -102,19 +106,42 @@
     userEmail = "bob@bobmuit.nl";
   };
 
-    programs.bash = {
+  programs.bash = {
     enable = true;
     enableCompletion = true;
     # TODO add your custom bashrc here
     bashrcExtra = ''
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
-    '';
+  '';
+  };
+
+  programs.vscode = {
+      enable = true;
+      package = pkgs.vscodium;
+      extensions = with pkgs.vscode-extensions; [
+        jnoortheen.nix-ide           # Nix language support extension
+        reditorsupport.r              # R Language
+        zaaack.markdown-editor  # Add the Markdown Editor extension
+        redhat.vscode-yaml           # Add the YAML support extension
+      ];
+      userSettings = {
+        "nix.enableLanguageServer" = true;  # Enable Nix language server
+        "nix.serverPath" = "nixd";          # Path to the Nix language server
+        "nix.serverSettings" = {
+          "nixd" = {
+            # Additional settings for the Nix language server can go here
+          };
+        "r.rterm.linux" = "/usr/bin/R";  # Path to the R executable (adjust if necessary)
+        "r.rpath.linux" = "/usr/bin/R";   # Specify path for the R Language Server
+        "r.lsp.args" = ["--vanilla"];     # Optional: Command line arguments for R
+        "r.lsp.diagnostics" = true;        # Enable linting of R code
+        };  
+      };  
+    };
 
     # set some aliases, feel free to add more or remove some
-    shellAliases = {
-      
-    };
-  };
+    #shellAliases = {  
+    #};
 
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
