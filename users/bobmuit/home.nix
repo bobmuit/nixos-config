@@ -28,6 +28,8 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
+    gnomeExtensions.applications-menu
+    
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
 
@@ -142,6 +144,29 @@
     # set some aliases, feel free to add more or remove some
     #shellAliases = {  
     #};
+
+    # Enable minimize and maximize buttons in gnome
+    dconf.settings = {
+    "org/gnome/desktop/wm/preferences" = {
+      button-layout = ":minimize,maximize,close";
+    };
+    "org/gnome/shell" = {
+      disable-user-extensions = false;
+      enabled-extensions = [
+        "dash-to-dock@micxgx.gmail.com"
+        "applications-menu@gnome-shell-extensions.gcampax.github.com" #Not yet operational
+      ];
+    };
+    "org/gnome/shell/extensions/dash-to-dock" = {
+      dock-position = "BOTTOM"; # Position the dock at the bottom
+      dock-fixed = true; # Prevent the dock from auto-hiding
+      extend-height = true; # Stretch the dock vertically
+      intellihide-mode = "NONE"; # Disable intelligent auto-hide
+      height-fraction = 1.0; # Set the height fraction to 1.0 for full height
+      dash-max-icon-size = 32; # Set the maximum icon size
+      panel-mode = true; # Enable panel mode to stretch horizontally
+    };
+  };
 
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage

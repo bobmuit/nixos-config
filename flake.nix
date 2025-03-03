@@ -25,6 +25,9 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
+            # Enable backups
+            home-manager.backupFileExtension = "backup";
+
             # Import the user-specific home-manager configuration from home.nix
             home-manager.users.bobmuit = import (./users/bobmuit/home.nix);
 

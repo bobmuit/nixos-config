@@ -115,7 +115,7 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-    gnomeExtensions.dash-to-dock # Run "gnome-extensions enable dash-to-dock@micxgx.gmail.com"  to enable
+    gnomeExtensions.dash-to-dock
     vmware-horizon-client
     synology-drive-client
     bitwarden-desktop
