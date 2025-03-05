@@ -1,24 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  # TODO please change the username & home directory to your own
   home.username = "bobmuit";
   home.homeDirectory = "/home/bobmuit";
-
-  # link the configuration file in current directory to the specified location in home directory
-  # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
-
-  # link all files in `./scripts` to `~/.config/i3/scripts`
-  # home.file.".config/i3/scripts" = {
-  #   source = ./scripts;
-  #   recursive = true;   # link recursively
-  #   executable = true;  # make all files executable
-  # };
-
-  # encode the file content in nix configuration file directly
-  # home.file.".xxx".text = ''
-  #     xxx
-  # '';
 
   # set cursor size and dpi for 4k monitor
   xresources.properties = {
@@ -28,80 +12,19 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    gnomeExtensions.applications-menu
-    
-    # here is some command line tools I use frequently
-    # feel free to add your own or remove some of them
-
-    # neofetch
-    # nnn # terminal file manager
-
-    # # archives
-     zip
-    # xz
-     unzip
-    # p7zip
-
-    # # utils
-    # ripgrep # recursively searches directories for a regex pattern
-    # jq # A lightweight and flexible command-line JSON processor
-    # yq-go # yaml processor https://github.com/mikefarah/yq
-    # eza # A modern replacement for ‘ls’
-    # fzf # A command-line fuzzy finder
-
-    # # networking tools
-    # mtr # A network diagnostic tool
-    # iperf3
-    # dnsutils  # `dig` + `nslookup`
-    # ldns # replacement of `dig`, it provide the command `drill`
-    # aria2 # A lightweight multi-protocol & multi-source command-line download utility
-    # socat # replacement of openbsd-netcat
-    # nmap # A utility for network discovery and security auditing
-    # ipcalc  # it is a calculator for the IPv4/v6 addresses
-
-    # # misc
-    # cowsay
-    # file
-    # which
-    # tree
-    # gnused
-    # gnutar
-    # gawk
-    # zstd
-    # gnupg
-
-    # # nix related
-    # #
-    # # it provides the command `nom` works just like `nix`
-    # # with more details log output
-    # nix-output-monitor
-
-    # # productivity
-    # hugo # static site generator
-    # glow # markdown previewer in terminal
-
-    # btop  # replacement of htop/nmon
-    # iotop # io monitoring
-    # iftop # network monitoring
-
-    # # system call monitoring
-    # strace # system call monitoring
-    # ltrace # library call monitoring
-    # lsof # list open files
-
-    # # system tools
-    # sysstat
-    # lm_sensors # for `sensors` command
-    # ethtool
-    # pciutils # lspci
-    # usbutils # lsusb
+    # gnomeExtensions.applications-menu  
   ];
   
+  # Imported modules
   imports = [
-    ../../home/programs/browsers.nix
+    ../../modules/home-manager/programs/browsers.nix
+    ../../modules/home-manager/programs/coding.nix
   ];
+  
+  # Nix autoformatter
+  # programs.alejandra.enable = true;
 
-  # basic configuration of git, please change to your own
+  # Configuration for git
   programs.git = {
     enable = true;
     userName = "Bob Muit";
@@ -111,41 +34,26 @@
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    # TODO add your custom bashrc here
+
+    # Add aliases using initExtra
+    initExtra = ''
+      alias hs="home-manager switch --flake ~/nixos-config#bobmuit"
+      alias ns="nixos-rebuild switch --flake .#nixos-dell"
+      alias nb="nixos-rebuild build --flake .#nixos-dell"
+    '';
+    
     bashrcExtra = ''
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
-  '';
+    '';
   };
 
-  programs.vscode = {
-      enable = true;
-      package = pkgs.vscodium;
-      extensions = with pkgs.vscode-extensions; [
-        jnoortheen.nix-ide           # Nix language support extension
-        reditorsupport.r              # R Language
-        zaaack.markdown-editor  # Add the Markdown Editor extension
-        redhat.vscode-yaml           # Add the YAML support extension
-      ];
-      userSettings = {
-        "nix.enableLanguageServer" = true;  # Enable Nix language server
-        "nix.serverPath" = "nixd";          # Path to the Nix language server
-        "nix.serverSettings" = {
-          "nixd" = {
-            # Additional settings for the Nix language server can go here
-          };
-        "r.rterm.linux" = "/usr/bin/R";  # Path to the R executable (adjust if necessary)
-        "r.rpath.linux" = "/usr/bin/R";   # Specify path for the R Language Server
-        "r.lsp.args" = ["--vanilla"];     # Optional: Command line arguments for R
-        "r.lsp.diagnostics" = true;        # Enable linting of R code
-        };  
-      };  
-    };
 
-    # set some aliases, feel free to add more or remove some
+      # set some aliases, feel free to add more or remove some
     #shellAliases = {  
     #};
 
     # Enable minimize and maximize buttons in gnome
+    # Consider moving over to home-manager/desktop.nix
     dconf.settings = {
     "org/gnome/desktop/wm/preferences" = {
       button-layout = ":minimize,maximize,close";
@@ -154,7 +62,7 @@
       disable-user-extensions = false;
       enabled-extensions = [
         "dash-to-dock@micxgx.gmail.com"
-        "applications-menu@gnome-shell-extensions.gcampax.github.com" #Not yet operational
+        # "applications-menu@gnome-shell-extensions.gcampax.github.com" #Not yet operational
       ];
     };
     "org/gnome/shell/extensions/dash-to-dock" = {

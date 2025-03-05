@@ -7,14 +7,18 @@
 {
   imports =
     [ 
-      ../../modules/R.nix
+      ../../modules/nixos/programs/R.nix
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
   # Enable the Flakes feature and the accompanying new nix command-line tool
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    auto-optimise-store = true; # Auto deduplicates nix store
+  };
+  
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -30,13 +34,10 @@
   # Enable networking
   networking.networkmanager = {
     enable = true;
-    #networks = {
-    #  "SB42" = {
-    #    psk = "N2ce5BtJKJ425Vv6SQ74";
-    #  };
-    #};
-    #unmanaged = [];
   };
+  
+  # Enable WireGuard
+  networking.wireguard.enable = true; 
 
   # networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 
@@ -72,8 +73,8 @@
     variant = "";
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # Disable CUPS to print documents.
+  services.printing.enable = false;
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
@@ -104,46 +105,52 @@
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
+  # Packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    # Desktop
     gnomeExtensions.dash-to-dock
+
+    # Work
     vmware-horizon-client
-    synology-drive-client
-    bitwarden-desktop
-    openvpn3
     rstudio
+    R
+    zotero
+    
+    # Security
+    bitwarden-desktop
+    wireguard-tools
+    # To add wireguard connection to NetworkManager, run
+    # nmcli connection import type wireguard file configurationfile.conf
+    
+    # Homelab
+    synology-drive-client
+    cifs-utils #smb
+    # Add wireguard client
+
+    # Proton
     protonvpn-cli_2
+    protonvpn-gui
     protonmail-desktop
-    ungoogled-chromium
+
+    # Media 
     spotify
     vlc
+
+    # Basic utilities
     neovim
-    cifs-utils #to enable smb shares
-    #check vpn client
-    #logitech
+    git
+
+    # Productivity
     libreoffice-fresh
     kuro #Microsoft To Do
-    librewolf
-    R
-    git
-    (vscode-with-extensions.override { # https://nixos.wiki/wiki/VSCodium
-      vscode = vscodium;
-      vscodeExtensions = with vscode-extensions; [
-        jnoortheen.nix-ide           # Nix language 
-        reditorsupport.r             # R Language
-        zaaack.markdown-editor       # Markdown Editor 
-        redhat.vscode-yaml           # YAML support
-      ];
-    })
+
+    # Browsers
+    librewolf #TODO configure in Home-Manager
+    ungoogled-chromium
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -154,16 +161,19 @@
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
-
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
-  # Open ports in the firewall.
+    # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall = {
+    allowedUDPPorts = [ 51820 ]; # Wireguard client
+  };
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+  # Configuration to enable WireGuard connection (disable rpfilter)
+  networking.firewall.checkReversePath = false; 
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -174,12 +184,20 @@
   system.stateVersion = "24.11"; # Did you read the comment?
 
   #services.flatpak.enable = true;
+  
+  # Autoupdate
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:nixos/nixpkgs/nixos-24.11" # Adjust to match your repo
+    dates = "daily";
+    randomizedDelaySec = 3600; # Spread out updates to avoid server overload
+  };
 
   # Automatic Garbage Collection
   nix.gc = {
   	automatic = true;
-	dates = "weekly";
-	options = "--delete-older-than 7d";
+	  dates = "weekly";
+	  options = "--delete-older-than 7d";
   };
 
 }
