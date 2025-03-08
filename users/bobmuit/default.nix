@@ -1,6 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
+  
+  # Enable NUR
+  # Used for Firefox add-ons
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import nur {
+      inherit pkgs;
+    };
+  };
+  
   home.username = "bobmuit";
   home.homeDirectory = "/home/bobmuit";
 
@@ -70,8 +79,8 @@
     # Add aliases using initExtra
     initExtra = ''
       alias hs="home-manager switch --flake ~/nixos-config#bobmuit"
-      alias ns="nixos-rebuild switch --flake .#nixos-dell"
-      alias nb="nixos-rebuild build --flake .#nixos-dell"
+      alias ns="sudo nixos-rebuild switch --flake .#nixos-dell"
+      alias nb="sudo nixos-rebuild build --flake .#nixos-dell"
     '';
     
     bashrcExtra = ''

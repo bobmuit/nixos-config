@@ -4,11 +4,139 @@
   #username,
   ...
 }: {
-  programs = {
-    firefox = {
-      enable = true;
-      #profiles.${username} = {};
-      profiles.bobmuit = {};
+  programs.firefox = {
+    enable = true;
+    
+    # Privacy settings
+    profiles.default = {
+      id = 0;
+      name = "Default";
+      isDefault = true;
+      
+      settings = {
+        # Disable telemetry
+        "toolkit.telemetry.enabled" = false;
+        "toolkit.telemetry.unified" = false;
+        "toolkit.telemetry.archive.enabled" = false;
+        "toolkit.telemetry.newProfilePing.enabled" = false;
+        "toolkit.telemetry.shutdownPingSender.enabled" = false;
+        "toolkit.telemetry.updatePing.enabled" = false;
+        "toolkit.telemetry.bhrPing.enabled" = false;
+        "toolkit.telemetry.firstShutdownPing.enabled" = false;
+        
+        # Disable studies
+        "app.shield.optoutstudies.enabled" = false;
+        "app.normandy.enabled" = false;
+        "app.normandy.api_url" = "";
+        
+        # Disable crash reports
+        "breakpad.reportURL" = "";
+        "browser.tabs.crashReporting.sendReport" = false;
+        "browser.crashReports.unsubmittedCheck.enabled" = false;
+        
+        # Disable prefetching
+        "network.prefetch-next" = false;
+        "network.dns.disablePrefetch" = true;
+        "network.predictor.enabled" = false;
+        "network.predictor.enable-prefetch" = false;
+        
+        # First party isolate
+        "privacy.firstparty.isolate" = true;
+        
+        # Enhanced tracking protection
+        "privacy.trackingprotection.enabled" = true;
+        "privacy.trackingprotection.socialtracking.enabled" = true;
+        "privacy.trackingprotection.fingerprinting.enabled" = true;
+        "privacy.trackingprotection.cryptomining.enabled" = true;
+        
+        # Resist fingerprinting
+        "privacy.resistFingerprinting" = true;
+        
+        # Disable pocket
+        "extensions.pocket.enabled" = false;
+        
+        # HTTPS-Only mode
+        "dom.security.https_only_mode" = true;
+        "dom.security.https_only_mode_ever_enabled" = true;
+        
+        # Disable location tracking
+        "geo.enabled" = false;
+        
+        # Clear history and cookies on exit
+        "privacy.sanitize.sanitizeOnShutdown" = true;
+        "privacy.clearOnShutdown.history" = true;
+        "privacy.clearOnShutdown.cookies" = true;
+        "privacy.clearOnShutdown.cache" = true;
+        "privacy.clearOnShutdown.downloads" = true;
+        "privacy.clearOnShutdown.formdata" = true;
+        "privacy.clearOnShutdown.sessions" = true;
+        "privacy.clearOnShutdown.offlineApps" = true;
+        "privacy.clearOnShutdown.siteSettings" = false;  # Keep site settings
+        
+        # Disable auto-filling
+        "browser.formfill.enable" = false;
+        
+        # Use DuckDuckGo as default search engine
+        "browser.search.defaultenginename" = "DuckDuckGo";
+        "browser.search.selectedEngine" = "DuckDuckGo";
+        "browser.urlbar.placeholderName" = "DuckDuckGo";
+        
+        # Disable search suggestions
+        "browser.search.suggest.enabled" = false;
+        "browser.urlbar.suggest.searches" = false;
+        
+        # Disable WebRTC 
+        "media.peerconnection.enabled" = false;
+        
+        # Make Firefox use standard DNS settings
+        # and therefore defer to PiHole
+        "network.trr.mode" = 0;  # 0 = Off (disabled)
+        "network.trr.uri" = "";
+      };
+      
+      # Privacy add-ons
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        ublock-origin
+        privacy-badger
+        https-everywhere
+        bitwarden  # Password manager
+        clearurls  # Remove tracking elements from URLs
+        decentraleyes  # Local CDN emulation
+        facebook-container  # Isolate Facebook activities
+        canvas-blocker  # Block canvas fingerprinting
+        cookie-autodelete  # Automatically delete cookies
+      ];
+      
+      search = {
+        force = true;
+        default = "DuckDuckGo";
+        engines = {
+          "Nix Packages" = {
+            urls = [{
+              template = "https://search.nixos.org/packages";
+              params = [
+                { name = "type"; value = "packages"; }
+                { name = "query"; value = "{searchTerms}"; }
+              ];
+            }];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            definedAliases = [ "@np" ];
+          };
+          "NixOS Wiki" = {
+            urls = [{ template = "https://nixos.wiki/index.php?search={searchTerms}"; }];
+            iconUpdateURL = "https://nixos.wiki/favicon.png";
+            updateInterval = 24 * 60 * 60 * 1000; # daily
+            definedAliases = [ "@nw" ];
+          };
+          "DuckDuckGo".metaData.hidden = false;
+          "Google".metaData.hidden = true;
+          "Amazon.com".metaData.hidden = true;
+          "Bing".metaData.hidden = true;
+          "eBay".metaData.hidden = true;
+          "Twitter".metaData.hidden = true;
+          "Wikipedia".metaData.hidden = false;
+        };
+      };
     };
   };
 }

@@ -10,6 +10,8 @@
       # ../../modules/nixos/programs/R.nix
       
       # Wireguard configuration
+      # Issue that .conf file cant be found due to not being included in
+      # repo. 
       # ./wireguard/default.nix
 
       # Include the results of the hardware scan.
@@ -93,11 +95,11 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    # jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
-    #media-session.enable = true;
+    # media-session.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -130,7 +132,7 @@
     
     # Security
     bitwarden-desktop
-    # wireguard-tools
+    wireguard-tools
     # To add wireguard connection to NetworkManager, run
     # nmcli connection import type wireguard file configurationfile.conf
     
