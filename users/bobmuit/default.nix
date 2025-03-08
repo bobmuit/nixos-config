@@ -1,15 +1,7 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
 {
-  
-  # Enable NUR
-  # Used for Firefox add-ons
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import nur {
-      inherit pkgs;
-    };
-  };
-  
+    
   home.username = "bobmuit";
   home.homeDirectory = "/home/bobmuit";
 

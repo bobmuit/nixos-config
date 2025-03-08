@@ -13,6 +13,18 @@
       name = "Default";
       isDefault = true;
       
+      # extensions = with pkgs.firefox-addons; [
+      #   ublock-origin         # uBlock Origin
+      #   privacy-badger        # Privacy Badger
+      #   https-everywhere      # HTTPS Everywhere (deprecated, but still available)
+      #   bitwarden            # Bitwarden
+      #   clearurls            # ClearURLs
+      #   decentraleyes        # Decentraleyes
+      #   facebook-container   # Facebook Container
+      #   canvasblocker        # Canvas Blocker
+      #   cookie-autodelete    # Cookie AutoDelete
+      # ];
+
       settings = {
         # Disable telemetry
         "toolkit.telemetry.enabled" = false;
@@ -88,25 +100,16 @@
         # Disable WebRTC 
         "media.peerconnection.enabled" = false;
         
+        # DNS over HTTPS
+        "network.trr.mode" = 2;  # 2 = TRR preferred (DoH with regular DNS as fallback)
+        "network.trr.uri" = "https://mozilla.cloudflare-dns.com/dns-query";
+
         # Make Firefox use standard DNS settings
         # and therefore defer to PiHole
-        "network.trr.mode" = 0;  # 0 = Off (disabled)
-        "network.trr.uri" = "";
+        # Use this once figured out Wireguard
+        # "network.trr.mode" = 0;  # 0 = Off (disabled)
       };
-      
-      # Privacy add-ons
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        ublock-origin
-        privacy-badger
-        https-everywhere
-        bitwarden  # Password manager
-        clearurls  # Remove tracking elements from URLs
-        decentraleyes  # Local CDN emulation
-        facebook-container  # Isolate Facebook activities
-        canvas-blocker  # Block canvas fingerprinting
-        cookie-autodelete  # Automatically delete cookies
-      ];
-      
+
       search = {
         force = true;
         default = "DuckDuckGo";
