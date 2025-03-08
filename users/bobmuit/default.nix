@@ -10,27 +10,59 @@
     "Xft.dpi" = 172;
   };
 
-  # Packages that should be installed to the user profile.
-  home.packages = with pkgs; [
-    # gnomeExtensions.applications-menu  
-  ];
-  
   # Imported modules
   imports = [
     ../../modules/home-manager/programs/browsers.nix
-    ../../modules/home-manager/programs/coding.nix
+    # ../../modules/home-manager/programs/coding.nix
+  ];
+
+  # Packages that should be installed to the user profile.
+  home.packages = with pkgs; [
+    # gnomeExtensions.applications-menu  
+
+    # Coding
+    # N.B. Manage packages through flake.nix in project folder (dev env)
+    R 
+    rstudio
+    nixd
   ];
   
+  # VSCodium settings
+  programs.vscode = {
+      enable = true;
+      package = pkgs.vscodium;
+      extensions = with pkgs.vscode-extensions; [
+        jnoortheen.nix-ide           # Nix language support extension
+        reditorsupport.r              # R Language
+        zaaack.markdown-editor  # Add the Markdown Editor extension
+        redhat.vscode-yaml           # Add the YAML support extension
+      ];
+      userSettings = {
+        "nix.enableLanguageServer" = true;  # Enable Nix language server
+        "nix.serverPath" = "nixd";          # Path to the Nix language server
+        "nix.serverSettings" = {
+          "nixd" = {
+            # Additional settings for the Nix language server can go here
+          };
+        "r.rterm.linux" = "/usr/bin/R";  # Path to the R executable (adjust if necessary)
+        "r.rpath.linux" = "/usr/bin/R";   # Specify path for the R Language Server
+        "r.lsp.args" = ["--vanilla"];     # Optional: Command line arguments for R
+        "r.lsp.diagnostics" = true;        # Enable linting of R code
+        };  
+      };  
+    };
+
   # Nix autoformatter
   # programs.alejandra.enable = true;
 
-  # Configuration for git
+  # Git settings
   programs.git = {
     enable = true;
     userName = "Bob Muit";
     userEmail = "bob@bobmuit.nl";
   };
 
+  # Bash settings
   programs.bash = {
     enable = true;
     enableCompletion = true;
@@ -46,18 +78,18 @@
       export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
     '';
   };
+  
+  # Joplin settings
+  programs.joplin-desktop.enable = true;
 
-
-      # set some aliases, feel free to add more or remove some
-    #shellAliases = {  
-    #};
-
+  # Gnome settings
+  dconf.settings = {
     # Enable minimize and maximize buttons in gnome
-    # Consider moving over to home-manager/desktop.nix
-    dconf.settings = {
     "org/gnome/desktop/wm/preferences" = {
       button-layout = ":minimize,maximize,close";
     };
+    
+    # Enable extensions
     "org/gnome/shell" = {
       disable-user-extensions = false;
       enabled-extensions = [
@@ -65,6 +97,8 @@
         # "applications-menu@gnome-shell-extensions.gcampax.github.com" #Not yet operational
       ];
     };
+
+    # Dash-to-dock settings
     "org/gnome/shell/extensions/dash-to-dock" = {
       dock-position = "BOTTOM"; # Position the dock at the bottom
       dock-fixed = true; # Prevent the dock from auto-hiding

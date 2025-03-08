@@ -7,16 +7,24 @@
 {
   imports =
     [ 
-      ../../modules/nixos/programs/R.nix
+      # ../../modules/nixos/programs/R.nix
+      
+      # Wireguard configuration
+      ./wireguard/default.nix
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-  # Enable the Flakes feature and the accompanying new nix command-line tool
   nix.settings = {
+    # Enable flakes and the accompanying new nix command-line tool
     experimental-features = [ "nix-command" "flakes" ];
-    auto-optimise-store = true; # Auto deduplicates nix store
+
+    # Auto deduplicate nix store
+    auto-optimise-store = true; 
+
+    # Increase download buffer size
+    download-buffer-size = 104857600; # 100 MB (or adjust as needed)
   };
   
 
@@ -111,13 +119,13 @@
   # Packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # Desktop
+        
+    # System
     gnomeExtensions.dash-to-dock
+    home-manager
 
     # Work
     vmware-horizon-client
-    rstudio
-    R
     zotero
     
     # Security
@@ -129,7 +137,6 @@
     # Homelab
     synology-drive-client
     cifs-utils #smb
-    # Add wireguard client
 
     # Proton
     protonvpn-cli_2
@@ -166,14 +173,14 @@
 
     # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
-  networking.firewall = {
-    allowedUDPPorts = [ 51820 ]; # Wireguard client
-  };
+  # networking.firewall = {
+  #   allowedUDPPorts = [ 51820 ]; # Wireguard client
+  # };
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
   # Configuration to enable WireGuard connection (disable rpfilter)
-  networking.firewall.checkReversePath = false; 
+  # networking.firewall.checkReversePath = false; 
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -188,16 +195,16 @@
   # Autoupdate
   system.autoUpgrade = {
     enable = true;
-    flake = "github:nixos/nixpkgs/nixos-24.11" # Adjust to match your repo
-    dates = "daily";
-    randomizedDelaySec = 3600; # Spread out updates to avoid server overload
+    flake = "github:nixos/nixpkgs/nixos-24.11"; # Adjust to match your repo
+    dates = "weekly";
+    randomizedDelaySec = "3600"; # Spread out updates to avoid server overload
   };
 
   # Automatic Garbage Collection
   nix.gc = {
   	automatic = true;
 	  dates = "weekly";
-	  options = "--delete-older-than 7d";
+	  options = "--delete-older-than 31d";
   };
 
 }

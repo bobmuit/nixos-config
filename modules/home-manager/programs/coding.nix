@@ -9,6 +9,7 @@
     nixd
   ];
   
+  # VSCodium settings
   programs.vscode = {
       enable = true;
       package = pkgs.vscodium;
