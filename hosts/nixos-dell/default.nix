@@ -10,7 +10,7 @@
       # ../../modules/nixos/programs/R.nix
       
       # Wireguard configuration
-      ./wireguard/default.nix
+      # ./wireguard/default.nix
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -45,7 +45,7 @@
   };
   
   # Enable WireGuard
-  networking.wireguard.enable = true; 
+  # networking.wireguard.enable = true; 
 
   # networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 
@@ -130,7 +130,7 @@
     
     # Security
     bitwarden-desktop
-    wireguard-tools
+    # wireguard-tools
     # To add wireguard connection to NetworkManager, run
     # nmcli connection import type wireguard file configurationfile.conf
     
