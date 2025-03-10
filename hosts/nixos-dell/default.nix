@@ -64,6 +64,18 @@
     ];
   };
 
+  # Add marloes-bob folder on Synology as network share
+  fileSystems."/mnt/synology/marloes-bob" = {
+    device = "//192.168.1.180/marloes-bob";  # Replace with your server IP and share
+    fsType = "cifs";
+    options = [
+      "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
+      "rw"
+      "iocharset=utf8"
+      "vers=3.0"  # Adjust based on your server's supported SMB version
+    ];
+  };
+
   # Enable WireGuard
   # networking.wireguard.enable = true; 
 
