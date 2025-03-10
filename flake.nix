@@ -27,17 +27,18 @@
             # Enable backups
             home-manager.backupFileExtension = "backup";
 
-            home-manager.users.bobmuit = import ./users/bobmuit ; # Adjust to match your username
+            home-manager.users.bobmuit = import ./users/bobmuit/home.nix ; # Adjust to match your username
             home-manager.extraSpecialArgs = { inherit (inputs) nixpkgs; }; 
 
           }
         ];
       };
 
-      # homeConfigurations.bobmuit = home-manager.lib.homeManagerConfiguration {
-      #   pkgs = nixpkgs.legacyPackages.${system};
-      #   modules = [ ./users/bobmuit ]; # Load your Home Manager config
-      #   specialArgs = { inherit inputs; }; # Pass additional arguments if needed
-      # };
+    # Add this to enable 'home-manager switch':
+      homeConfigurations.bobmuit = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs { inherit system; };
+        modules = [ ./users/bobmuit/home.nix ];
+      };
+
     };
 }

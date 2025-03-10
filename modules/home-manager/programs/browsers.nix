@@ -13,6 +13,33 @@
       name = "Default";
       isDefault = true;
       
+      # Add bookmark toolbar
+      bookmarks = [
+        {
+          name = "Homelab";  # Folder name (optional)
+          toolbar = true;         # Show in toolbar (optional)
+          bookmarks = [
+            {
+              name = "Heimdall";
+              url = "hhttp://192.168.1.180:8056/";
+            }
+            {
+              name = "Paperless";
+              url = "http://192.168.1.180:8777/";
+            }
+          ];
+        }
+        {
+          name = "Linux Resources"; # Another folder
+          bookmarks = [
+            {
+              name = "Arch Wiki";
+              url = "https://wiki.archlinux.org";
+            }
+          ];
+        }
+      ];
+
       # extensions = with pkgs.firefox-addons; [
       #   ublock-origin         # uBlock Origin
       #   privacy-badger        # Privacy Badger
@@ -24,6 +51,7 @@
       #   canvasblocker        # Canvas Blocker
       #   cookie-autodelete    # Cookie AutoDelete
       # ];
+      
 
       settings = {
         # Disable telemetry
@@ -77,11 +105,11 @@
         # Clear history and cookies on exit
         "privacy.sanitize.sanitizeOnShutdown" = true;
         "privacy.clearOnShutdown.history" = true;
-        "privacy.clearOnShutdown.cookies" = true;
+        "privacy.clearOnShutdown.cookies" = false; # Keep cookings
         "privacy.clearOnShutdown.cache" = true;
         "privacy.clearOnShutdown.downloads" = true;
         "privacy.clearOnShutdown.formdata" = true;
-        "privacy.clearOnShutdown.sessions" = true;
+        "privacy.clearOnShutdown.sessions" = false; # Keep sessions
         "privacy.clearOnShutdown.offlineApps" = true;
         "privacy.clearOnShutdown.siteSettings" = false;  # Keep site settings
         
@@ -108,6 +136,10 @@
         # and therefore defer to PiHole
         # Use this once figured out Wireguard
         # "network.trr.mode" = 0;  # 0 = Off (disabled)
+
+        # Keep bookmark toolbar visible
+        "browser.toolbars.bookmarks.visibility" = "always";  # Options: "always", "newtab", "never"
+
       };
 
       search = {
