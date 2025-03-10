@@ -6,9 +6,6 @@ let
 in {
   # Ensure NetworkManager is enabled
   networking.networkmanager.enable = true;
-
-  # Enable wireguard plugin for networkmanager
-  # networking.networkmanager.wireguard = true;
   
   # Install necessary packages
   environment.systemPackages = with pkgs; [

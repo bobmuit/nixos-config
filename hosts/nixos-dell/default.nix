@@ -159,7 +159,6 @@
     # Work
     vmware-horizon-client
     zotero
-    teams-for-linux
     
     # Security
     bitwarden-desktop
