@@ -111,6 +111,13 @@
     };
   };
 
+  # Bookmarks in gnome file manager
+  home.file.".config/gtk-3.0/bookmarks".text = ''
+    file:///home/bobmuit/Drive
+    file:///mnt/synology/marloes-bob
+    file:///mnt/synology/docker
+  '';
+
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new home Manager release introduces backwards
