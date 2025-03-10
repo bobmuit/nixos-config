@@ -46,6 +46,24 @@
     enable = true;
   };
   
+  # Enable samba
+  services.samba = {
+    enable = true;
+    package = pkgs.samba;
+  }; 
+
+  # Add docker folder on Synology as network share
+  fileSystems."/mnt/synology/docker" = {
+    device = "//192.168.1.180/docker";  # Replace with your server IP and share
+    fsType = "cifs";
+    options = [
+      "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
+      "rw"
+      "iocharset=utf8"
+      "vers=3.0"  # Adjust based on your server's supported SMB version
+    ];
+  };
+
   # Enable WireGuard
   # networking.wireguard.enable = true; 
 
