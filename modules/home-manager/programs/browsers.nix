@@ -16,7 +16,6 @@
       # Add bookmark toolbar
       bookmarks = [
         {
-          name = "Homelab";  # Folder name (optional)
           toolbar = true;         # Show in toolbar (optional)
           bookmarks = [
             {
@@ -26,15 +25,6 @@
             {
               name = "Paperless";
               url = "http://192.168.1.180:8777/";
-            }
-          ];
-        }
-        {
-          name = "Linux Resources"; # Another folder
-          bookmarks = [
-            {
-              name = "Arch Wiki";
-              url = "https://wiki.archlinux.org";
             }
           ];
         }

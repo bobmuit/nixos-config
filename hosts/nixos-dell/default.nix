@@ -8,11 +8,6 @@
   imports =
     [ 
       # ../../modules/nixos/programs/R.nix
-      
-      # Wireguard configuration
-      # Issue that .conf file cant be found due to not being included in
-      # repo. 
-      # ./wireguard/default.nix
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -28,7 +23,6 @@
     # Increase download buffer size
     download-buffer-size = 104857600; # 100 MB (or adjust as needed)
   };
-  
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -46,6 +40,12 @@
     enable = true;
   };
   
+  # Enable tailscale
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client"; # allow exit node use
+  };
+
   # Enable samba
   services.samba = {
     enable = true;
@@ -162,9 +162,7 @@
     
     # Security
     bitwarden-desktop
-    wireguard-tools
-    # To add wireguard connection to NetworkManager, run
-    # nmcli connection import type wireguard file configurationfile.conf
+    tailscale
     
     # Homelab
     synology-drive-client
@@ -177,18 +175,19 @@
 
     # Media 
     spotify
+    spotify-player
     vlc
 
     # Basic utilities
     neovim
     git
+    btop
 
     # Productivity
     libreoffice-fresh
     kuro #Microsoft To Do
 
     # Browsers
-    librewolf #TODO configure in Home-Manager
     ungoogled-chromium
   ];
 
@@ -236,7 +235,7 @@
   nix.gc = {
   	automatic = true;
 	  dates = "weekly";
-	  options = "--delete-older-than 31d";
+	  options = "--delete-older-than 7d";
   };
 
 }
