@@ -80,6 +80,30 @@
     ];
   };
 
+  # Add bob-storage folder on Synology as network share
+  fileSystems."/mnt/synology/bob-storage" = {
+    device = "//192.168.1.180/bob-storage";  # Replace with your server IP and share
+    fsType = "cifs";
+    options = [
+      "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
+      "rw"
+      "iocharset=utf8"
+      "vers=3.0"  # Adjust based on your server's supported SMB version
+    ];
+  };
+
+  # Add photos folder on Synology as network share
+  fileSystems."/mnt/synology/photos" = {
+    device = "//192.168.1.180/photos";  # Replace with your server IP and share
+    fsType = "cifs";
+    options = [
+      "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
+      "rw"
+      "iocharset=utf8"
+      "vers=3.0"  # Adjust based on your server's supported SMB version
+    ];
+  };
+
   # networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 
   # Set your time zone.
@@ -168,6 +192,7 @@
     # Homelab
     synology-drive-client
     cifs-utils #smb
+    evolution # for accessing caldav
 
     # Proton
     protonvpn-cli_2

@@ -46,6 +46,7 @@
         # cookie-autodelete    # Cookie AutoDelete
         sponsorblock
         darkreader
+        zotero-connector
       ];
       
       settings = {
