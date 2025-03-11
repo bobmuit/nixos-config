@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  inputs,
   #username,
   ...
 }: {
@@ -20,27 +21,32 @@
           bookmarks = [
             {
               name = "Heimdall";
-              url = "hhttp://192.168.1.180:8056/";
+              url = "http://192.168.1.180:8056/";
             }
             {
               name = "Paperless";
               url = "http://192.168.1.180:8777/";
             }
+            {
+              name = "FreshRSS";
+              url = "http://192.168.1.180:8057/";
+            }
+            
           ];
         }
       ];
 
-      # extensions = with pkgs.firefox-addons; [
-      #   ublock-origin         # uBlock Origin
-      #   privacy-badger        # Privacy Badger
-      #   https-everywhere      # HTTPS Everywhere (deprecated, but still available)
-      #   bitwarden            # Bitwarden
-      #   clearurls            # ClearURLs
-      #   decentraleyes        # Decentraleyes
-      #   facebook-container   # Facebook Container
-      #   canvasblocker        # Canvas Blocker
-      #   cookie-autodelete    # Cookie AutoDelete
-      # ];
+      extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+        ublock-origin         # uBlock Origin
+        privacy-badger        # Privacy Badger
+        bitwarden            # Bitwarden
+        clearurls            # ClearURLs
+        decentraleyes        # Decentraleyes
+        canvasblocker        # Canvas Blocker
+        # cookie-autodelete    # Cookie AutoDelete
+        sponsorblock
+        darkreader
+      ];
       
       settings = {
         # Disable telemetry
@@ -70,7 +76,7 @@
         "network.predictor.enable-prefetch" = false;
         
         # First party isolate
-        "privacy.firstparty.isolate" = true;
+        "privacy.firstparty.isolate" = false;
         
         # Enhanced tracking protection
         "privacy.trackingprotection.enabled" = true;
@@ -79,7 +85,7 @@
         "privacy.trackingprotection.cryptomining.enabled" = true;
         
         # Resist fingerprinting
-        "privacy.resistFingerprinting" = true;
+        "privacy.resistFingerprinting" = false;
         
         # Disable pocket
         "extensions.pocket.enabled" = false;
@@ -92,7 +98,7 @@
         "geo.enabled" = false;
         
         # Clear history and cookies on exit
-        "privacy.sanitize.sanitizeOnShutdown" = true;
+        "privacy.sanitize.sanitizeOnShutdown" = false;
         "privacy.clearOnShutdown.history" = true;
         "privacy.clearOnShutdown.cookies" = false; # Keep cookings
         "privacy.clearOnShutdown.cache" = true;
@@ -102,6 +108,12 @@
         "privacy.clearOnShutdown.offlineApps" = true;
         "privacy.clearOnShutdown.siteSettings" = false;  # Keep site settings
         
+        # Enable persistent storage for logins
+        "browser.sessionstore.enabled" = true;
+        "browser.sessionstore.privacy_level" = 0;  # Store all session data
+        "browser.sessionstore.resume_from_crash" = true;
+        "browser.sessionstore.resume_session_once" = true;
+
         # Disable auto-filling
         "browser.formfill.enable" = false;
         
@@ -129,6 +141,13 @@
         # Keep bookmark toolbar visible
         "browser.toolbars.bookmarks.visibility" = "always";  # Options: "always", "newtab", "never"
 
+        # Store login information
+        "signon.rememberSignons" = true;
+        "browser.privatebrowsing.autostart" = false;
+
+        # Cookie settings
+        "network.cookie.lifetimePolicy" = 0; # Accept cookies normally
+        "network.cookie.cookieBehavior" = 1; # Only accept from the originating site
       };
 
       search = {
