@@ -19,12 +19,13 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    # gnomeExtensions.applications-menu  
+    # Desktop
+    gnomeExtensions.applications-menu  
 
     # Coding
     # N.B. Manage packages through flake.nix in project folder (dev env)
     R 
-    rstudio
+    # rstudio
     nixd
   ];
   
@@ -53,9 +54,6 @@
       };  
     };
 
-  # Nix autoformatter
-  # programs.alejandra.enable = true;
-
   # Git settings
   programs.git = {
     enable = true;
@@ -82,6 +80,7 @@
   
   # Joplin settings
   programs.joplin-desktop.enable = true;
+  # TODO add configuration from Win10
 
   # Gnome settings
   dconf.settings = {
@@ -95,7 +94,7 @@
       disable-user-extensions = false;
       enabled-extensions = [
         "dash-to-dock@micxgx.gmail.com"
-        # "applications-menu@gnome-shell-extensions.gcampax.github.com" #Not yet operational
+        "applications-menu@gnome-shell-extensions.gcampax.github.com"
       ];
     };
 
