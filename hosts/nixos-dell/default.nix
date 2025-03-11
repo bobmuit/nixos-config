@@ -28,6 +28,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Enable Plymouth for a nicer boot screen
+  boot.plymouth.enable = true;
+  boot.plymouth.theme = "breeze";
+
   networking.hostName = "nixos-dell"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -75,9 +79,6 @@
       "vers=3.0"  # Adjust based on your server's supported SMB version
     ];
   };
-
-  # Enable WireGuard
-  # networking.wireguard.enable = true; 
 
   # networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 

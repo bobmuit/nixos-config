@@ -42,7 +42,6 @@
       #   cookie-autodelete    # Cookie AutoDelete
       # ];
       
-
       settings = {
         # Disable telemetry
         "toolkit.telemetry.enabled" = false;
