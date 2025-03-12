@@ -30,7 +30,7 @@
 
   # Enable Plymouth for a nicer boot screen
   boot.plymouth.enable = true;
-  # boot.plymouth.theme = "breeze";
+  boot.plymouth.theme = "spinner";
 
   networking.hostName = "nixos-dell"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
