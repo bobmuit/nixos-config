@@ -248,6 +248,8 @@
     randomizedDelaySec = "3600"; # Spread out updates to avoid server overload
   };
 
+  # Flake.lock is weekly updated through GitHub action
+
   # Automatic Garbage Collection
   nix.gc = {
   	automatic = true;
