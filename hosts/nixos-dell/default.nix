@@ -243,7 +243,7 @@
   # Autoupdate
   system.autoUpgrade = {
     enable = true;
-    flake = "github:nixos/nixpkgs/nixos-24.11"; # Adjust to match your repo
+    flake = "github:bobmuit/nixos-config"; # Adjust to match your repo
     dates = "weekly";
     randomizedDelaySec = "3600"; # Spread out updates to avoid server overload
   };
