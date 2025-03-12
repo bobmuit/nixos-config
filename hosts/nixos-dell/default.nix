@@ -238,17 +238,17 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
 
-  #services.flatpak.enable = true;
+  # services.flatpak.enable = true;
   
   # Autoupdate
   system.autoUpgrade = {
     enable = true;
-    flake = "github:bobmuit/nixos-config"; # Adjust to match your repo
+    flake = "github:nixos/nixpkgs/nixos-24.11"; 
+    #  flake = "github:bobmuit/nixos-config"; # Adjust to match your repo
+    # TODO Fix GitHub Action for weekly update of flake.lock, permission problem?
     dates = "weekly";
     randomizedDelaySec = "3600"; # Spread out updates to avoid server overload
   };
-
-  # Flake.lock is weekly updated through GitHub action
 
   # Automatic Garbage Collection
   nix.gc = {
