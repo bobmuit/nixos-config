@@ -19,6 +19,9 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
+    # Desktop
+    gnomeExtensions.applications-menu  
+
     # Coding
     # N.B. Manage packages through flake.nix in project folder (dev env)
     R 
@@ -91,6 +94,7 @@
       disable-user-extensions = false;
       enabled-extensions = [
         "dash-to-dock@micxgx.gmail.com"
+        "applications-menu@gnome-shell-extensions.gcampax.github.com"
       ];
     };
 

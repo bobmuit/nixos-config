@@ -31,30 +31,7 @@
               name = "FreshRSS";
               url = "http://192.168.1.180:8057/";
             }
-            {
-              name = "Calibre";
-              url = "http://192.168.1.180:8083/";
-            }
-            {
-              name = "Rabobank";
-              url = "https://bankieren.rabobank.nl/welcome/";
-            }
-            {
-              name = "Perplexity";
-              url = "https://www.perplexity.ai/";
-            }   
-            {
-              name = "Claude";
-              url = "https://claude.ai/";
-            }   
-            {
-              name = "ChatGPT";
-              url = "https://chatgpt.com/";
-            }
-            {
-              name = "NixOS Discourse";
-              url = "https://discourse.nixos.org/";
-            }
+            
           ];
         }
       ];
