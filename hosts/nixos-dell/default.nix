@@ -30,11 +30,7 @@
 
   # Enable Plymouth for a nicer boot screen
   boot.plymouth.enable = true;
-<<<<<<< HEAD
   boot.plymouth.theme = "spinner";
-=======
-  boot.plymouth.theme = "breeze";
->>>>>>> parent of 5533e6b (Minor adjustments to firefox and plymouth)
 
   networking.hostName = "nixos-dell"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
