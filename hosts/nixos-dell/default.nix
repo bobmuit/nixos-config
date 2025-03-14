@@ -200,6 +200,11 @@
 
     # Productivity
     libreoffice-fresh
+    hunspell
+    hunspellDicts.nl_NL
+    hunspellDicts.en_US # For English (US)
+  # hunspellDicts.en_GB # For English (UK), 
+
     kuro #Microsoft To Do
 
     # Browsers

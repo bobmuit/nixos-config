@@ -24,14 +24,37 @@
               url = "http://192.168.1.180:8056/";
             }
             {
+              name = "FreshRSS";
+              url = "http://192.168.1.180:8057/";
+            }
+            {
               name = "Paperless";
               url = "http://192.168.1.180:8777/";
             }
             {
-              name = "FreshRSS";
-              url = "http://192.168.1.180:8057/";
+              name = "Calibre";
+              url = "http://192.168.1.180:8083/";
             }
-            
+            {
+              name = "Perplexity";
+              url = "https://www.perplexity.ai/";
+            }
+            {
+              name = "Claude";
+              url = "https://claude.ai/";
+            }
+            {
+              name = "ChatGPT";
+              url = "https://chatgpt.com/";
+            }
+            {
+              name = "GitHub";
+              url = "https://github.com/";
+            }
+            {
+              name = "NixOS Discourse";
+              url = "https://discourse.nixos.org/";
+            }
           ];
         }
       ];
