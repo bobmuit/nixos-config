@@ -3,12 +3,20 @@
 let
   # Define the list of desired R packages
   myRPackages = with pkgs.rPackages; [
+    # Basics
     languageserver
     ggplot2
     dplyr
     tidyr
+
+    # Meta-analysis
     meta
     netmeta
+
+    # Markdown
+    rmarkdown
+    knitr
+    tinytex
     # Add other R packages here as needed
   ];
 
@@ -23,5 +31,7 @@ in
   environment.systemPackages = with pkgs; [
     R                  # Install R
     customR            # Install the custom R environment with the specified packages
+
+    pandoc
   ];
 }
