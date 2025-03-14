@@ -63,6 +63,20 @@
     options = [
       "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
       "rw"
+      "nofail" # Boot even if share fails to mount
+      "iocharset=utf8"
+      "vers=3.0"  # Adjust based on your server's supported SMB version
+    ];
+  };
+
+  # Add media folder on Synology as network share
+  fileSystems."/mnt/synology/media" = {
+    device = "//192.168.1.180/media";  # Replace with your server IP and share
+    fsType = "cifs";
+    options = [
+      "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
+      "rw"
+      "nofail" # Boot even if share fails to mount
       "iocharset=utf8"
       "vers=3.0"  # Adjust based on your server's supported SMB version
     ];
@@ -75,8 +89,14 @@
     options = [
       "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
       "rw"
+      "nofail" # Boot even if share fails to mount
       "iocharset=utf8"
       "vers=3.0"  # Adjust based on your server's supported SMB version
+      "uid=1000"
+      "gid=100"
+      "file_mode=0775"
+      "dir_mode=0775"
+      "noperm"            # Ignore server permissions
     ];
   };
 
@@ -87,8 +107,14 @@
     options = [
       "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
       "rw"
+      "nofail" # Boot even if share fails to mount
       "iocharset=utf8"
       "vers=3.0"  # Adjust based on your server's supported SMB version
+      "uid=1000"
+      "gid=100"
+      "file_mode=0775"
+      "dir_mode=0775"
+      "noperm"            # Ignore server permissions
     ];
   };
 
