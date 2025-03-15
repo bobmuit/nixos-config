@@ -60,16 +60,16 @@
       ];
 
       extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
-        ublock-origin         # uBlock Origin
-        privacy-badger        # Privacy Badger
-        bitwarden            # Bitwarden
-        clearurls            # ClearURLs
-        decentraleyes        # Decentraleyes
-        canvasblocker        # Canvas Blocker
-        # cookie-autodelete    # Cookie AutoDelete
+        ublock-origin        
+        privacy-badger       
+        bitwarden            
+        clearurls            
+        decentraleyes        
+        canvasblocker        
         sponsorblock
         darkreader
         zotero-connector
+        joplin-web-clipper
       ];
       
       settings = {
