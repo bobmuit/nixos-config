@@ -66,6 +66,8 @@
       "nofail" # Boot even if share fails to mount
       "iocharset=utf8"
       "vers=3.0"  # Adjust based on your server's supported SMB version
+      "uid=1000"
+      "gid=100"
     ];
   };
 
