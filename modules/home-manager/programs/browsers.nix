@@ -149,7 +149,11 @@
         # Disable search suggestions
         "browser.search.suggest.enabled" = false;
         "browser.urlbar.suggest.searches" = false;
-        
+
+        # Set Heimdall as standard startup page        
+        "browser.startup.homepage" = "http://192.168.1.180:8056/"; # Replace with your desired homepage
+
+
         # Disable WebRTC 
         "media.peerconnection.enabled" = false;
         
