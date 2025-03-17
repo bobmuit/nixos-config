@@ -95,7 +95,7 @@
         
         # Disable prefetching
         "network.prefetch-next" = false;
-        "network.dns.disablePrefetch" = true;
+        "network.dns.disablePrefetch" = true; 
         "network.predictor.enabled" = false;
         "network.predictor.enable-prefetch" = false;
         
@@ -153,18 +153,30 @@
         # Set Heimdall as standard startup page        
         "browser.startup.homepage" = "http://192.168.1.180:8056/"; # Replace with your desired homepage
 
-
         # Disable WebRTC 
         "media.peerconnection.enabled" = false;
         
         # DNS over HTTPS
-        "network.trr.mode" = 2;  # 2 = TRR preferred (DoH with regular DNS as fallback)
-        "network.trr.uri" = "https://mozilla.cloudflare-dns.com/dns-query";
+        # "network.trr.mode" = 2;  # 2 = TRR preferred (DoH with regular DNS as fallback)
+        # "network.trr.uri" = "https://mozilla.cloudflare-dns.com/dns-query";
 
         # Make Firefox use standard DNS settings
         # and therefore defer to PiHole
-        # Use this once figured out Wireguard
-        # "network.trr.mode" = 0;  # 0 = Off (disabled)
+        "network.trr.mode" = 0;  # 0 = Off (disabled)
+        
+        # Force Firefox to use system DNS
+        "network.proxy.type" = 0;  # No proxy
+        "network.proxy.socks_remote_dns" = false;
+        # "network.captive-portal-service.enabled" = false;
+        # "network.connectivity-service.enabled" = false;
+
+        # Disable DNS resolver cache
+        "network.dnsCacheExpiration" = 0;
+        "network.dnsCacheEntries" = 0;
+        # "network.dns.disableIPv6" = true;
+
+        # Force specific DNS server (your Pi-hole)
+        # "network.dns.forceResolve" = "192.168.1.3";  # Adjust to your Pi-hole IP
 
         # Keep bookmark toolbar visible
         "browser.toolbars.bookmarks.visibility" = "always";  # Options: "always", "newtab", "never"
