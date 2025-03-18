@@ -20,39 +20,47 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     # Desktop
-    gnomeExtensions.applications-menu  
-
+    gnomeExtensions.applications-menu
     # Coding
     # N.B. Manage packages through flake.nix in project folder (dev env)
-    R 
+    R
+    rPackages.languageserver
+    
     # rstudio
     nixd
   ];
-  
+
   # VSCodium settings
   programs.vscode = {
-      enable = true;
-      package = pkgs.vscodium;
-      extensions = with pkgs.vscode-extensions; [
-        jnoortheen.nix-ide           # Nix language support extension
-        reditorsupport.r              # R Language
-        zaaack.markdown-editor  # Add the Markdown Editor extension
-        redhat.vscode-yaml           # Add the YAML support extension
-      ];
-      userSettings = {
-        "nix.enableLanguageServer" = true;  # Enable Nix language server
-        "nix.serverPath" = "nixd";          # Path to the Nix language server
-        "nix.serverSettings" = {
-          "nixd" = {
-            # Additional settings for the Nix language server can go here
-          };
-        "r.rterm.linux" = "/usr/bin/R";  # Path to the R executable (adjust if necessary)
-        "r.rpath.linux" = "/usr/bin/R";   # Specify path for the R Language Server
-        "r.lsp.args" = ["--vanilla"];     # Optional: Command line arguments for R
-        "r.lsp.diagnostics" = true;        # Enable linting of R code
-        };  
-      };  
+    enable = true;
+    package = pkgs.vscodium;
+    extensions = with pkgs.vscode-extensions; [
+      jnoortheen.nix-ide # Nix language support extension
+      reditorsupport.r # R Language
+      redhat.vscode-yaml # YAML support extension
+      yzhang.markdown-all-in-one # Markdown All in One
+      # insert-unicode not available in nixpkgs
+    ];
+    userSettings = {
+      # Nix settings
+      "nix.enableLanguageServer" = true;
+      "nix.serverPath" = "nixd";
+      # R settings
+      "r.rterm.linux" = "${pkgs.R}/bin/R"; # Absolute path to R
+      "r.rpath.linux" = "${pkgs.R}/bin/R";
+      "r.lsp.path" = "${pkgs.rPackages.languageserver}/library/languageserver";
+      "r.lsp.enabled" = true;
+      "r.lsp.args" = ["--vanilla"]; # Optional: Prevent loading user profiles
+      "r.lsp.diagnostics" = true; # Enable linting for R code
     };
+  };
+
+  # This will make R automatically load the language server when running interactively.
+  home.file.".Rprofile".text = ''
+  if (interactive() && requireNamespace("languageserver", quietly = TRUE)) {
+    library(languageserver)
+  }
+'';
 
   # Git settings
   programs.git = {
