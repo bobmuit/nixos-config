@@ -53,14 +53,55 @@
   in {
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [
-        rWithPackages # Use costum R with packages  
+        rWithPackages
         pandoc
-
         # Required for building dmetar
-        cmake 
+        cmake
         libxml2
+        
+        # Add these packages for XeLaTeX and natbib support
+        (texlive.combine {
+          inherit (texlive) 
+            scheme-medium    # Base packages
+            xetex           # XeLaTeX
+            fontspec        # Font handling for XeLaTeX
+            natbib          # Bibliography management
+            biblatex        # Modern bibliography management
+            biber           # Bibliography processor for biblatex
+            latexmk         # Build tool for LaTeX
+            
+            # Common dependencies for academic documents
+            amsmath
+            amscls
+            mathtools
+            unicode-math    # Unicode math support for XeLaTeX
+            
+            # For handling of PDF graphics and links
+            hyperref
+            
+            # Language and font support
+            babel
+            polyglossia     # Multilingual typesetting with XeLaTeX
+            
+            # Tables support
+            booktabs
+            # longtable
+            # tabularx
+            
+            # Additional commonly needed packages
+            xcolor          # Color support
+            caption
+            setspace        # Line spacing
+            etoolbox
+            koma-script     # Modern document classes
+            geometry        # Page layout
+            
+            # If you need specific styles for citations
+            elsarticle      # Elsevier journals
+            acmart;          # ACM publications
+        })
       ];
-
+    
       shellHook = ''
         echo "R development environment loaded!"
         # Set up a writable user library path
@@ -77,6 +118,23 @@
         
         echo "Installing dmetar from GitHub (if not already installed)..."
         Rscript -e 'if (!requireNamespace("dmetar", quietly = TRUE)) { install.packages("remotes", repos="https://cloud.r-project.org"); remotes::install_github("MathiasHarrer/dmetar", lib=Sys.getenv("R_LIBS_USER")) }'
+
+        echo '#!/bin/bash
+        # This script helps VSCode use the R from the nix shell
+        nix develop -c R "$@"' > R-shell-wrapper.sh
+        chmod +x R-shell-wrapper.sh
+
+        # Create settings.json with recognition of costum R environment
+        # Requires R-shell-wrapper.sh
+        cat > .vscode/settings.json << 'EOF'
+        {
+          "r.alwaysUseActiveTerminal": true,
+          "r.bracketedPaste": true,
+          "r.sessionWatcher": true,
+          "r.rterm.linux": "\$\{workspaceFolder}/R-shell-wrapper.sh",
+          "r.lsp.enabled": true
+        }
+        EOF
 
         # Don't automatically start R
         echo "To start R, type 'R' at the prompt"

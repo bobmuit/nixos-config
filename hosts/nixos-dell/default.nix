@@ -7,8 +7,6 @@
 {
   imports =
     [ 
-      # ../../modules/nixos/programs/R.nix
-
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
