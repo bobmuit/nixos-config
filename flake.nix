@@ -15,9 +15,11 @@
   };
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, firefox-addons, nixos-hardware, ... }@inputs:
     let
-      system = "x86_64-linux"; # For main system
+      system = "x86_64-linux";
       aarch64-system = "aarch64-linux"; # For the Raspberry Pi
     in {
+
+      # Laptop Bob configuration
       nixosConfigurations.nixos-dell = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
@@ -41,7 +43,7 @@
         ];
       };
       
-      # Add Raspberry Pi 4 configuration
+      # Raspberry Pi 4 configuration
       nixosConfigurations.nixos-pi = nixpkgs.lib.nixosSystem {
         system = aarch64-system;
         specialArgs = {
@@ -54,14 +56,6 @@
         modules = [
           ./hosts/nixos-pi
           nixos-hardware.nixosModules.raspberry-pi-4
-          # home-manager.nixosModules.home-manager
-          # {
-          #   home-manager.useGlobalPkgs = true;
-          #   home-manager.useUserPackages = true;
-          #   home-manager.backupFileExtension = "backup";
-          #   home-manager.users.bobmuit = import ./users/bobmuit/home-pi.nix; # You can create a separate config for the Pi
-          #   home-manager.extraSpecialArgs = { inherit inputs; };
-          # }
         ];
       };
       
