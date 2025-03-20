@@ -3,5 +3,6 @@ result
 logs/
 wg-conf/
 smb-credentials-syno
+smb-credentials-nixos-pi
 pihole-credentials
 .env

@@ -75,6 +75,7 @@
     tmux
     at
     tree
+    samba
   ];
 
   # Enable at service
