@@ -105,42 +105,7 @@
 
   virtualisation.oci-containers.backend = "podman";
 
-  # # Make the credentials available to the build
-  # environment.etc."pihole-credentials".source = ./pihole-credentials;
-
-  # virtualisation.oci-containers.containers = {
-  #   pihole = {
-  #     image = "pihole/pihole:latest";
-  #     autoStart = true;
-  #     ports = [
-  #       "53:53/tcp"   # DNS port (TCP) - available to network
-  #       "53:53/udp"   # DNS port (UDP) - available to network
-  #       "80:80/tcp"   # Web interface (HTTP)
-  #       "443:443/tcp" # Web interface (HTTPS)
-  #     ];
-  #     volumes = [
-  #       "/var/lib/containers/pihole/pihole:/etc/pihole"
-  #       "/var/lib/containers/pihole/dnsmasq.d:/etc/dnsmasq.d"
-  #     ];
-  #     environment = {
-  #       TZ = "Europe/London";
-  #       WEBPASSWORD = builtins.readFile config.environment.etc."pihole-credentials".source;
-  #       DNS1 = "1.1.1.1";
-  #       DNS2 = "8.8.8.8";
-  #       SERVERIP = "192.168.1.67";  # Pi's IP address
-  #       DNSMASQ_USER = "root";
-  #       DNSMASQ_LISTENING = "all";  # This will listen on all interfaces including VPN subnets
-  #     };
-  #     extraOptions = [
-  #       "--hostname=pihole"
-  #       "--dns=127.0.0.1"
-  #       "--dns=8.8.8.8"
-  #       "--cap-add=NET_ADMIN"  # Required for network-related operations
-  #     ];
-  #   };
-  # };
-
-  # Make sure to create the directory for volumes
+  # Create the directory for volumes for pihole
   system.activationScripts = {
     createPiholeDirectories = {
       text = ''
@@ -150,6 +115,9 @@
       deps = [];
     };
   };
+
+  # Enable rootless containers to use privileged ports for pihole
+  sysctl."net.ipv4.ip_unprivileged_port_start" = 53;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -199,10 +167,18 @@
 
     # Enable firewall but allow: ssh
     firewall = {
-      enable = true;
-      allowedTCPPorts = [ 22 ];
+      enable = true;  # Enable the firewall
+
+      # Allow UDP traffic on port 53 for DNS
+      allowedUDPPorts = [ 53 ];
+
+      # Allow TCP traffic on ports:
+      # - 22: SSH access
+      # - 53: DNS service
+      # - 80: HTTP for Pi-hole web interface
+      # - 443: HTTPS for Pi-hole web interface
+      allowedTCPPorts = [ 22 53 80 443 ];
     };
-  };
 
   # Force eth0 via udev
   services.udev.extraRules = ''
