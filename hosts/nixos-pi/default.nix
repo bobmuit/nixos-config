@@ -103,6 +103,9 @@
 
   virtualisation.oci-containers.backend = "podman";
 
+  # Make the credentials available to the build
+  environment.etc."pihole-credentials".source = ./pihole-credentials;
+
   virtualisation.oci-containers.containers = {
     pihole = {
       image = "pihole/pihole:latest";
@@ -119,7 +122,7 @@
       ];
       environment = {
         TZ = "Europe/London";
-        WEBPASSWORD = builtins.readFile /home/nixos/nixos-config/hosts/nixos-pi/pihole-credentials;
+        WEBPASSWORD = builtins.readFile config.environment.etc."pihole-credentials".source;
         DNS1 = "1.1.1.1";
         DNS2 = "8.8.8.8";
         SERVERIP = "192.168.1.67";  # Pi's IP address
