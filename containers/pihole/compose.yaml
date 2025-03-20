@@ -1,4 +1,3 @@
-# Pihole on nixos-pi
 version: "3.8"
 
 services:
@@ -12,22 +11,26 @@ services:
       - "80:80/tcp"   # Web interface (HTTP)
       - "443:443/tcp" # Web interface (HTTPS)
     volumes:
-      - "/home/nixos/containers/pihole/pihole:/etc/pihole"
-      - "/home/nixos/containers/pihole/dnsmasq.d:/etc/dnsmasq.d"
+      - "pihole_data:/etc/pihole"
+      - "dnsmasq_data:/etc/dnsmasq.d"
     environment:
       - TZ=Europe/London
-      - WEBPASSWORD="${PIHOLE_PASSWORD}"  # Assuming you set this in an .env file or other way
+      - WEBPASSWORD="${PIHOLE_PASSWORD}"
       - DNS1=1.1.1.1
       - DNS2=8.8.8.8
-      - SERVERIP=192.168.1.63  # Pi's IP addresscd 
+      - SERVERIP=192.168.1.63
       - DNSMASQ_USER=root
-      - DNSMASQ_LISTENING=all  # This will listen on all interfaces including VPN subnets
+      - DNSMASQ_LISTENING=all
     extra_hosts:
       - "pihole:${SERVERIP}"
     cap_add:
-      - "NET_ADMIN"  # Required for network-related operations
+      - "NET_ADMIN"
     networks:
       - pihole_network
+
+volumes:
+  pihole_data:
+  dnsmasq_data:
 
 networks:
   pihole_network:
