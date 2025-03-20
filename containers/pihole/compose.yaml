@@ -12,8 +12,8 @@ services:
       - "80:80/tcp"   # Web interface (HTTP)
       - "443:443/tcp" # Web interface (HTTPS)
     volumes:
-      - "/var/lib/containers/pihole/pihole:/etc/pihole"
-      - "/var/lib/containers/pihole/dnsmasq.d:/etc/dnsmasq.d"
+      - "/home/nixos/containers/pihole/pihole:/etc/pihole"
+      - "/home/nixos/containers/pihole/dnsmasq.d:/etc/dnsmasq.d"
     environment:
       TZ: "Europe/London"
       WEBPASSWORD: "${PIHOLE_PASSWORD}"  # Assuming you set this in an .env file or other way
