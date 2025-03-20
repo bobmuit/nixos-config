@@ -108,24 +108,6 @@
     "net.ipv4.ip_unprivileged_port_start" = 53;
   };
 
-  # Enable samba
-  services.samba.enable = true;
-  services.samba.settings = {
-    # Global options for samba
-    global = {
-      workgroup = "WORKGROUP";
-      "server string" = "NixOS Raspberry Pi";
-      security = "user";
-    };
-    
-    # Define the shared folder
-    home = {
-      path = "/home/nixos";
-      "read only" = "no";
-      "guest ok" = "no";
-    };
-  };
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   # services.openssh.settings.passwordAuthentication = false;
