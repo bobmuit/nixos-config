@@ -106,6 +106,9 @@
     enable = true;
     useRoutingFeatures = "server"; # Allows the machine to act as a subnet router and DNS server
     openFirewall = true; # Opens required firewall ports for Tailscale
+    acceptRoutes = true;  # Allow the system to accept advertised routes from other peers
+    advertiseDns = true;           # Enable DNS advertisement
+    dns = "192.168.1.63";         # DNS server (e.g., Pi-hole's IP address)
   };
 
   # Networking configuration
