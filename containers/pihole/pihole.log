@@ -1,0 +1,227 @@
+  [i] Setting up user & group for the pihole user
+  [i] PIHOLE_UID not set in environment, using default (1000)
+  [i] PIHOLE_GID not set in environment, using default (1000)
+
+  [i] Starting FTL configuration
+  [i] No DNS upstream set in environment or config file, defaulting to Google DNS
+  [i] No password set in environment or config file, assigning random password: MiFiINl7
+  [i] Starting crond for scheduled scripts. Randomizing times for gravity and update checker
+
+  [i] Ensuring logrotate script exists in /etc/pihole
+
+  [i] Gravity migration checks
+  [i] No adlist file found, creating one with a default blocklist
+  [i] /etc/pihole/gravity.db does not exist (Likely due to a fresh volume). This is a required file for Pi-hole to operate.
+  [i] Gravity will now be run to create the database
+  [i] Migrating the list's cache directory to new location...[K  [✗] Migrating the list's cache directory to new location
+  [i] Creating new gravity database
+   [✗] Unable to create /etc/pihole/gravity.db
+   [✗] Error creating new gravity database. Please contact support.
+   [✗] Unable to migrate to database. Please contact support.
+
+  [i] pihole-FTL pre-start checks
+  [i] Setting capabilities on pihole-FTL where possible
+  [i] Applying the following caps to pihole-FTL:
+        * CAP_CHOWN
+        * CAP_NET_BIND_SERVICE
+        * CAP_NET_ADMIN
+
+  [i] Starting pihole-FTL (no-daemon) as root
+
+  [i] Version info:
+      Could not find /etc/pihole/versions. Running update now.
+
+2025-03-20 14:08:19.434 GMT [60M] INFO: ########## FTL started on a0ed83afc3b9! ##########
+2025-03-20 14:08:19.434 GMT [60M] INFO: FTL branch: master
+2025-03-20 14:08:19.434 GMT [60M] INFO: FTL version: v6.0.4
+2025-03-20 14:08:19.434 GMT [60M] INFO: FTL commit: b7eb53bf
+2025-03-20 14:08:19.435 GMT [60M] INFO: FTL date: 2025-03-04 17:22:10 +0000
+2025-03-20 14:08:19.435 GMT [60M] INFO: FTL user: root
+2025-03-20 14:08:19.435 GMT [60M] INFO: Compiled for linux/arm64/v8 (compiled on CI) using cc (Alpine 14.2.0) 14.2.0
+2025-03-20 14:08:19.436 GMT [60M] INFO: Config file /etc/pihole/pihole.toml not available (r): No such file or directory
+2025-03-20 14:08:19.436 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.1 not available (r): No such file or directory
+2025-03-20 14:08:19.436 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.2 not available (r): No such file or directory
+2025-03-20 14:08:19.436 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.3 not available (r): No such file or directory
+2025-03-20 14:08:19.436 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.4 not available (r): No such file or directory
+2025-03-20 14:08:19.437 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.5 not available (r): No such file or directory
+2025-03-20 14:08:19.437 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.6 not available (r): No such file or directory
+2025-03-20 14:08:19.437 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.7 not available (r): No such file or directory
+2025-03-20 14:08:19.437 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.8 not available (r): No such file or directory
+2025-03-20 14:08:19.437 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.9 not available (r): No such file or directory
+2025-03-20 14:08:19.437 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.10 not available (r): No such file or directory
+2025-03-20 14:08:19.437 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.11 not available (r): No such file or directory
+2025-03-20 14:08:19.438 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.12 not available (r): No such file or directory
+2025-03-20 14:08:19.438 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.13 not available (r): No such file or directory
+2025-03-20 14:08:19.438 GMT [60M] INFO: Config backup file /etc/pihole/config_backups/pihole.toml.14 not available (r): No such file or directory
+2025-03-20 14:08:19.438 GMT [60M] INFO: No config file nor backup available, using defaults
+2025-03-20 14:08:19.439 GMT [60M] INFO: Config initialized with webserver ports 80 (HTTP) and 443 (HTTPS), IPv6 support is enabled
+2025-03-20 14:08:19.439 GMT [60M] INFO: Config file /etc/pihole/pihole.toml.tmp not available (w): Permission denied
+2025-03-20 14:08:19.439 GMT [60M] ERROR: Cannot open /etc/pihole/dnsmasq.conf.temp for writing, unable to update dnsmasq configuration: Permission denied
+2025-03-20 14:08:19.439 GMT [60M] ERROR: Cannot create directory /etc/pihole/hosts: Permission denied
+2025-03-20 14:08:19.439 GMT [60M] INFO: PID file does not exist or not readable
+2025-03-20 14:08:19.439 GMT [60M] INFO: No other running FTL process found.
+2025-03-20 14:08:19.439 GMT [60M] WARNING: Insufficient permissions to set process priority to -10 (CAP_SYS_NICE required), process priority remains at 0
+2025-03-20 14:08:19.446 GMT [60M] WARNING: Starting pihole-FTL as user root is not recommended
+2025-03-20 14:08:19.446 GMT [60M] INFO: PID of FTL process: 60
+2025-03-20 14:08:19.447 GMT [60M] INFO: listening on 0.0.0.0 port 53
+2025-03-20 14:08:19.447 GMT [60M] INFO: listening on :: port 53
+2025-03-20 14:08:19.451 GMT [60M] INFO: PID of FTL process: 60
+2025-03-20 14:08:19.452 GMT [60M] WARNING: No database file found, creating new (empty) database
+2025-03-20 14:08:19.452 GMT [60M] ERROR: SQLite3: cannot open file at line 44994 of [873d4e274b] (14)
+2025-03-20 14:08:19.452 GMT [60M] ERROR: SQLite3: os_unix.c:44994: (0) open(/etc/pihole/pihole-FTL.db) -  (14)
+2025-03-20 14:08:19.453 GMT [60M] ERROR: Error while trying to open database: unable to open database file
+2025-03-20 14:08:19.453 GMT [60M] ERROR: Creation of database failed, database is not available
+2025-03-20 14:08:19.459 GMT [60M] ERROR: SQLite3: cannot open file at line 44994 of [873d4e274b] (14)
+2025-03-20 14:08:19.459 GMT [60M] ERROR: SQLite3: os_unix.c:44994: (0) open(/etc/pihole/pihole-FTL.db) -  (14)
+2025-03-20 14:08:19.459 GMT [60M] ERROR: SQLite3: statement aborts at 4: [ATTACH ? AS ?] unable to open database: /etc/pihole/pihole-FTL.db (14)
+2025-03-20 14:08:19.459 GMT [60M] ERROR: attach_database(): Failed to attach database: unable to open database file
+2025-03-20 14:08:19.460 GMT [60M] ERROR: init_memory_database(): Failed to attach disk database
+2025-03-20 14:08:19.460 GMT [60M] ERROR: SQLite3: no such table: disk.message in "DELETE FROM disk.message;" (1)
+2025-03-20 14:08:19.460 GMT [60M] ERROR: ERROR: SQL query "DELETE FROM disk.message;" failed: SQL logic error (SQLITE_ERROR)
+2025-03-20 14:08:19.460 GMT [60M] ERROR: flush_message_table() failed!
+2025-03-20 14:08:19.688 GMT [60M] ERROR: SQLite3: no such table: disk.query_storage in "SELECT MAX(id) FROM disk.query_storage" (1)
+2025-03-20 14:08:19.688 GMT [60M] ERROR: init_disk_db_idx(): Failed to get MAX(id) from disk.query_storage: SQL logic error
+2025-03-20 14:08:19.688 GMT [60M] WARNING: Insufficient permissions to set system time (CAP_SYS_TIME required), NTP client not available
+2025-03-20 14:08:19.689 GMT [60/T62] INFO: NTP server listening on :::123 (IPv6)
+2025-03-20 14:08:19.689 GMT [60/T61] INFO: NTP server listening on 0.0.0.0:123 (IPv4)
+2025-03-20 14:08:19.689 GMT [60/T64] WARNING: check_files_on_same_device(): stat() failed: No such file or directory
+2025-03-20 14:08:19.689 GMT [60M] INFO: FTL is running as root
+2025-03-20 14:08:19.697 GMT [60M] INFO: Created SSL/TLS certificate for pi.hole at /etc/pihole/tls.pem
+2025-03-20 14:08:19.697 GMT [60M] ERROR: Webserver SSL/TLS certificate /etc/pihole/tls.pem not found or not readable!
+2025-03-20 14:08:19.697 GMT [60M] ERROR: Start of webserver failed!. Web interface will not be available!
+2025-03-20 14:08:19.697 GMT [60M] ERROR:        Error: Error initializing SSL context (error code 3.0)
+2025-03-20 14:08:19.697 GMT [60M] ERROR:        Hint: Check the webserver log at /var/log/pihole/webserver.log
+2025-03-20 14:08:19.698 GMT [60M] INFO: Blocking status is enabled
+2025-03-20 14:08:19.798 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_count(0): Gravity database not available
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_count(6): Gravity database not available
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_count(5): Gravity database not available
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_count(7): Gravity database not available
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_count(2): Gravity database not available
+2025-03-20 14:08:19.799 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: gravityDB_count(1): Gravity database not available
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: gravityDB_count(4): Gravity database not available
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: gravityDB_count(3): Gravity database not available
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: gravityDB_count(3): Gravity database not available
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: Database query failed, assuming there are no deny regex entries
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: gravityDB_count(4): Gravity database not available
+2025-03-20 14:08:19.800 GMT [60/T63] WARNING: Database query failed, assuming there are no allow regex entries
+2025-03-20 14:08:19.801 GMT [60/T63] INFO: Compiled 0 allow and 0 deny regex for 0 client in 0.5 msec
+2025-03-20 14:08:19.801 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.801 GMT [60/T63] ERROR: check_inaccessible_adlists(): Gravity database not available
+2025-03-20 14:08:19.801 GMT [60/T63] WARNING: gravityDB_open(): /etc/pihole/gravity.db does not exist
+2025-03-20 14:08:19.801 GMT [60/T63] ERROR: check_restored_gravity(): Gravity database not available
+2025-03-20 14:08:20.001 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:20.054 GMT [60M] ERROR: SQLite3: cannot open file at line 44994 of [873d4e274b] (14)
+2025-03-20 14:08:20.054 GMT [60M] ERROR: SQLite3: os_unix.c:44994: (0) open(/etc/pihole/pihole-FTL.db) -  (14)
+2025-03-20 14:08:20.054 GMT [60M] ERROR: Error while trying to open database: unable to open database file
+2025-03-20 14:08:20.054 GMT [60M] WARNING: Failed to open database in reimport_aliasclients()
+2025-03-20 14:08:21.003 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:21.701 GMT [60M] ERROR: SQLite3: cannot open file at line 44994 of [873d4e274b] (14)
+2025-03-20 14:08:21.701 GMT [60M] ERROR: SQLite3: os_unix.c:44994: (0) open(/etc/pihole/pihole-FTL.db) -  (14)
+2025-03-20 14:08:21.701 GMT [60M] ERROR: Error while trying to open database: unable to open database file
+2025-03-20 14:08:21.701 GMT [60M] WARNING: Failed to open database in reimport_aliasclients()
+2025-03-20 14:08:22.005 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:22.151 GMT [60M] INFO: Rate-limiting 10.89.0.1 for at least 57 seconds
+2025-03-20 14:08:22.151 GMT [60M] ERROR: SQLite3: cannot open file at line 44994 of [873d4e274b] (14)
+2025-03-20 14:08:22.151 GMT [60M] ERROR: SQLite3: os_unix.c:44994: (0) open(/etc/pihole/pihole-FTL.db) -  (14)
+2025-03-20 14:08:22.151 GMT [60M] ERROR: Error while trying to open database: unable to open database file
+2025-03-20 14:08:22.289 GMT [127M] INFO: Config file /etc/pihole/pihole.toml not available (r): No such file or directory
+2025-03-20 14:08:22.301 GMT [130M] INFO: Config file /etc/pihole/pihole.toml not available (r): No such file or directory
+2025-03-20 14:08:22.316 GMT [133M] INFO: Config file /etc/pihole/pihole.toml not available (r): No such file or directory
+2025-03-20 14:08:22.696 GMT [216M] INFO: Config file /etc/pihole/pihole.toml not available (r): No such file or directory
+2025-03-20 14:08:22.707 GMT [219M] INFO: Config file /etc/pihole/pihole.toml not available (r): No such file or directory
+2025-03-20 14:08:22.717 GMT [222M] INFO: Config file /etc/pihole/pihole.toml not available (r): No such file or directory
+2025-03-20 14:08:23.014 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:23.714 GMT [60/T65] ERROR: Cannot receive UDP DNS reply: Timeout - no response from upstream DNS server
+2025-03-20 14:08:23.714 GMT [60/T65] INFO: Tried to resolve PTR "1.0.89.10.in-addr.arpa" on 127.0.0.1#53 (UDP)
+2025-03-20 14:08:24.016 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:25.018 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:25.730 GMT [60/T65] ERROR: Cannot receive UDP DNS reply: Timeout - no response from upstream DNS server
+2025-03-20 14:08:25.730 GMT [60/T65] INFO: Tried to resolve PTR "1.0.89.10.in-addr.arpa" on 127.0.0.1#53 (UDP)
+2025-03-20 14:08:26.019 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:27.021 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:28.023 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:29.024 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:30.026 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:31.027 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:32.029 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:33.030 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:34.032 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:35.034 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:36.035 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:37.037 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:38.038 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:39.040 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:40.041 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:41.043 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:42.045 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:43.046 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:44.048 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:45.049 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:46.051 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:47.053 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:48.054 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:49.056 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:50.057 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:51.059 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:52.061 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:53.062 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:54.064 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:55.065 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:56.067 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:57.069 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:58.070 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:08:59.072 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:00.073 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:00.074 GMT [60/T63] ERROR: SQLite3: cannot open file at line 44994 of [873d4e274b] (14)
+2025-03-20 14:09:00.074 GMT [60/T63] ERROR: SQLite3: os_unix.c:44994: (0) open(/etc/pihole/pihole-FTL.db) -  (14)
+2025-03-20 14:09:00.074 GMT [60/T63] ERROR: Error while trying to open database: unable to open database file
+2025-03-20 14:09:05.079 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:06.081 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:07.083 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:08.084 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:09.086 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:10.087 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:11.089 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:12.091 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:13.092 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:14.094 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:15.095 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:16.097 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:17.098 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:18.000 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:19.001 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:19.716 GMT [60/T64] INFO: Ending rate-limitation of 10.89.0.1
+2025-03-20 14:09:20.003 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:21.005 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:22.006 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:23.008 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:24.009 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:25.011 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:26.013 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:27.014 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:28.016 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:29.017 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:30.019 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:31.020 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:32.022 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:33.024 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:34.025 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:35.027 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:36.028 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:37.030 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:38.032 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:39.033 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:40.035 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:41.037 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
+2025-03-20 14:09:42.039 GMT [60/T63] ERROR: Cannot read gravity database at /etc/pihole/gravity.db - file does not exist or is not readable
