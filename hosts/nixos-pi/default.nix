@@ -104,7 +104,9 @@
   };
 
   # Enable rootless containers to use privileged ports for pihole
-  sysctl."net.ipv4.ip_unprivileged_port_start" = 53;
+  system.sysctl = {
+    "net.ipv4.ip_unprivileged_port_start" = 53;
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -161,6 +163,5 @@
   };
 
   # System state version (usually you don't need to change this)
-  system.stateVersion = "24.11"; # Did you read the comment?
-
+  system.stateVersion = "24.11"; # Did you read the comment?c
 }
