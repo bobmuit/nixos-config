@@ -60,7 +60,6 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc0lUn+zcewulF+LE8+j87Gb3lKVZkBHZcoPRmpsV0j"
     ];
   };
-  users.groups.podman = {};  # This will create the podman group
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
@@ -102,6 +101,11 @@
     '';
     deps = [];
   };
+
+  # Allow read/write access to containers folder for users in the podman group
+  systemd.tmpfiles.rules = [
+    "d /var/lib/containers 0775 - podman - -"
+  ];
 
   # Enable rootless containers to use privileged ports for pihole
   boot.kernel.sysctl = {
