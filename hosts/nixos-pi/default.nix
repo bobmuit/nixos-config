@@ -102,15 +102,20 @@
     deps = [];
   };
 
-  # Allow read/write access to containers folder for users in the podman group
-  systemd.tmpfiles.rules = [
-    "d /var/lib/containers 2775 - podman - -"
-  ];
-
   # Enable rootless containers to use privileged ports for pihole
   boot.kernel.sysctl = {
     "net.ipv4.ip_unprivileged_port_start" = 53;
   };
+
+  # Enable samba
+  services.samba.enable = true;
+  services.samba.extraConfig = ''
+    [home]
+    path = /home/nixos
+    read only = no
+    guest ok = no
+  '';
+
   
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -121,8 +126,8 @@
 
   # Manually configure DNS server
   environment.etc."resolv.conf".text = ''
-  nameserver 1.1.1.1
-  nameserver 8.8.8.8
+    nameserver 1.1.1.1
+    nameserver 8.8.8.8
   '';
 
   # Networking configuration
