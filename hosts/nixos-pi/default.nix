@@ -108,14 +108,23 @@
   };
 
   # Enable samba
+  # Enable samba
   services.samba.enable = true;
-  services.samba.extraConfig = ''
-    [home]
-    path = /home/nixos
-    read only = no
-    guest ok = no
-  '';
+  services.samba.settings = {
+    # Global options for samba
+    workgroup = "WORKGROUP";
+    server string = "NixOS Raspberry Pi";
+    security = "user";
+  };
 
+  # Define the shared folder
+  services.samba.shares = {
+    "home" = {
+      path = "/home/nixos";
+      readOnly = false;
+      guestOk = false;
+    };
+  };
   
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

@@ -15,13 +15,13 @@ services:
       - "/home/nixos/containers/pihole/pihole:/etc/pihole"
       - "/home/nixos/containers/pihole/dnsmasq.d:/etc/dnsmasq.d"
     environment:
-      TZ: "Europe/London"
-      WEBPASSWORD: "${PIHOLE_PASSWORD}"  # Assuming you set this in an .env file or other way
-      DNS1: "1.1.1.1"
-      DNS2: "8.8.8.8"
-      SERVERIP: "192.168.1.63"  # Pi's IP addresscd 
-      DNSMASQ_USER: "root"
-      DNSMASQ_LISTENING: "all"  # This will listen on all interfaces including VPN subnets
+      - TZ=Europe/London
+      - WEBPASSWORD="${PIHOLE_PASSWORD}"  # Assuming you set this in an .env file or other way
+      - DNS1=1.1.1.1
+      - DNS2=8.8.8.8
+      - SERVERIP=192.168.1.63  # Pi's IP addresscd 
+      - DNSMASQ_USER=root
+      - DNSMASQ_LISTENING=all  # This will listen on all interfaces including VPN subnets
     extra_hosts:
       - "pihole:${SERVERIP}"
     cap_add:
