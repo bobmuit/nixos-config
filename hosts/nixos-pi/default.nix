@@ -125,7 +125,6 @@
 
     # Enable systemd-networkd
     useNetworkd = true;
-    networkd.hostname = "nixos-pi";
 
     # Disable wpa_supplicant
     wireless.enable = false; 
