@@ -125,6 +125,7 @@
 
     # Enable systemd-networkd
     useNetworkd = true;
+    networkd.hostname = "nixos-pi";
 
     # Disable wpa_supplicant
     wireless.enable = false; 
@@ -138,8 +139,17 @@
 
   # Force eth0 via udev
   services.udev.extraRules = ''
-    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="dc:a6:32:98:62:96", NAME="eth0"
+    # Force eth0 naming with high priority (00-)
+    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="dc:a6:32:98:62:96", KERNEL=="end*", NAME="eth0", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/sys/subsystem/net/devices/eth0"
   '';
+
+  # Configure systemd-networkd to not try to set hostname
+  systemd.services.systemd-networkd.serviceConfig = {
+    CapabilityBoundingSet = "~CAP_SYS_ADMIN";
+  };
+
+  # Add kernel parameters to force traditional naming
+  boot.kernelParams = [ "net.ifnames=0" "biosdevname=0" ];
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
