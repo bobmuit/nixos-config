@@ -113,7 +113,7 @@
   services.samba.settings = {
     # Global options for samba
     workgroup = "WORKGROUP";
-    server string = "NixOS Raspberry Pi";
+    "server string" = "NixOS Raspberry Pi";
     security = "user";
   };
 
