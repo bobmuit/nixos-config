@@ -27,6 +27,8 @@ services:
       - "NET_ADMIN"
     networks:
       - pihole_network
+    env_file:
+      - .env
 
 volumes:
   pihole_data:
