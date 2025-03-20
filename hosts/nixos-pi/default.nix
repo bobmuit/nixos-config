@@ -126,11 +126,6 @@
     # Enable systemd-networkd
     useNetworkd = true;
 
-    # Force eth0 via udev
-    udev.extraRules = ''
-      SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="dc:a6:32:98:62:96", NAME="eth0"
-    '';
-
     # Disable wpa_supplicant
     wireless.enable = false; 
 
@@ -140,6 +135,11 @@
       allowedTCPPorts = [ 22 ];
     };
   };
+
+  # Force eth0 via udev
+  services.udev.extraRules = ''
+    SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="dc:a6:32:98:62:96", NAME="eth0"
+  '';
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
