@@ -62,7 +62,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nixos = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager"]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "podman"]; # Enable ‘sudo’ for the user.
     initialPassword = "nixos"; # Will be used if SSH fails; change this!
     openssh.authorizedKeys.keys = [
      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc0lUn+zcewulF+LE8+j87Gb3lKVZkBHZcoPRmpsV0j"
@@ -89,6 +89,63 @@
 
   # Enable at
   services.atd.enable = true;
+
+  # Enable podman and configure OCI containers
+  virtualisation.containers.enable = true;
+
+  virtualisation.podman = {
+    enable = true;
+    # Create a `docker` alias for podman
+    dockerCompat = true;
+    # Required for containers to communicate
+    defaultNetwork.settings.dns_enabled = true;
+  };
+
+  virtualisation.oci-containers.backend = "podman";
+
+  virtualisation.oci-containers.containers = {
+    piHole = {
+      image = "pihole/pihole:latest";
+      name = "pihole"; 
+      autoStart = true;
+      ports = [
+        "53:53/tcp"   # DNS port (TCP) - available to network
+        "53:53/udp"   # DNS port (UDP) - available to network
+        "80:80/tcp"   # Web interface (HTTP)
+        "443:443/tcp" # Web interface (HTTPS)
+      ];
+      volumes = [
+        "/var/lib/containers/pihole/pihole:/etc/pihole"
+        "/var/lib/containers/pihole/dnsmasq.d:/etc/dnsmasq.d"
+      ];
+      environment = {
+        TZ = "Europe/London";
+        WEBPASSWORD = builtins.readFile ./pihole-credentials;
+        DNS1 = "1.1.1.1";
+        DNS2 = "8.8.8.8";
+        SERVERIP = "192.168.1.67";  # Pi's IP address
+        DNSMASQ_USER = "root";
+        DNSMASQ_LISTENING = "all";  # This will listen on all interfaces including VPN subnets
+      };
+      extraOptions = [
+        "--hostname=pihole"
+        "--dns=127.0.0.1"
+        "--dns=8.8.8.8"
+        "--cap-add=NET_ADMIN"  # Required for network-related operations
+      ];
+    };
+  };
+
+  # Make sure to create the directory for volumes
+  system.activationScripts = {
+    createPiholeDirectories = {
+      text = ''
+        mkdir -p /var/lib/containers/pihole/pihole
+        mkdir -p /var/lib/containers/pihole/dnsmasq.d
+      '';
+      deps = [];
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
