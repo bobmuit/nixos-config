@@ -30,14 +30,6 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
@@ -65,15 +57,13 @@
     extraGroups = [ "wheel" "podman"]; # Enable ‘sudo’ for the user.
     initialPassword = "nixos"; # Will be used if SSH fails; change this!
     openssh.authorizedKeys.keys = [
-     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc0lUn+zcewulF+LE8+j87Gb3lKVZkBHZcoPRmpsV0j"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc0lUn+zcewulF+LE8+j87Gb3lKVZkBHZcoPRmpsV0j"
     ];
   };
   users.groups.podman = {};  # This will create the podman group
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-
     # Server packages
     podman
     podman-compose
@@ -86,10 +76,9 @@
     tmux
     at
     tree
-
   ];
 
-  # Enable at
+  # Enable at service
   services.atd.enable = true;
 
   # Enable podman and configure OCI containers
@@ -106,48 +95,31 @@
   virtualisation.oci-containers.backend = "podman";
 
   # Create the directory for volumes for pihole
-  system.activationScripts = {
-    createPiholeDirectories = {
-      text = ''
-        mkdir -p /var/lib/containers/pihole/pihole
-        mkdir -p /var/lib/containers/pihole/dnsmasq.d
-      '';
-      deps = [];
-    };
+  system.activationScripts.createPiholeDirectories = {
+    text = ''
+      mkdir -p /var/lib/containers/pihole/pihole
+      mkdir -p /var/lib/containers/pihole/dnsmasq.d
+    '';
+    deps = [];
   };
 
   # Enable rootless containers to use privileged ports for pihole
   sysctl."net.ipv4.ip_unprivileged_port_start" = 53;
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   # services.openssh.settings.passwordAuthentication = false;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
 
   # Networking configuration
   networking = {
     hostName = "nixos-pi"; # Define your hostname.
     usePredictableInterfaceNames = false; # Disable systemd's default renaming
-    
+
     interfaces.eth0 = {
       # Enable DHCP on eth0
       useDHCP = true;
       # Fallback static IP configuration in case DHCP fails
-      ipv4.addresses = [{ 
+      ipv4.addresses = [{
         address = "192.168.1.63";  # Choose an appropriate static IP
         prefixLength = 24;
       }];
@@ -179,51 +151,16 @@
       # - 443: HTTPS for Pi-hole web interface
       allowedTCPPorts = [ 22 53 80 443 ];
     };
-
-  # # Force eth0 via udev
-  # services.udev.extraRules = ''
-  #   # Force eth0 naming with high priority (00-)
-  #   SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="dc:a6:32:98:62:96", KERNEL=="end*", NAME="eth0", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/sys/subsystem/net/devices/eth0"
-  # '';
-
-  # # Configure systemd-networkd to not try to set hostname
-  # systemd.services.systemd-networkd.serviceConfig = {
-  #   CapabilityBoundingSet = "~CAP_SYS_ADMIN";
-  # };
-
-  # # Add kernel parameters to force traditional naming
-  # boot.kernelParams = [ "net.ifnames=0" "biosdevname=0" ];
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
-
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
-  # to actually do that.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "24.11"; # Did you read the comment?
+  };
 
   # Garbage collection
   nix.gc = {
-            automatic = true;
-            dates = "weekly";
-            options = "--delete-older-than 30d";
-          };
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
   };
-}
 
+  # System state version (usually you don't need to change this)
+  system.stateVersion = "24.11"; # Did you read the comment?
+
+}
