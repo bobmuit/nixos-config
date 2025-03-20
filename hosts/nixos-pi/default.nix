@@ -119,7 +119,7 @@
       ];
       environment = {
         TZ = "Europe/London";
-        WEBPASSWORD = builtins.readFile ./pihole-credentials;
+        WEBPASSWORD = builtins.readFile /home/nixos/nixos-config/hosts/nixos-pi/pihole-credentials;
         DNS1 = "1.1.1.1";
         DNS2 = "8.8.8.8";
         SERVERIP = "192.168.1.67";  # Pi's IP address
