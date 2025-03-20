@@ -94,15 +94,6 @@
 
   virtualisation.oci-containers.backend = "podman";
 
-  # Create the directory for volumes for pihole
-  system.activationScripts.createPiholeDirectories = {
-    text = ''
-      mkdir -p /var/lib/containers/pihole/pihole
-      mkdir -p /var/lib/containers/pihole/dnsmasq.d
-    '';
-    deps = [];
-  };
-
   # Enable rootless containers to use privileged ports for pihole
   boot.kernel.sysctl = {
     "net.ipv4.ip_unprivileged_port_start" = 53;
