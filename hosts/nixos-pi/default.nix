@@ -107,13 +107,30 @@
 
   # Networking configuration
   networking = {
-    networkmanager.enable = true;
-    wireless.enable = false; # Disable wpa_supplicant
+    usePredictableInterfaceNames = false; # Disable systemd's default renaming
+    interfaces.eth0.useDHCP = true; # Enable DHCP on eth0
+
+    # Disable NetworkManager
+    networkmanager.enable = false;
+
+    # Enable systemd-networkd
+    useNetworkd = true;
+
+    # Force eth0 via udev
+    udev.extraRules = ''
+      SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="XX:XX:XX:XX:XX:XX", NAME="eth0"
+    '';
+
+    # Disable wpa_supplicant
+    wireless.enable = false; 
+
+    # Enable firewall but allow: ssh
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ];
     };
   };
+
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
