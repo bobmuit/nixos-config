@@ -106,7 +106,19 @@
   networking = {
     hostName = "nixos-pi"; # Define your hostname.
     usePredictableInterfaceNames = false; # Disable systemd's default renaming
-    interfaces.eth0.useDHCP = true; # Enable DHCP on eth0
+    
+    interfaces.eth0 = {
+      # Enable DHCP on eth0
+      useDHCP = true;
+      # Fallback static IP configuration in case DHCP fails
+      ipv4.addresses = [{ 
+        address = "192.168.1.63";  # Choose an appropriate static IP
+        prefixLength = 24;
+      }];
+    };
+
+    # Explicit DNS settings
+    nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
     # Disable NetworkManager
     networkmanager.enable = false;
