@@ -22,10 +22,6 @@
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
-  networking.hostName = "nixos-pi"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
@@ -107,6 +103,7 @@
 
   # Networking configuration
   networking = {
+    hostName = "nixos-pi"; # Define your hostname.
     usePredictableInterfaceNames = false; # Disable systemd's default renaming
     interfaces.eth0.useDHCP = true; # Enable DHCP on eth0
 
@@ -130,7 +127,6 @@
       allowedTCPPorts = [ 22 ];
     };
   };
-
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
