@@ -125,6 +125,13 @@
     # Disable wpa_supplicant
     wireless.enable = false; 
 
+    # Enable Tailscale
+    services.tailscale = {
+      enable = true;
+      useRoutingFeatures = "server"; # Allows the machine to act as a subnet router and DNS server
+      openFirewall = true; # Opens required firewall ports for Tailscale
+    };
+
     # Enable firewall but allow: ssh
     firewall = {
       enable = true;  # Enable the firewall
