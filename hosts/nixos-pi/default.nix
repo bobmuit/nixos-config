@@ -5,6 +5,7 @@
 # Add network share for nixos-config and/or pi-hole config
 # Add tailscale
 # Add other useful things from nixos-dell
+# Fix networking
 
 { config, lib, pkgs, ... }:
 
@@ -115,7 +116,7 @@
 
     # Force eth0 via udev
     udev.extraRules = ''
-      SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="XX:XX:XX:XX:XX:XX", NAME="eth0"
+      SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="dc:a6:32:98:62:96", NAME="eth0"
     '';
 
     # Disable wpa_supplicant
