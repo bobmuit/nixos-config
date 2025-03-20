@@ -104,9 +104,8 @@
   virtualisation.oci-containers.backend = "podman";
 
   virtualisation.oci-containers.containers = {
-    piHole = {
+    pihole = {
       image = "pihole/pihole:latest";
-      name = "pihole"; 
       autoStart = true;
       ports = [
         "53:53/tcp"   # DNS port (TCP) - available to network
