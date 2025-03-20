@@ -127,8 +127,14 @@
       }];
     };
 
-    # Explicit DNS settings
-    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+    # Disable resolved because pihole needs :53
+    services.resolved.enable = false;
+
+    # Manually configure DNS server
+    environment.etc."resolv.conf".text = ''
+    nameserver 1.1.1.1
+    nameserver 8.8.8.8
+    '';
 
     # Disable NetworkManager
     networkmanager.enable = false;
