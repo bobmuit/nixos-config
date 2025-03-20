@@ -78,6 +78,11 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
+    # Server packages
+    podman
+    podman-compose
+    podman-tui
+
     # SysAdmin tools
     vim
     wget
