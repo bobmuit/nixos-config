@@ -79,23 +79,23 @@
   # Enable at service
   services.atd.enable = true;
 
-  # Enable docker
-  virtualisation.docker.enable = true;
-  virtualisation.oci-containers.backend = "docker"; 
-
-  # Enable rootless containers to use privileged ports for pihole
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_unprivileged_port_start" = 53;
-  };
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   # services.openssh.settings.passwordAuthentication = false;
 
+  # Enable docker
+  virtualisation.docker.enable = true;
+
+  # Enable rootless containers to use privileged ports for pihole
+  # Required for podman, but maybe not docker
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_unprivileged_port_start" = 53;
+  };
+
   # Disable resolved because pihole needs :53
   services.resolved.enable = false;
 
-  # Manually configure DNS server
+  # Manually configure DNS server because resolved was disabled
   environment.etc."resolv.conf".text = ''
     nameserver 1.1.1.1
     nameserver 8.8.8.8
