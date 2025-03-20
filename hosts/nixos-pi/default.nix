@@ -112,6 +112,15 @@
   services.openssh.enable = true;
   # services.openssh.settings.passwordAuthentication = false;
 
+  # Disable resolved because pihole needs :53
+  services.resolved.enable = false;
+
+  # Manually configure DNS server
+  environment.etc."resolv.conf".text = ''
+  nameserver 1.1.1.1
+  nameserver 8.8.8.8
+  '';
+
   # Networking configuration
   networking = {
     hostName = "nixos-pi"; # Define your hostname.
@@ -126,15 +135,6 @@
         prefixLength = 24;
       }];
     };
-
-    # Disable resolved because pihole needs :53
-    services.resolved.enable = false;
-
-    # Manually configure DNS server
-    environment.etc."resolv.conf".text = ''
-    nameserver 1.1.1.1
-    nameserver 8.8.8.8
-    '';
 
     # Disable NetworkManager
     networkmanager.enable = false;
