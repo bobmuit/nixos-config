@@ -67,12 +67,8 @@
     openssh.authorizedKeys.keys = [
      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc0lUn+zcewulF+LE8+j87Gb3lKVZkBHZcoPRmpsV0j"
     ];
-    packages = with pkgs; [
-      tree
-    ];
   };
-
-  # programs.firefox.enable = true;
+  users.groups.podman = {};  # This will create the podman group
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -89,6 +85,7 @@
     git
     tmux
     at
+    tree
 
   ];
 
