@@ -64,9 +64,7 @@
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     # Server packages
-    podman
-    podman-compose
-    podman-tui
+    docker-compose
 
     # SysAdmin tools
     vim
@@ -81,18 +79,9 @@
   # Enable at service
   services.atd.enable = true;
 
-  # Enable podman and configure OCI containers
-  virtualisation.containers.enable = true;
-
-  virtualisation.podman = {
-    enable = true;
-    # Create a `docker` alias for podman
-    dockerCompat = true;
-    # Required for containers to communicate
-    defaultNetwork.settings.dns_enabled = true;
-  };
-
-  virtualisation.oci-containers.backend = "podman";
+  # Enable docker
+  virtualisation.docker.enable = true;
+  virtualisation.oci-containers.backend = "docker"; 
 
   # Enable rootless containers to use privileged ports for pihole
   boot.kernel.sysctl = {
