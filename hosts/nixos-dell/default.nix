@@ -11,7 +11,7 @@
       ./hardware-configuration.nix
 
       # Include samba shares
-      ../../modules/nixos/services/samba.nix
+      ../../modules/nixos/services/smb-client/default.nix
     ];
 
   nix.settings = {
