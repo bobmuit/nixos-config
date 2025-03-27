@@ -79,6 +79,7 @@
       alias hs="home-manager switch --flake ~/nixos-config#bobmuit"
       alias ns="sudo nixos-rebuild switch --flake .#nixos-dell"
       alias nb="sudo nixos-rebuild build --flake .#nixos-dell"
+      alias nt="sudo nixos-rebuild test --flake .#nixos-dell"
     '';
     
     bashrcExtra = ''
