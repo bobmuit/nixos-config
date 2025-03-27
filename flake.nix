@@ -11,15 +11,12 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, firefox-addons, nixos-hardware, ... }@inputs:
-    let
-      system = "x86_64-linux";
-      aarch64-system = "aarch64-linux"; # For the Raspberry Pi
-    in {
 
-      # Laptop Bob configuration
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, firefox-addons, ... }@inputs:
+    let
+      system = "x86_64-linux"; # Adjust for your architecture if necessary
+    in {
       nixosConfigurations.nixos-dell = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {
@@ -42,24 +39,7 @@
           }
         ];
       };
-      
-      # Raspberry Pi 4 configuration
-      nixosConfigurations.nixos-pi = nixpkgs.lib.nixosSystem {
-        system = aarch64-system;
-        specialArgs = {
-          inherit inputs;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = aarch64-system;
-            config.allowUnfree = true;
-          };
-        };
-        modules = [
-          ./hosts/nixos-pi
-          nixos-hardware.nixosModules.raspberry-pi-4
-        ];
-      };
-      
-      # Home manager configurations
+      # Add this to enable 'home-manager switch':
       homeConfigurations.bobmuit = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { inherit system; };
         modules = [ ./users/bobmuit/home.nix ];
