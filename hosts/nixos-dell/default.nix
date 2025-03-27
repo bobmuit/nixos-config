@@ -9,6 +9,9 @@
     [ 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+      # Include samba shares 
+      ./samba.nix
     ];
 
   nix.settings = {
@@ -46,94 +49,6 @@
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client"; # allow exit node use
-  };
-
-  # Enable samba
-  services.samba = {
-    enable = true;
-    package = pkgs.samba;
-  }; 
-
-  # Add docker folder on Synology as network share
-  fileSystems."/mnt/synology/docker" = {
-    device = "//192.168.1.180/docker";  # Replace with your server IP and share
-    fsType = "cifs";
-    options = [
-      "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
-      "rw"
-      "nofail" # Boot even if share fails to mount
-      "iocharset=utf8"
-      "vers=3.0"  # Adjust based on your server's supported SMB version
-      "uid=1000"
-      "gid=100"
-    ];
-  };
-
-  # Add media folder on Synology as network share
-  fileSystems."/mnt/synology/media" = {
-    device = "//192.168.1.180/media";  # Replace with your server IP and share
-    fsType = "cifs";
-    options = [
-      "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
-      "rw"
-      "nofail" # Boot even if share fails to mount
-      "iocharset=utf8"
-      "vers=3.0"  # Adjust based on your server's supported SMB version
-    ];
-  };
-
-  # Add marloes-bob folder on Synology as network share
-  fileSystems."/mnt/synology/marloes-bob" = {
-    device = "//192.168.1.180/marloes-bob";  # Replace with your server IP and share
-    fsType = "cifs";
-    options = [
-      "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
-      "rw"
-      "nofail" # Boot even if share fails to mount
-      "iocharset=utf8"
-      "vers=3.0"  # Adjust based on your server's supported SMB version
-      "uid=1000"
-      "gid=100"
-      "file_mode=0775"
-      "dir_mode=0775"
-      "noperm"            # Ignore server permissions
-    ];
-  };
-
-  # Add bob-storage folder on Synology as network share
-  fileSystems."/mnt/synology/bob-storage" = {
-    device = "//192.168.1.180/bob-storage";  # Replace with your server IP and share
-    fsType = "cifs";
-    options = [
-      "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-syno"
-      "rw"
-      "nofail" # Boot even if share fails to mount
-      "iocharset=utf8"
-      "vers=3.0"  # Adjust based on your server's supported SMB version
-      "uid=1000"
-      "gid=100"
-      "file_mode=0775"
-      "dir_mode=0775"
-      "noperm"            # Ignore server permissions
-    ];
-  };
-
-  # Add bob-storage folder on Synology as network share
-  fileSystems."/mnt/nixos-pi/home" = {
-    device = "//192.168.1.63/home";  # Replace with your server IP and share
-    fsType = "cifs";
-    options = [
-      "credentials=/home/bobmuit/nixos-config/hosts/nixos-dell/smb-credentials-nixos-pi"
-      "rw"
-      "nofail" # Boot even if share fails to mount
-      "iocharset=utf8"
-      "vers=3.0"  # Adjust based on your server's supported SMB version
-      "uid=1000"
-      "gid=100"
-      "file_mode=0775"
-      "dir_mode=0775"
-      "noperm"            # Ignore server permissions
-    ];
   };
 
   # networking.nameservers = ["1.1.1.1" "8.8.8.8"];
@@ -181,12 +96,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    # jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    # media-session.enable = true;
+    wireplumber.enable = false; # disabled due to build errors, might cause issues with audio
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -294,8 +204,6 @@
   system.autoUpgrade = {
     enable = true;
     flake = "github:nixos/nixpkgs/nixos-24.11"; 
-    #  flake = "github:bobmuit/nixos-config"; # Adjust to match your repo
-    # TODO Fix GitHub Action for weekly update of flake.lock, permission problem?
     dates = "weekly";
     randomizedDelaySec = "3600"; # Spread out updates to avoid server overload
   };
