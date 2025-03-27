@@ -12,9 +12,10 @@
     device = "//192.168.1.180/docker";  # Replace with your server IP and share
     fsType = "cifs";
     options = [
-      "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-credentials-syno"
+      "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
       "rw"
       "nofail" # Boot even if share fails to mount
+      "noauto"  # Prevents automatic mounting at boot
       "x-systemd.automount"  # Mounts only when accessed
       "x-systemd.requires=network-online.target"  # Ensures network is up before mounting
       "x-systemd.idle-timeout=600"  # Unmounts after 10 minutes of inactivity
@@ -30,7 +31,7 @@
     device = "//192.168.1.180/media";  # Replace with your server IP and share
     fsType = "cifs";
     options = [
-      "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-credentials-syno"
+      "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
       "rw"
       "nofail" # Boot even if share fails to mount
       "x-systemd.automount"  # Mounts only when accessed
@@ -46,9 +47,10 @@
     device = "//192.168.1.180/marloes-bob";  # Replace with your server IP and share
     fsType = "cifs";
     options = [
-      "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-credentials-syno"
+      "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
       "rw"
       "nofail" # Boot even if share fails to mount
+      "noauto"  # Prevents automatic mounting at boot
       "x-systemd.automount"  # Mounts only when accessed
       "x-systemd.requires=network-online.target"  # Ensures network is up before mounting
       "x-systemd.idle-timeout=600"  # Unmounts after 10 minutes of inactivity
@@ -67,9 +69,10 @@
     device = "//192.168.1.180/bob-storage";  # Replace with your server IP and share
     fsType = "cifs";
     options = [
-      "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-credentials-syno"
+      "credentials=//home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
       "rw"
       "nofail" # Boot even if share fails to mount
+      "noauto"  # Prevents automatic mounting at boot
       "x-systemd.automount"  # Mounts only when accessed
       "x-systemd.requires=network-online.target"  # Ensures network is up before mounting
       "x-systemd.idle-timeout=600"  # Unmounts after 10 minutes of inactivity
@@ -88,9 +91,10 @@
   #  device = "//192.168.1.63/home";  # Replace with your server IP and share
   #  fsType = "cifs";
   #  options = [
-  #    "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-credentials-nixos-pi"
+  #    "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-nixos-pi"
   #    "rw"
   #    "nofail" # Boot even if share fails to mount
+  # "noauto"  # Prevents automatic mounting at boot
   #      "x-systemd.automount"  # Mounts only when accessed
   #     "x-systemd.requires=network-online.target"  # Ensures network is up before mounting
   #      "x-systemd.idle-timeout=600"  # Unmounts after 10 minutes of inactivity

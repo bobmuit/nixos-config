@@ -23,15 +23,19 @@
 
     # Increase download buffer size
     download-buffer-size = 104857600; # 100 MB (or adjust as needed)
+
+    max-jobs = "auto"; # Automatically set max jobs based on available CPUs
+    cores = 0; # Use all available cores for builds
+    keep-going = true; # Continue builds even if some fail
   };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Enable Plymouth for a nicer boot screen
-  boot.plymouth.enable = true;
-  boot.plymouth.theme = "spinner";
+  # Disable Plymouth for faster boot times
+  boot.plymouth.enable = false;
+  # boot.plymouth.theme = "spinner";
 
   networking.hostName = "nixos-dell"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -45,6 +49,9 @@
     enable = true;
   };
   
+  # Boot should not wait for NetworkManager to start
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   # Enable tailscale
   services.tailscale = {
     enable = true;
@@ -79,6 +86,12 @@
   services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
 
+  # Disable unnecessary GNOME services
+  systemd.user.services.gnome-remote-desktop.enable = false; # not using RDP
+  systemd.user.services.gnome-software-service.enable = false; # updates by Nix
+  systemd.user.services.gnome-software-daemon.enable = false;
+  services.gnome.gnome-online-accounts.enable = false; # not using any online accounts
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -101,6 +114,9 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+
+  # Prolonge longetivity of SSD by periodically cleaning up blocks
+  services.fstrim.enable = true;
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.bobmuit = {
