@@ -237,6 +237,9 @@
     spotify-player
     vlc
 
+    # Chat
+    signal-desktop
+
     # Basic utilities
     neovim
     git
@@ -286,7 +289,7 @@
   system.stateVersion = "24.11"; # Did you read the comment?
 
   # services.flatpak.enable = true;
-  
+
   # Autoupdate
   system.autoUpgrade = {
     enable = true;
