@@ -74,11 +74,10 @@
     enable = true;
     enableCompletion = true;
 
-    # Add aliases using initExtra
+    # Configure just for bash
     initExtra = ''
-      alias hs="home-manager switch --flake ~/nixos-config#bobmuit"
-      alias ns="sudo nixos-rebuild switch --flake .#nixos-dell"
-      alias nb="sudo nixos-rebuild build --flake .#nixos-dell"
+      eval "$(just --completions bash)"
+      alias j=just 
     '';
     
     bashrcExtra = ''

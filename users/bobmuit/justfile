@@ -1,0 +1,20 @@
+# Remember to make a symlink from this file to home folder
+
+# Set the shell to use (default is sh)
+set shell := ["bash", "-cu"]
+
+# Home Manager switch
+hs:
+    home-manager switch --flake ~/nixos-config#bobmuit
+
+# NixOS rebuild switch
+ns:
+    sudo nixos-rebuild switch --flake ~/nixos-config#nixos-dell
+
+# NixOS rebuild build
+nb:
+    sudo nixos-rebuild build --flake ~/nixos-config#nixos-dell
+
+# NixOS rebuild test
+nt:
+    sudo nixos-rebuild test --flake ~/nixos-config#nixos-dell
