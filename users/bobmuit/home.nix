@@ -78,7 +78,8 @@
     initExtra = ''
       eval "$(just --completions bash)"
       alias j=just 
-      alias ls="eza --long --all --git"
+      alias ls="eza"
+      alias ll="eza --long --all --git"
     '';
 
     bashrcExtra = ''
