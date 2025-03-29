@@ -78,6 +78,7 @@
     initExtra = ''
       eval "$(just --completions bash)"
       alias j=just 
+      alias ls="eza --long --all --git"
     '';
 
     bashrcExtra = ''
@@ -85,6 +86,9 @@
     '';
   };
   
+  # Starship shell prompt
+  programs.starship.enable = true;
+
   # Joplin settings
   programs.joplin-desktop.enable = true;
   # TODO add configuration from Win10

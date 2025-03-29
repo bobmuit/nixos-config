@@ -90,7 +90,6 @@
   systemd.user.services.gnome-remote-desktop.enable = false; # not using RDP
   systemd.user.services.gnome-software-service.enable = false; # updates by Nix
   systemd.user.services.gnome-software-daemon.enable = false;
-  services.gnome.gnome-online-accounts.enable = false; # not using any online accounts
 
   # Configure keymap in X11
   services.xserver.xkb = {
