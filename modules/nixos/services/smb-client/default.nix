@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  # Enable samba support
+  environment.systemPackages = with pkgs; [
+    cifs-utils
+  ];
+
   # Enable samba
   services.samba = {
     enable = true;
