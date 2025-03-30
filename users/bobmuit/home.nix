@@ -21,6 +21,7 @@
   home.packages = with pkgs; [
     # Desktop
     gnomeExtensions.applications-menu
+
     # Coding
     # N.B. Manage packages through flake.nix in project folder (dev env)
     R
@@ -91,9 +92,6 @@
   home.sessionVariables = {
     JUSTFILE = "/home/bobmuit/nixos-config/users/bobmuit/justfile"; # not working
   };
-
-  # Starship shell prompt
-  programs.starship.enable = true;
 
   # Joplin settings
   programs.joplin-desktop.enable = true;

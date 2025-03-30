@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+
+  # Starship shell prompt
+  # programs.starship.enable = true;
+
   environment.systemPackages = with pkgs; [
 
     # Basic utilities
