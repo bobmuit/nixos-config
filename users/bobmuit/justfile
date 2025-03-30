@@ -20,5 +20,9 @@ nt:
     sudo nixos-rebuild test --flake ~/nixos-config#nixos-dell
 
 # SSH into Synology
-sshsyno: 
+syno: 
     ssh bobmuit@192.168.1.180
+
+# NixOS flake update
+update:
+    sudo nix flake update

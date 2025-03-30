@@ -87,6 +87,11 @@
     '';
   };
   
+  # Universal justfile
+  home.sessionVariables = {
+    JUSTFILE = "/home/bobmuit/nixos-config/users/bobmuit/justfile"; # not working
+  };
+
   # Starship shell prompt
   programs.starship.enable = true;
 
