@@ -23,5 +23,8 @@
     tmux         # Terminal multiplexer for managing multiple terminal sessions  
     ncdu          # Disk usage analyzer with a user-friendly interface  
 
+    # Networking
+    dnsutils  # Collection of command-line tools for DNS queries, including dig, nslookup, and host.
+
   ];
 }
