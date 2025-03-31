@@ -6,3 +6,5 @@ smb-credentials-syno
 smb-credentials-nixos-pi
 pihole-credentials
 .env
+*credentials*
+smb-credentials-syno-marloes
