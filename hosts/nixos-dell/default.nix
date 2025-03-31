@@ -213,12 +213,11 @@
   # services.flatpak.enable = true;
 
   # Autoupdate
-  system.autoUpgrade = {
-    enable = true;
-    flake = "github:nixos/nixpkgs/nixos-24.11"; 
-    dates = "weekly";
-    randomizedDelaySec = "3600"; # Spread out updates to avoid server overload
-  };
+  # system.autoUpgrade = {
+  #   enable = true;
+  #   flake = "github:nixos/nixpkgs/nixos-24.11";
+  #   dates = "weekly";
+  # };
 
   # Automatic Garbage Collection
   nix.gc = {
