@@ -25,4 +25,4 @@ syno:
 
 # NixOS flake update
 update:
-    sudo nix flake update --flake ~/nixos-config/flake.nix
+    sudo nix flake update --flake ~/nixos-config/
