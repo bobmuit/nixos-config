@@ -26,10 +26,6 @@
 
     # Increase download buffer size
     download-buffer-size = 104857600; # 100 MB (or adjust as needed)
-
-    max-jobs = "auto"; # Automatically set max jobs based on available CPUs
-    cores = 0; # Use all available cores for builds
-    keep-going = true; # Continue builds even if some fail
   };
 
   # Bootloader.
