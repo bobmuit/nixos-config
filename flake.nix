@@ -31,6 +31,7 @@
         };
         modules = [
           ./hosts/nixos-dell
+          nixos-hardware.nixosModules.dell-latitude-7490
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
