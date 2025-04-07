@@ -28,6 +28,10 @@
               url = "http://192.168.1.180:8057/";
             }
             {
+              name = "Home Assistant";
+              url = "http://192.168.1.180:8123/";
+            }
+            {
               name = "Paperless";
               url = "http://192.168.1.180:8777/";
             }
