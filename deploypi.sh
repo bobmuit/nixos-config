@@ -12,5 +12,5 @@ echo "🔄 Syncing config to $PI_HOST..."
 rsync -avz --delete --exclude=".git" ./ "$PI_USER@$PI_HOST:$PI_TARGET_DIR"
 
 # 2. Trigger the build remotely
-echo "⚙️  Running nixos-rebuild test on the Pi..."
-ssh "$PI_USER@$PI_HOST" "sudo nixos-rebuild test --flake $PI_TARGET_DIR#$FLAKE_REF"
+echo "⚙️  Running nixos-rebuild switch on the Pi..."
+ssh "$PI_USER@$PI_HOST" "sudo nixos-rebuild switch --flake $PI_TARGET_DIR#$FLAKE_REF"
