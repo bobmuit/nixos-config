@@ -33,5 +33,25 @@ gc:
 syno: 
     ssh bobmuit@192.168.1.180
 
+PI_USER := "nixos"
+PI_HOST := "192.168.1.63"
+PI_TARGET_DIR := "/home/nixos/nixos-config-remote"
+FLAKE_REF := "nixos-pi"
+
 pi:
-    ssh nixos@192.168.1.63
+    ssh "{{PI_USER}}@{{PI_HOST}}"
+
+syncpi:
+    # Sync the nixos-config directory to the Pi
+    echo "🔄 Syncing config to {{PI_HOST}}..."
+    rsync -avz --delete --exclude=".git" "$HOME/nixos-config" "{{PI_USER}}@{{PI_HOST}}:{{PI_TARGET_DIR}}"
+
+deploypi:
+    # Trigger the rebuild remotely
+    echo "Running nixos-rebuild switch on the Pi..."
+    ssh "{{PI_USER}}@{{PI_HOST}}" "sudo nixos-rebuild switch --flake {{PI_TARGET_DIR}}#{{FLAKE_REF}}"
+
+testpi:
+    # Trigger the rebuild remotely
+    echo "Running nixos-rebuild test on the Pi..."
+    ssh "{{PI_USER}}@{{PI_HOST}}" "sudo nixos-rebuild test --flake {{PI_TARGET_DIR}}#{{FLAKE_REF}}"
