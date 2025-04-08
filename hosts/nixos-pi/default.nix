@@ -66,8 +66,20 @@
   # };
 
   # Enable sound
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;  # Or use PipeWire
+  hardware.pulseaudio.enable = false;  # Disable PulseAudio
+  services.pipewire.enable = true;
+  services.pipewire.pulse.enable = true;  # Enable PulseAudio compatibility for PipeWire
+
+  # Enable video hardware acceleration
+  hardware.graphics = {
+    enable = true;
+    package = pkgs.mesa.drivers;
+    extraPackages = with pkgs; [
+      vaapiVdpau
+      libvdpau-va-gl
+      # raspberrypi.firmware.opt.vc4-fkms-v3d  # Raspberry Pi specific
+    ];
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
@@ -81,6 +93,9 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc0lUn+zcewulF+LE8+j87Gb3lKVZkBHZcoPRmpsV0j"
     ];
   };
+
+  # Add the sudoers rule for passwordless sudo
+  security.sudo.wheelNeedsPassword = false;
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
@@ -99,17 +114,6 @@
     KERNEL=="dma_heap/linux,cma", MODE="0666"
     KERNEL=="cec[0-9]*", GROUP="video", MODE="0660"
   '';
-
-  # Enable video hardware acceleration
-  hardware.opengl = {
-    enable = true;
-    setLdLibraryPath = true;
-    package = pkgs.mesa.drivers;
-    extraPackages = with pkgs; [
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
