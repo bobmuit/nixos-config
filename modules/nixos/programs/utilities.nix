@@ -8,7 +8,7 @@
   environment.systemPackages = with pkgs; [
 
     # Basic utilities
-    neovim     # Modern, extensible Vim-based text editor  
+    vim     # Modern, extensible Vim-based text editor  
     git        # Distributed version control system  
     lazygit    # Terminal-based Git UI for easy navigation  
     delta      # Enhanced `git diff` viewer with syntax highlighting  
@@ -22,9 +22,15 @@
     tldr        # Simplified man pages with practical examples  
     tmux         # Terminal multiplexer for managing multiple terminal sessions  
     ncdu          # Disk usage analyzer with a user-friendly interface  
+    wget
+    at
 
     # Networking
     dnsutils  # Collection of command-line tools for DNS queries, including dig, nslookup, and host.
 
   ];
+
+  # Enable at service
+  services.atd.enable = true;
+
 }

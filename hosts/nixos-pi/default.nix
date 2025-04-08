@@ -13,6 +13,9 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+      # Include CLI utilities
+      ../../modules/nixos/programs/utilities.nix
     ];
 
   # Enable flakes
@@ -31,7 +34,19 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable the X11 windowing system.
-  # services.xserver.enable = true;
+  services.xserver = {
+    enable = true;
+    displayManager.lightdm.enable = true;
+    displayManager.autoLogin = {
+      enable = true;
+      user = "nixos";
+    };
+    desktopManager.kodi.enable = true;
+
+    # Optional: set resolution, etc.
+    videoDrivers = [ "vc4" ]; # for Raspberry Pi 4
+  };
+
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -55,7 +70,7 @@
   users.users.nixos = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker"]; # Enable ‘sudo’ for the user.
-    initialPassword = "nixos"; # Will be used if SSH fails; change this!
+    # initialPassword = "nixos"; # Will be used if SSH fails; change this!
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc0lUn+zcewulF+LE8+j87Gb3lKVZkBHZcoPRmpsV0j"
     ];
@@ -66,18 +81,15 @@
     # Server packages
     docker-compose
 
-    # SysAdmin tools
-    vim
-    wget
-    git
-    tmux
-    at
-    tree
-    samba
+    # Media packages
+    kodi
+    kodiPlugins.jellyfin
   ];
 
-  # Enable at service
-  services.atd.enable = true;
+  # Add udev rule for Kodi hardware acceleration
+  services.udev.extraRules = ''
+    KERNEL=="dma_heap/linux,cma", MODE="0666"
+  '';
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

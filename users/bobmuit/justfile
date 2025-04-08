@@ -37,4 +37,10 @@ pi:
     ssh nixos@192.168.1.63
 
 deploypi:
-    nixos-rebuild switch --flake .#nixos-pi --target-host nixos@192.168.1.63 --use-remote-sudo
+    nixos-rebuild switch --flake ~/nixos-config#nixos-pi --build-host nixos@192.168.1.63 --use-remote-sudo
+
+buildpi:
+    nixos-rebuild build --flake ~/nixos-config#nixos-pi --build-host nixos@192.168.1.63 --use-remote-sudo
+
+testpi:
+    nixos-rebuild test --flake ~/nixos-config#nixos-pi --build-host nixos@192.168.1.63 --use-remote-sudo
