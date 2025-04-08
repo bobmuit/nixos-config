@@ -57,11 +57,13 @@
     useRoutingFeatures = "client"; # allow exit node use
   };
 
-  # networking.nameservers = ["1.1.1.1" "8.8.8.8"];
   # Set DNS nameservers to a combination of
   # nixos-pi over Tailscale
   # and synology locally
-  networking.nameservers = ["100.104.67.42" "192.168.1.2"]; 
+  # networking.nameservers = ["100.104.67.42" "192.168.1.2"]; 
+
+  # Set DNS to common nameservers, bypassing pi-hole
+  networking.nameservers = ["1.1.1.1 8.8.8.8"];
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
