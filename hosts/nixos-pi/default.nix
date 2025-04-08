@@ -26,6 +26,9 @@
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
+  # Enable HDMI CEC at kernel level
+  boot.kernelModules = [ "cec" "cec_gpio" ];
+
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
@@ -47,7 +50,6 @@
     videoDrivers = [ "vc4" ]; # for Raspberry Pi 4
   };
 
-
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
@@ -63,13 +65,17 @@
   #   pulse.enable = true;
   # };
 
+  # Enable sound
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;  # Or use PipeWire
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nixos = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker"]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "video"]; # Enable ‘sudo’ for the user.
     # initialPassword = "nixos"; # Will be used if SSH fails; change this!
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc0lUn+zcewulF+LE8+j87Gb3lKVZkBHZcoPRmpsV0j"
@@ -84,12 +90,26 @@
     # Media packages
     kodi
     kodiPlugins.jellyfin
+    libcec # enables HDMI CEC
   ];
 
   # Add udev rule for Kodi hardware acceleration
+  # Add udev rule for allowing Kodi access to HDMI CEC
   services.udev.extraRules = ''
     KERNEL=="dma_heap/linux,cma", MODE="0666"
+    KERNEL=="cec[0-9]*", GROUP="video", MODE="0660"
   '';
+
+  # Enable video hardware acceleration
+  hardware.opengl = {
+    enable = true;
+    setLdLibraryPath = true;
+    package = pkgs.mesa.drivers;
+    extraPackages = with pkgs; [
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
