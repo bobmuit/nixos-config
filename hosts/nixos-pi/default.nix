@@ -133,10 +133,11 @@
     kodiPlugins.jellyfin
     libcec # enables HDMI CEC
 
-    # RPi-specific
+    # Tools and libraries for interacting with Raspberry Pi-specific hardware and features.
     libraspberrypi
-    raspberrypi-eeprom
 
+    # Bootloader and firmware EEPROM for Raspberry Pi 4
+    raspberrypi-eeprom
   ];
 
   # Add udev rule for Kodi hardware acceleration
