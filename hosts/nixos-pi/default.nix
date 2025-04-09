@@ -2,10 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-# Add network share for nixos-config and/or pi-hole config
-# Add tailscale
-# Add other useful things from nixos-dell
-# Fix networking
+# https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_4
 
 { config, lib, pkgs, ... }:
 
@@ -70,6 +67,12 @@
   services.pipewire.enable = true;
   services.pipewire.pulse.enable = true;  # Enable PulseAudio compatibility for PipeWire
 
+  # Enable audio devices on RPi
+  boot.kernelParams = [ "snd_bcm2835.enable_hdmi=1" "snd_bcm2835.enable_headphones=1" ];
+  boot.loader.raspberryPi.firmwareConfig = ''
+    dtparam=audio=on
+  '';
+
   # Enable video hardware acceleration
   hardware.graphics = {
     enable = true;
@@ -77,8 +80,31 @@
     extraPackages = with pkgs; [
       vaapiVdpau
       libvdpau-va-gl
-      # raspberrypi.firmware.opt.vc4-fkms-v3d  # Raspberry Pi specific
     ];
+  };
+
+  hardware = {
+    raspberry-pi."4".apply-overlays-dtmerge.enable = true;
+    deviceTree = {
+      enable = true;
+      filter = "*rpi-4-*.dtb";
+    };
+  };
+
+  # Enabling the vc4-kms-v3d overlay for hardware acceleration and allocates GPU memory.
+  hardware.raspberry-pi.config = {
+    base-dt-params = {
+      dtoverlay = "vc4-kms-v3d";
+      max_framebuffers = 2;
+      gpu_mem = 256;
+      hdmi_enable_4kp60 = 1;
+    };
+  };
+
+  hardware.raspberry-pi.config.base-dt-params = {
+    hdmi_drive = 2;  # Force HDMI mode (rather than DVI)
+    hdmi_group = 1;  # CEA (Consumer Electronics Association, for TVs)
+    hdmi_force_hotplug = 1;  # Force HDMI output even if no display detected
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -106,13 +132,20 @@
     kodi
     kodiPlugins.jellyfin
     libcec # enables HDMI CEC
+
+    # RPi-specific
+    libraspberrypi
+    raspberrypi-eeprom
+
   ];
 
   # Add udev rule for Kodi hardware acceleration
   # Add udev rule for allowing Kodi access to HDMI CEC
+  # Add udev rule access to the vchiq device, which is necessary for CEC communication on Raspberry Pi devices
   services.udev.extraRules = ''
     KERNEL=="dma_heap/linux,cma", MODE="0666"
     KERNEL=="cec[0-9]*", GROUP="video", MODE="0660"
+    KERNEL=="vchiq", GROUP="video", MODE="0660", TAG+="systemd", ENV{SYSTEMD_ALIAS}="/dev/vchiq"
   '';
 
   # Enable the OpenSSH daemon.
