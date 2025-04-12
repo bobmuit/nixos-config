@@ -105,15 +105,20 @@
   # Disable CUPS to print documents.
   services.printing.enable = false;
 
-  # Enable sound with pipewire.
+  # Disable PulseAudio (replaced by PipeWire)
   hardware.pulseaudio.enable = false;
+
+  # Enable real-time privileges (recommended)
   security.rtkit.enable = true;
+
+  # PipeWire with WirePlumber
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    wireplumber.enable = false; # disabled due to build errors, might cause issues with audio
+    jack.enable = true; # optional, useful for advanced apps
+    wireplumber.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
