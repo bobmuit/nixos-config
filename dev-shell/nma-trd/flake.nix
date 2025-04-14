@@ -2,7 +2,7 @@
   description = "R Development Environment with Pandoc and Selected Packages";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
   };
 
   outputs = { self, nixpkgs }: 
@@ -20,33 +20,33 @@
         devtools
 
         # Data Manipulation & Analysis
-        tidyverse
-        dplyr
-        stringr
-        readxl
-        writexl
-        openxlsx
-        summarytools
-        gridExtra
-        ggplot2
-        rgl
-        scales
-        gtable
+        # tidyverse
+        # dplyr
+        # stringr
+        # readxl
+        # writexl
+        # openxlsx
+        # summarytools
+        # gridExtra
+        # ggplot2
+        # rgl
+        # scales
+        # gtable
 
         # Meta-Analysis & Network Meta-Analysis
-        meta
-        netmeta
-        NMA
+        # meta
+        # netmeta
+        # NMA
 
         # R Markdown & Reporting
-        rmarkdown
-        knitr
-        tinytex
-        kableExtra
+        # rmarkdown
+        # knitr
+        # tinytex
+        # kableExtra
 
         # Other Tools
-        PRISMA2020
-        RISmed
+        # PRISMA2020
+        # RISmed
       ];
     };
 
@@ -59,47 +59,8 @@
         cmake
         libxml2
         
-        # Add these packages for XeLaTeX and natbib support
-        (texlive.combine {
-          inherit (texlive) 
-            scheme-medium    # Base packages
-            xetex           # XeLaTeX
-            fontspec        # Font handling for XeLaTeX
-            natbib          # Bibliography management
-            biblatex        # Modern bibliography management
-            biber           # Bibliography processor for biblatex
-            latexmk         # Build tool for LaTeX
-            
-            # Common dependencies for academic documents
-            amsmath
-            amscls
-            mathtools
-            unicode-math    # Unicode math support for XeLaTeX
-            
-            # For handling of PDF graphics and links
-            hyperref
-            
-            # Language and font support
-            babel
-            polyglossia     # Multilingual typesetting with XeLaTeX
-            
-            # Tables support
-            booktabs
-            # longtable
-            # tabularx
-            
-            # Additional commonly needed packages
-            xcolor          # Color support
-            caption
-            setspace        # Line spacing
-            etoolbox
-            koma-script     # Modern document classes
-            geometry        # Page layout
-            
-            # If you need specific styles for citations
-            elsarticle      # Elsevier journals
-            acmart;          # ACM publications
-        })
+        # Simplified texlive approach to avoid derivation errors
+        # texlive.combined.scheme-medium
       ];
     
       shellHook = ''
@@ -112,6 +73,7 @@
         export PATH=${rWithPackages}/bin:$PATH
         
         # Create a file that VSCode R extension can use to detect R
+        mkdir -p .vscode
         echo "# R environment marker file for VSCode" > .vscode-R-environment
         echo "R_HOME=${rWithPackages}/lib/R" >> .vscode-R-environment
         echo "R_BINARY=${rWithPackages}/bin/R" >> .vscode-R-environment
@@ -124,14 +86,14 @@
         nix develop -c R "$@"' > R-shell-wrapper.sh
         chmod +x R-shell-wrapper.sh
 
-        # Create settings.json with recognition of costum R environment
-        # Requires R-shell-wrapper.sh
+        # Create settings.json with recognition of custom R environment
+        mkdir -p .vscode
         cat > .vscode/settings.json << 'EOF'
         {
           "r.alwaysUseActiveTerminal": true,
           "r.bracketedPaste": true,
           "r.sessionWatcher": true,
-          "r.rterm.linux": "\$\{workspaceFolder}/R-shell-wrapper.sh",
+          "r.rterm.linux": "$${toString ./.}/R-shell-wrapper.sh",
           "r.lsp.enabled": true
         }
         EOF
