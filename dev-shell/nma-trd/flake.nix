@@ -21,10 +21,10 @@
 
         # Data Manipulation & Analysis
         # tidyverse
-        # dplyr
+        dplyr
         # stringr
-        # readxl
-        # writexl
+        readxl
+        writexl
         # openxlsx
         # summarytools
         # gridExtra
