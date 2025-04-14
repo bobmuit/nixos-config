@@ -17,6 +17,12 @@
       alias j=just 
       alias ls="eza"
       alias ll="eza --long --all --git"
+
+      if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+      then
+        shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+        exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+      fi
     '';
 
     bashrcExtra = ''
@@ -30,17 +36,24 @@
     shellInit = ''
       starship init fish | source
     '';
+    plugins = [
+      {
+        name = "fzf";
+        src = pkgs.fishPlugins.fzf.src;
+      }
+    ];
+    # Use the built-in zoxide integration instead of as a plugin
+    interactiveShellInit = ''
+      zoxide init fish | source
+    '';
   };
   
-  # Optionally, set Fish as the default shell
-  # users.users.my_user.shell = pkgs.fish;
+  programs.starship.enable = true;
 
-  # Optionally, install Fish plugins
-  programs.fish.pluginManager.enable = true;
-
-  programs.fish.pluginManager.plugins = [
-    pkgs.fishPlugins.fzf
-    pkgs.fishPlugins.z
-  ];
+  # Make sure zoxide is installed
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+  };
 
 }

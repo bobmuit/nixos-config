@@ -15,6 +15,9 @@
 
       # Include samba shares
       ../../modules/nixos/services/smb-client/default.nix
+
+      # Include shell
+      # ../../modules/nixos/programs/shell.nix
     ];
 
   nix.settings = {
