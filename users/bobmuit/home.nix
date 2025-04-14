@@ -14,6 +14,9 @@
   # Imported modules
   imports = [
     ../../modules/home-manager/programs/browsers.nix
+    ../../modules/home-manager/programs/shells.nix
+
+    # Not using coding.nix, managed by dev shell
     # ../../modules/home-manager/programs/coding.nix
   ];
 
@@ -70,25 +73,7 @@
     userEmail = "bob@bobmuit.nl";
   };
 
-  # Bash settings
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-
-    # Configure just for bash
-    initExtra = ''
-      eval "$(just --completions bash)"
-      alias j=just 
-      alias ls="eza"
-      alias ll="eza --long --all --git"
-    '';
-
-    bashrcExtra = ''
-      export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/go/bin"
-    '';
-  };
-  
-  # Universal justfile
+    # Universal justfile
   home.sessionVariables = {
     JUSTFILE = "/home/bobmuit/nixos-config/users/bobmuit/justfile"; # not working
   };
