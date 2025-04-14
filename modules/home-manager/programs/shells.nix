@@ -35,6 +35,14 @@
     enable = true;
     shellInit = ''
       starship init fish | source
+
+       # Set up aliases
+      alias j=just
+      alias ls="eza"
+      alias ll="eza --long --all --git"
+
+      # Just completions in Fish
+      just --completions fish | source
     '';
     plugins = [
       {
