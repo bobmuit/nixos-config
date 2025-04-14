@@ -25,9 +25,22 @@
   };
 
   # Install Fish shell
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    shellInit = ''
+      starship init fish | source
+    '';
+  };
   
   # Optionally, set Fish as the default shell
   # users.users.my_user.shell = pkgs.fish;
+
+  # Optionally, install Fish plugins
+  programs.fish.pluginManager.enable = true;
+
+  programs.fish.pluginManager.plugins = [
+    pkgs.fishPlugins.fzf
+    pkgs.fishPlugins.z
+  ];
 
 }
