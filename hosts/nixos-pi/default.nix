@@ -37,8 +37,6 @@
 
   # Enable OpenGL
   hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
-  hardware.opengl.driSupport32Bit = true; # Might be unneccessary, required to run 32bit OpenGL applications
 
   environment.variables = {
     # Allow hardware accelerated OpenGL
