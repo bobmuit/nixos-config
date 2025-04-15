@@ -38,6 +38,32 @@
       "cec" 
       "cec_gpio" 
     ];
+    # Enable audio devices on RPi
+    kernelParams = [ 
+      "snd_bcm2835.enable_hdmi=1" 
+      "snd_bcm2835.enable_headphones=1" 
+    ];
+  };
+
+  # Enable fkms (not kms)
+  hardware = {
+    raspberry-pi."4" = {
+      apply-overlays-dtmerge.enable = true;
+      fkms-3d.enable = true;
+    };
+    deviceTree = lib.mkForce {
+      enable = true;
+      filter = "*rpi-4-*.dtb";
+    };
+    # Enable video hardware acceleration
+    graphics = {
+      enable = true;
+      package = pkgs.mesa.drivers;
+      extraPackages = with pkgs; [
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
   };
 
   environment.variables = {
@@ -77,34 +103,7 @@
   # Enable sound
   hardware.pulseaudio.enable = false;  # Disable PulseAudio
   services.pipewire.enable = true;
-  services.pipewire.pulse.enable = true;  # Enable PulseAudio compatibility for PipeWire
-
-  # Enable audio devices on RPi
-  boot.kernelParams = [ 
-    "snd_bcm2835.enable_hdmi=1" 
-    "snd_bcm2835.enable_headphones=1" 
-  ];
-
-  # Enable fkms (not kms)
-  hardware = {
-    raspberry-pi."4" = {
-      apply-overlays-dtmerge.enable = true;
-      fkms-3d.enable = true;
-    };
-    deviceTree = lib.mkForce {
-      enable = true;
-      filter = "*rpi-4-*.dtb";
-    };
-    # Enable video hardware acceleration
-    graphics = {
-      enable = true;
-      package = pkgs.mesa.drivers;
-      extraPackages = with pkgs; [
-        vaapiVdpau
-        libvdpau-va-gl
-      ];
-    };
-  };
+  services.pipewire.pulse.enable = true;  # Enable PulseAudio compatibility for PipeWire  
 
     # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
