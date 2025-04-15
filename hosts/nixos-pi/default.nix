@@ -22,21 +22,23 @@
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
-  boot.loader.grub.enable = false;
-  # Enables the generation of /boot/extlinux/extlinux.conf
-  boot.loader.generic-extlinux-compatible.enable = true;
-
-  boot.loader.raspberryPi = {
-    enable = true;
-    version = 4;
+  boot = {
+    kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
+    initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
+    loader = {
+      # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
+      grub.enable = false;
+      # Enables the generation of /boot/extlinux/extlinux.conf
+      generic-extlinux-compatible = {
+        enable = true;
+      };
+    };
+    # Enable HDMI CEC at kernel level
+    kernelModules = [ 
+      "cec" 
+      "cec_gpio" 
+    ];
   };
-
-  # Enable HDMI CEC at kernel level
-  boot.kernelModules = [ "cec" "cec_gpio" ];
-
-  # Enable OpenGL
-  hardware.opengl.enable = true;
 
   environment.variables = {
     # Allow hardware accelerated OpenGL
@@ -62,6 +64,7 @@
     # videoDrivers = [ "fbdev" ] # In case kms is used
   };
 
+  # Allow autologin
   services.displayManager.autoLogin = {
     enable = true;
     user = "nixos";
@@ -82,38 +85,28 @@
     "snd_bcm2835.enable_headphones=1" 
   ];
 
-  # Enable video hardware acceleration
-  hardware.graphics = {
-    enable = true;
-    package = pkgs.mesa.drivers;
-    extraPackages = with pkgs; [
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
-
   # Enable fkms (not kms)
   hardware = {
     raspberry-pi."4" = {
       apply-overlays-dtmerge.enable = true;
       fkms-3d.enable = true;
     };
-    deviceTree = {
+    deviceTree = lib.mkForce {
       enable = true;
       filter = "*rpi-4-*.dtb";
     };
+    # Enable video hardware acceleration
+    graphics = {
+      enable = true;
+      package = pkgs.mesa.drivers;
+      extraPackages = with pkgs; [
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
   };
 
-  # Set GPU memory, enable audio, set HDMI settings
-  boot.loader.raspberryPi.firmwareConfig = ''
-    gpu_mem=256
-    hdmi_force_hotplug=1
-    hdmi_group=1
-    hdmi_drive=2
-    dtparam=audio=on
-  '';
-
-  # Enable touchpad support (enabled default in most desktopManager).
+    # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
