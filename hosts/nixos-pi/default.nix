@@ -23,8 +23,27 @@
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
+  boot.loader.raspberryPi = {
+    enable = true;
+    version = 4; # or 3, depending on your device
+    firmwareConfig = ''
+      dtoverlay=vc4-fkms-v3d
+      gpu_mem=256
+    '';
+  };
+
   # Enable HDMI CEC at kernel level
   boot.kernelModules = [ "cec" "cec_gpio" ];
+
+  # Enable OpenGL
+  hardware.opengl.enable = true;
+  hardware.opengl.driSupport = true;
+  hardware.opengl.driSupport32Bit = true;
+
+  environment.variables = {
+    # Allow hardware accelerated OpenGL
+    LIBGL_ALWAYS_SOFTWARE = "0";
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -44,7 +63,8 @@
     desktopManager.kodi.enable = true;
 
     # Optional: set resolution, etc.
-    videoDrivers = [ "vc4" ]; # for Raspberry Pi 4
+    # videoDrivers = [ "vc4" ]; # kernel DRM driver
+    videoDrivers = [ "modesetting" ]; # X11 driver
   };
 
   # Configure keymap in X11
