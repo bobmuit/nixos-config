@@ -56,10 +56,6 @@
   services.xserver = {
     enable = true;
     displayManager.lightdm.enable = true;
-    displayManager.autoLogin = {
-      enable = true;
-      user = "nixos";
-    };
     desktopManager.kodi.enable = true;
 
     # Optional: set resolution, etc.
@@ -68,6 +64,11 @@
     # videoDrivers = [ "fbdev" ] # In case kms is used
   };
 
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "nixos";
+  };
+  
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
