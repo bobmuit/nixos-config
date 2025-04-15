@@ -79,7 +79,10 @@
   services.pipewire.pulse.enable = true;  # Enable PulseAudio compatibility for PipeWire
 
   # Enable audio devices on RPi
-  boot.kernelParams = [ "snd_bcm2835.enable_hdmi=1" "snd_bcm2835.enable_headphones=1" ];
+  boot.kernelParams = [ 
+    "snd_bcm2835.enable_hdmi=1" 
+    "snd_bcm2835.enable_headphones=1" 
+  ];
 
   # Enable video hardware acceleration
   hardware.graphics = {
@@ -91,28 +94,26 @@
     ];
   };
 
+  # Enable fkms (not kms)
   hardware = {
-    raspberry-pi."4".apply-overlays-dtmerge.enable = true;
+    raspberry-pi."4" = {
+      apply-overlays-dtmerge.enable = true;
+      fkms-3d.enable = true;
+    };
     deviceTree = {
       enable = true;
       filter = "*rpi-4-*.dtb";
     };
   };
 
-  # Enable vc4-fkms-v3d
-  hardware.raspberry-pi."4".fkms-3d.enable = true;
-
   # Set GPU memory, enable audio, set HDMI settings
-  hardware.raspberry-pi.config.base-dt-params = {
-    # dtoverlay = "vc4-fkms-v3d"; # Redundant
-    max_framebuffers = 2;
-    gpu_mem = 256;
-    dtparam = "audio=on"; # Enable audio
-    # hdmi_enable_4kp60 = 1; # Disabled because I want to use 1080p output
-    hdmi_drive = 2;  # Force HDMI mode (rather than DVI)
-    hdmi_group = 1;  # CEA (Consumer Electronics Association, for TVs)
-    hdmi_force_hotplug = 1;  # Force HDMI output even if no display detected
-  };
+  boot.loader.raspberryPi.firmwareConfig = ''
+    gpu_mem=256
+    hdmi_force_hotplug=1
+    hdmi_group=1
+    hdmi_drive=2
+    dtparam=audio=on
+  '';
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
