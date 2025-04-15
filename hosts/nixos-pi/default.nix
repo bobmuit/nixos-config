@@ -4,6 +4,10 @@
 
 # https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_4
 
+# CUrrently on fkms consider kms
+# Currently on modesetting, consider vc4
+# Check mesa drivers for applicability
+
 { config, lib, pkgs, ... }:
 
 {
@@ -25,11 +29,7 @@
 
   boot.loader.raspberryPi = {
     enable = true;
-    version = 4; # or 3, depending on your device
-    firmwareConfig = ''
-      dtoverlay=vc4-fkms-v3d
-      gpu_mem=256
-    '';
+    version = 4;
   };
 
   # Enable HDMI CEC at kernel level
@@ -38,7 +38,7 @@
   # Enable OpenGL
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
-  hardware.opengl.driSupport32Bit = true;
+  hardware.opengl.driSupport32Bit = true; # Might be unneccessary, required to run 32bit OpenGL applications
 
   environment.variables = {
     # Allow hardware accelerated OpenGL
@@ -65,22 +65,12 @@
     # Optional: set resolution, etc.
     # videoDrivers = [ "vc4" ]; # kernel DRM driver
     videoDrivers = [ "modesetting" ]; # X11 driver
+    # videoDrivers = [ "fbdev" ] # In case kms is used
   };
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # services.pulseaudio.enable = true;
-  # OR
-  # services.pipewire = {
-  #   enable = true;
-  #   pulse.enable = true;
-  # };
 
   # Enable sound
   hardware.pulseaudio.enable = false;  # Disable PulseAudio
@@ -89,9 +79,6 @@
 
   # Enable audio devices on RPi
   boot.kernelParams = [ "snd_bcm2835.enable_hdmi=1" "snd_bcm2835.enable_headphones=1" ];
-  boot.loader.raspberryPi.firmwareConfig = ''
-    dtparam=audio=on
-  '';
 
   # Enable video hardware acceleration
   hardware.graphics = {
@@ -111,17 +98,16 @@
     };
   };
 
-  # Enabling the vc4-kms-v3d overlay for hardware acceleration and allocates GPU memory.
-  hardware.raspberry-pi.config = {
-    base-dt-params = {
-      dtoverlay = "vc4-kms-v3d";
-      max_framebuffers = 2;
-      gpu_mem = 256;
-      hdmi_enable_4kp60 = 1;
-    };
-  };
+  # Enable vc4-fkms-v3d
+  hardware.raspberry-pi."4".fkms-3d.enable = true;
 
+  # Set GPU memory, enable audio, set HDMI settings
   hardware.raspberry-pi.config.base-dt-params = {
+    # dtoverlay = "vc4-fkms-v3d"; # Redundant
+    max_framebuffers = 2;
+    gpu_mem = 256;
+    dtparam = "audio=on"; # Enable audio
+    # hdmi_enable_4kp60 = 1; # Disabled because I want to use 1080p output
     hdmi_drive = 2;  # Force HDMI mode (rather than DVI)
     hdmi_group = 1;  # CEA (Consumer Electronics Association, for TVs)
     hdmi_force_hotplug = 1;  # Force HDMI output even if no display detected
