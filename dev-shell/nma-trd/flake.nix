@@ -22,16 +22,16 @@
         # Data Manipulation & Analysis
         # tidyverse
         dplyr
-        # stringr
+        stringr
         readxl
         writexl
-        # openxlsx
-        # summarytools
-        # gridExtra
-        # ggplot2
-        # rgl
-        # scales
-        # gtable
+        openxlsx
+        summarytools
+        gridExtra
+        ggplot2
+        rgl
+        scales
+        gtable
 
         # Meta-Analysis & Network Meta-Analysis
         # meta
@@ -58,7 +58,7 @@
         # Required for building dmetar
         cmake
         libxml2
-        
+
         # Simplified texlive approach to avoid derivation errors
         # texlive.combined.scheme-medium
       ];
