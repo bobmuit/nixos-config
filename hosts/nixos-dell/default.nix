@@ -36,6 +36,14 @@
   boot.plymouth.enable = false;
   # boot.plymouth.theme = "spinner";
 
+    # Enable swap
+    swapDevices = [
+        {
+            device = "/swapfile";
+            size = 4096; # in MB, optional if already created
+        }
+    ];
+
   networking.hostName = "nixos-dell"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
