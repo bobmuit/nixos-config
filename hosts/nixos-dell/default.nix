@@ -55,9 +55,6 @@
   networking.networkmanager = {
     enable = true;
   };
-  
-  # Enable dbus system service
-  services.dbus.enable = true;
 
   # Boot should not wait for NetworkManager to start
   systemd.services.NetworkManager-wait-online.enable = false;
@@ -146,14 +143,6 @@
     packages = with pkgs; [
     #  thunderbird
     ];
-  };
-
-  # Add user for managing network connection
-  users.groups.netdev = {};
-  users.groups.power = {};
-  users.users.nm-openconnect = {
-    isSystemUser = true;
-    group = "netdev";
   };
 
   # Allow unfree packages
