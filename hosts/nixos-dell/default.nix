@@ -148,6 +148,14 @@
     ];
   };
 
+  # Add user for managing network connection
+  users.groups.netdev = {};
+  users.groups.power = {};
+  users.users.nm-openconnect = {
+    isSystemUser = true;
+    group = "netdev";
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
