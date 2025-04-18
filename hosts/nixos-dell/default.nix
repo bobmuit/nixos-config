@@ -45,7 +45,7 @@
     ];
 
   networking.hostName = "nixos-dell"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -56,6 +56,9 @@
     enable = true;
   };
   
+  # Enable dbus system service
+  services.dbus.enable = true;
+
   # Boot should not wait for NetworkManager to start
   systemd.services.NetworkManager-wait-online.enable = false;
 
