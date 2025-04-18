@@ -56,9 +56,6 @@
     enable = true;
   };
   
-  # Enable dbus system service
-  services.dbus.enable = true;
-
   # Boot should not wait for NetworkManager to start
   systemd.services.NetworkManager-wait-online.enable = false;
 
