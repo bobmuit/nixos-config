@@ -2,7 +2,7 @@
   description = "R Development Environment with Pandoc and Selected Packages";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
   outputs = { self, nixpkgs }: 
@@ -20,15 +20,19 @@
         devtools
 
         # Data Manipulation & Analysis
-        # tidyverse
         dplyr
+        ggplot2
+        readr
+        tibble
+        tidyr
+        purrr
         stringr
+        forcats
         readxl
         writexl
         openxlsx
         summarytools
         gridExtra
-        ggplot2
         rgl
         scales
         gtable
@@ -59,50 +63,7 @@
         cmake
         libxml2
 
-        # Simplified texlive approach to avoid derivation errors
-        # texlive.combined.scheme-medium
-
-        # Add these packages for XeLaTeX and natbib support
-        # (texlive.combine {
-        #   inherit (texlive) 
-        #     scheme-medium    # Base packages
-        #     xetex           # XeLaTeX
-        #     fontspec        # Font handling for XeLaTeX
-        #     natbib          # Bibliography management
-        #     biblatex        # Modern bibliography management
-        #     biber           # Bibliography processor for biblatex
-        #     latexmk         # Build tool for LaTeX
-            
-        #     # Common dependencies for academic documents
-        #     amsmath
-        #     amscls
-        #     mathtools
-        #     unicode-math    # Unicode math support for XeLaTeX
-            
-        #     # For handling of PDF graphics and links
-        #     hyperref
-            
-        #     # Language and font support
-        #     babel
-        #     polyglossia     # Multilingual typesetting with XeLaTeX
-            
-        #     # Tables support
-        #     booktabs
-        #     # longtable
-        #     # tabularx
-            
-        #     # Additional commonly needed packages
-        #     xcolor          # Color support
-        #     caption
-        #     setspace        # Line spacing
-        #     etoolbox
-        #     koma-script     # Modern document classes
-        #     geometry        # Page layout
-            
-        #     # If you need specific styles for citations
-        #     elsarticle      # Elsevier journals
-        #     acmart;          # ACM publications
-        # })
+        
 
       ];
     
@@ -121,11 +82,6 @@
         echo "R_HOME=${rWithPackages}/lib/R" >> .vscode-R-environment
         echo "R_BINARY=${rWithPackages}/bin/R" >> .vscode-R-environment
         
-        # Temporarily disabled ####
-        # echo "Installing dmetar from GitHub (if not already installed)..."
-        # Rscript -e 'if (!requireNamespace("dmetar", quietly = TRUE)) { install.packages("remotes", repos="https://cloud.r-project.org"); remotes::install_github("MathiasHarrer/dmetar", lib=Sys.getenv("R_LIBS_USER")) }'
-        echo "Please note that dmetar is disabled."
-
         echo '#!/bin/bash
         # This script helps VSCode use the R from the nix shell
         nix develop -c R "$@"' > R-shell-wrapper.sh
