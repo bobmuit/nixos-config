@@ -62,6 +62,8 @@
         # Required for building dmetar
         cmake
         libxml2
+
+        texliveMedium
       ];
     
       shellHook = ''
