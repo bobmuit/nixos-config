@@ -34,15 +34,15 @@
         gtable
 
         # Meta-Analysis & Network Meta-Analysis
-        # meta
-        # netmeta
+        meta
+        netmeta
         # NMA
 
         # R Markdown & Reporting
-        # rmarkdown
-        # knitr
-        # tinytex
-        # kableExtra
+        rmarkdown
+        knitr
+        tinytex
+        kableExtra
 
         # Other Tools
         # PRISMA2020
@@ -78,8 +78,10 @@
         echo "R_HOME=${rWithPackages}/lib/R" >> .vscode-R-environment
         echo "R_BINARY=${rWithPackages}/bin/R" >> .vscode-R-environment
         
-        echo "Installing dmetar from GitHub (if not already installed)..."
-        Rscript -e 'if (!requireNamespace("dmetar", quietly = TRUE)) { install.packages("remotes", repos="https://cloud.r-project.org"); remotes::install_github("MathiasHarrer/dmetar", lib=Sys.getenv("R_LIBS_USER")) }'
+        # Temporarily disabled ####
+        # echo "Installing dmetar from GitHub (if not already installed)..."
+        # Rscript -e 'if (!requireNamespace("dmetar", quietly = TRUE)) { install.packages("remotes", repos="https://cloud.r-project.org"); remotes::install_github("MathiasHarrer/dmetar", lib=Sys.getenv("R_LIBS_USER")) }'
+        echo "Please note that dmetar is disabled."
 
         echo '#!/bin/bash
         # This script helps VSCode use the R from the nix shell
@@ -99,7 +101,7 @@
         EOF
 
         # Don't automatically start R
-        echo "To start R, type 'R' at the prompt"
+        echo "To start R, type 'R' at the prompt."
       '';
     };
   };
