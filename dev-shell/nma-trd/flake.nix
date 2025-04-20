@@ -61,6 +61,49 @@
 
         # Simplified texlive approach to avoid derivation errors
         # texlive.combined.scheme-medium
+
+        # Add these packages for XeLaTeX and natbib support
+        # (texlive.combine {
+        #   inherit (texlive) 
+        #     scheme-medium    # Base packages
+        #     xetex           # XeLaTeX
+        #     fontspec        # Font handling for XeLaTeX
+        #     natbib          # Bibliography management
+        #     biblatex        # Modern bibliography management
+        #     biber           # Bibliography processor for biblatex
+        #     latexmk         # Build tool for LaTeX
+            
+        #     # Common dependencies for academic documents
+        #     amsmath
+        #     amscls
+        #     mathtools
+        #     unicode-math    # Unicode math support for XeLaTeX
+            
+        #     # For handling of PDF graphics and links
+        #     hyperref
+            
+        #     # Language and font support
+        #     babel
+        #     polyglossia     # Multilingual typesetting with XeLaTeX
+            
+        #     # Tables support
+        #     booktabs
+        #     # longtable
+        #     # tabularx
+            
+        #     # Additional commonly needed packages
+        #     xcolor          # Color support
+        #     caption
+        #     setspace        # Line spacing
+        #     etoolbox
+        #     koma-script     # Modern document classes
+        #     geometry        # Page layout
+            
+        #     # If you need specific styles for citations
+        #     elsarticle      # Elsevier journals
+        #     acmart;          # ACM publications
+        # })
+
       ];
     
       shellHook = ''
