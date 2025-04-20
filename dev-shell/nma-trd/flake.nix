@@ -62,9 +62,6 @@
         # Required for building dmetar
         cmake
         libxml2
-
-        
-
       ];
     
       shellHook = ''
@@ -98,6 +95,26 @@
           "r.lsp.enabled": true
         }
         EOF
+
+        # List of packages to check and install if needed
+        # These packages are unavailable in nixpkgs
+        PACKAGES_TO_INSTALL=(
+          "NMA"
+          "PRISMA2020"
+          "kableExtra"
+        )
+
+        # Check and install packages if they're not already installed
+        echo "Checking for additional R packages..."
+        for pkg in "''${PACKAGES_TO_INSTALL[@]}"; do
+          if ! R --quiet -e "library('$pkg')" 2>/dev/null; then
+            echo "Installing $pkg package (this will only happen once)..."
+            R --quiet -e "install.packages('$pkg', repos='https://cran.rstudio.com/')"
+            echo "$pkg package installed successfully."
+          else
+            echo "$pkg package is already installed."
+          fi
+        done
 
         # Don't automatically start R
         echo "To start R, type 'R' at the prompt."
