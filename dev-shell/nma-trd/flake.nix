@@ -42,11 +42,11 @@
         rmarkdown
         knitr
         tinytex
-        kableExtra
+        # kableExtra
 
         # Other Tools
         # PRISMA2020
-        # RISmed
+        RISmed
       ];
     };
 
