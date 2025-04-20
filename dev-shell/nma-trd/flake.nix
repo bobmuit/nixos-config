@@ -116,6 +116,15 @@
           fi
         done
 
+        # Check and install GitHub packages if needed
+        if ! R --quiet -e "library('dmetar')" 2>/dev/null; then
+          echo "Installing dmetar from GitHub (this will only happen once)..."
+          R --quiet -e "if (!requireNamespace('remotes', quietly = TRUE)) install.packages('remotes', repos='https://cloud.r-project.org'); remotes::install_github('MathiasHarrer/dmetar', lib=Sys.getenv('R_LIBS_USER'))"
+          echo "dmetar package installed successfully."
+        else
+          echo "dmetar package is already installed."
+        fi
+
         # Don't automatically start R
         echo "To start R, type 'R' at the prompt."
       '';
