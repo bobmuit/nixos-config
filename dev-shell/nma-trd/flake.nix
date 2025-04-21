@@ -9,7 +9,9 @@
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
-    userRLib = "$HOME/R/lib";  # Define a writable directory for R packages
+    # userRLib = "${builtins.getEnv "HOME"}/.local/share/R/library"; # A persistent path
+    # homeDir = builtins.getEnv "HOME";
+    # userRLib = "${homeDir}/.local/share/R/library"; 
 
     # Create a custom R with necessary packages bundled
     rWithPackages = pkgs.rWrapper.override {
@@ -63,16 +65,33 @@
         cmake
         libxml2
 
-        texliveMedium
+        # To help installing packages
+        pkg-config
+
+        # Dependencies for costum packages
+        zlib
+        nodejs.libv8
+        # Add more
+
+        # texliveMedium
+        # (texlive.combine {
+        #   inherit (texlive) scheme-medium;
+        # })
       ];
     
       shellHook = ''
+        echo "Nixpkgs git revision: $(nix eval --raw nixpkgs.rev)"
+
+        # Make pkg-config available
+        export PKG_CONFIG_PATH=${pkgs.zlib}/lib/pkgconfig:$PKG_CONFIG_PATH
+
         echo "R development environment loaded!"
         # Set up a writable user library path
-        mkdir -p ${userRLib}
-        export R_LIBS_USER=${userRLib} # Set R user library
+
+        export R_LIBS_USER="$HOME/.local/share/R/library"
+        mkdir -p "$R_LIBS_USER"
         export R_PROFILE_USER=$PWD/.Rprofile
-        export R_HOME=${rWithPackages}/lib/R
+        # export R_HOME=${rWithPackages}/lib/R
         export PATH=${rWithPackages}/bin:$PATH
         
         # Create a file that VSCode R extension can use to detect R
@@ -111,7 +130,7 @@
         for pkg in "''${PACKAGES_TO_INSTALL[@]}"; do
           if ! R --quiet -e "library('$pkg')" 2>/dev/null; then
             echo "Installing $pkg package (this will only happen once)..."
-            R --quiet -e "install.packages('$pkg', repos='https://cran.rstudio.com/')"
+            R --quiet -e "install.packages('$pkg', lib=Sys.getenv('R_LIBS_USER'), repos='https://cran.rstudio.com/')"
             echo "$pkg package installed successfully."
           else
             echo "$pkg package is already installed."
@@ -121,7 +140,7 @@
         # Check and install GitHub packages if needed
         if ! R --quiet -e "library('dmetar')" 2>/dev/null; then
           echo "Installing dmetar from GitHub (this will only happen once)..."
-          R --quiet -e "if (!requireNamespace('remotes', quietly = TRUE)) install.packages('remotes', repos='https://cloud.r-project.org'); remotes::install_github('MathiasHarrer/dmetar', lib=Sys.getenv('R_LIBS_USER'))"
+          R --quiet -e "if (!requireNamespace('remotes', quietly = TRUE)) install.packages('remotes', lib=Sys.getenv('R_LIBS_USER'), repos='https://cloud.r-project.org'); remotes::install_github('MathiasHarrer/dmetar', lib=Sys.getenv('R_LIBS_USER'))"
           echo "dmetar package installed successfully."
         else
           echo "dmetar package is already installed."
