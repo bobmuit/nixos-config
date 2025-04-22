@@ -209,11 +209,35 @@
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
             definedAliases = [ "@np" ];
           };
-          "NixOS Wiki" = {
-            urls = [{ template = "https://nixos.wiki/index.php?search={searchTerms}"; }];
+
+          "NixOS Options" = {
+            urls = [{
+              template = "https://search.nixos.org/options";
+              params = [
+                { name = "type"; value = "options"; }
+                { name = "query"; value = "{searchTerms}"; }
+              ];
+            }];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            definedAliases = [ "@no" ];
+          };
+
+          "Home Manager Options" = {
+            urls = [{
+              template = "https://home-manager-options.extranix.com/?query={searchTerms}";
+            }];
             iconUpdateURL = "https://nixos.wiki/favicon.png";
-            updateInterval = 24 * 60 * 60 * 1000; # daily
-            definedAliases = [ "@nw" ];
+            updateInterval = 24 * 60 * 60 * 1000;
+            definedAliases = [ "@hm" ];
+          };
+
+          "ProtonDB" = {
+            urls = [{
+              template = "https://www.protondb.com/search?q={searchTerms}";
+            }];
+            iconUpdateURL = "https://www.protondb.com/favicon.ico";
+            updateInterval = 24 * 60 * 60 * 1000;
+            definedAliases = [ "@proton" ];
           };
           "DuckDuckGo".metaData.hidden = false;
           "Google".metaData.hidden = true;
