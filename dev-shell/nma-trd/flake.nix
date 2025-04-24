@@ -187,6 +187,7 @@
         pkg-config
 
         # Dependencies for custom packages
+        # These could probaby be removed because now I am using buildRPackages
         zlib
         nodejs.libv8
 
@@ -295,6 +296,7 @@
 
         # Don't automatically start R
         echo "To start R, type 'R' at the prompt."
+        echo "To start Cursor in this development shell, type 'cursor .' at the prompt.
       '';
     };
   };
