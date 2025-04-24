@@ -78,11 +78,43 @@
         export PKG_CONFIG_PATH=${pkgs.zlib}/lib/pkgconfig:$PKG_CONFIG_PATH
 
         echo "R development environment loaded!"
-        # Set up a writable user library path
-        export R_LIBS_USER="$HOME/.local/share/R/library" # Persistant path in home directory for R packages
-        mkdir -p "$R_LIBS_USER"
+        
+        # Set up R environment variables
+        export R_HOME=${rWithPackages}/lib/R
+        export R_LIBS_USER="$HOME/.local/share/R/library"
+        export R_LIBS_SITE="${rWithPackages}/lib/R/library"
         export R_PROFILE_USER=$PWD/.Rprofile
         export PATH=${rWithPackages}/bin:$PATH
+        export CURSOR_R_PATH="${rWithPackages}/bin/R"
+        
+        # Create necessary directories
+        mkdir -p "$R_LIBS_USER"
+        
+        # Install jsonlite in user library if not already installed
+        echo "Ensuring jsonlite is installed in user library..."
+        R --quiet -e 'if (!requireNamespace("jsonlite", quietly = TRUE)) { 
+          install.packages("jsonlite", 
+                          lib=Sys.getenv("R_LIBS_USER"), 
+                          repos="https://cloud.r-project.org", 
+                          quiet=TRUE,
+                          dependencies=TRUE) 
+        }'
+        
+        # Verify jsonlite installation
+        echo "Verifying jsonlite installation..."
+        R --quiet -e 'if (!requireNamespace("jsonlite", quietly = TRUE)) { 
+          stop("Failed to install jsonlite package") 
+        } else { 
+          cat("jsonlite package is installed and available\n") 
+        }'
+        
+        # Force install jsonlite in user library to ensure it's available
+        echo "Force installing jsonlite in user library..."
+        R --quiet -e 'install.packages("jsonlite", 
+                                      lib=Sys.getenv("R_LIBS_USER"), 
+                                      repos="https://cloud.r-project.org", 
+                                      quiet=TRUE,
+                                      dependencies=TRUE)'
         
         # Create a file that VSCode R extension can use to detect R
         mkdir -p .vscode
@@ -104,6 +136,40 @@
           "r.sessionWatcher": true,
           "r.rterm.linux": "$${toString ./.}/R-shell-wrapper.sh",
           "r.lsp.enabled": true
+        }
+        EOF
+
+        # Create a script to help Cursor find the R executable
+        echo '#!/bin/bash
+        # This script helps Cursor find the R executable
+        if [ -n "$CURSOR_R_PATH" ]; then
+          exec "$CURSOR_R_PATH" "$@"
+        else
+          exec "${rWithPackages}/bin/R" "$@"
+        fi' > cursor-r-wrapper.sh
+        chmod +x cursor-r-wrapper.sh
+
+        # Create Cursor-specific settings
+        mkdir -p .vscode
+        cat > .vscode/cursor.json << 'EOF'
+        {
+          "r.rterm.linux": "$${toString ./.}/cursor-r-wrapper.sh",
+          "r.rpath.linux": "${rWithPackages}/bin/R",
+          "r.lsp.enabled": true,
+          "r.alwaysUseActiveTerminal": true,
+          "r.bracketedPaste": true,
+          "r.sessionWatcher": true,
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "r-lsp.r-lsp",
+          "r.lsp.path": "${rWithPackages}/bin/R",
+          "r.lsp.diagnostics": true,
+          "r.lsp.completion": true,
+          "r.lsp.hover": true,
+          "r.lsp.signature": true,
+          "r.libPaths": [
+            "${rWithPackages}/lib/R/library",
+            "$HOME/.local/share/R/library"
+          ]
         }
         EOF
 
