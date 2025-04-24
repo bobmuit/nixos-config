@@ -192,7 +192,7 @@
         nodejs.libv8
 
         # Latex support
-        texlive.combined.scheme-medium
+        texlive.combined.scheme-full
       ];
     
       shellHook = ''

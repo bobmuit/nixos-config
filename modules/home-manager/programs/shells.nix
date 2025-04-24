@@ -56,7 +56,13 @@
     '';
   };
   
-  programs.starship.enable = true;
+  # Starship configuration
+  programs.starship = {
+    enable = true;
+    settings = {
+      command_timeout = 10000; # 10 seconds timeout
+    };
+  };
 
   # Make sure zoxide is installed
   programs.zoxide = {
