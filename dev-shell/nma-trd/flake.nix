@@ -62,6 +62,74 @@
       };
     };
 
+    # Create a custom PRISMA2020 package
+    prisma2020 = pkgs.rPackages.buildRPackage {
+      name = "PRISMA2020-1.1.1";
+      pname = "PRISMA2020";
+      version = "1.1.1";
+      src = pkgs.fetchurl {
+        url = "https://cran.r-project.org/src/contrib/PRISMA2020_1.1.1.tar.gz";
+        sha256 = "0jhf1kgcc29b8gsb42b3d5hyfzsa13lz9qgs104ynrzld94kqqwf";
+      };
+      nativeBuildInputs = with pkgs; [
+        pkg-config
+      ];
+      propagatedBuildInputs = with pkgs.rPackages; [
+        # Required imports
+        DiagrammeR
+        DiagrammeRsvg
+        htmltools
+        htmlwidgets
+        rsvg
+        scales
+        # stats # unavailable
+        shiny
+        shinyjs
+        stringr
+        # utils # unavailable
+        xml2
+        webp
+        DT
+        rio
+        # tools # unavailable
+        zip
+      ];
+      meta = {
+        homepage = "https://cran.r-project.org/package=PRISMA2020";
+        license = pkgs.lib.licenses.gpl2;
+        platforms = pkgs.lib.platforms.all;
+      };
+    };
+
+    # Create a custom NMA package
+    nma = pkgs.rPackages.buildRPackage {
+      name = "NMA-1.4-3";
+      pname = "NMA";
+      version = "1.4-3";
+      src = pkgs.fetchurl {
+        url = "https://cran.r-project.org/src/contrib/NMA_1.4-3.tar.gz";
+        sha256 = "09y3arzw08054xb1y3nmnnzxybgjm2yyvkc530avpqkl1yrb1ap2";
+      };
+      nativeBuildInputs = with pkgs; [
+        pkg-config
+      ];
+      propagatedBuildInputs = with pkgs.rPackages; [
+        # Required imports
+        # stats # unavailable
+        # grid # unavailable
+        MASS
+        ggplot2
+        metafor
+        stringr
+        forestplot
+      ];
+      meta = {
+        homepage = "https://cran.r-project.org/package=NMA";
+        license = pkgs.lib.licenses.gpl2;
+        platforms = pkgs.lib.platforms.all;
+      };
+    };
+
     # Create a custom R with necessary packages bundled
     rWithPackages = pkgs.rWrapper.override {
       packages = with pkgs.rPackages; [
@@ -91,15 +159,17 @@
         # Meta-Analysis & Network Meta-Analysis
         meta
         netmeta
-        # NMA # Not available in nixpkgs
+        # NMA # Now using our custom build
 
         # R Markdown & Reporting
         rmarkdown
         knitr
         tinytex
       ] ++ [
-        # Add our custom kableExtra package
+        # Add our custom packages
         kableExtra
+        prisma2020
+        nma
       ];
     };
 
@@ -223,35 +293,35 @@
         }
         EOF
 
-        # List of packages to check and install if needed
-        # These packages are unavailable in nixpkgs
-        PACKAGES_TO_INSTALL=(
-          "NMA"
-          # "kableExtra" # Now using our custom build
-          # "PRISMA2020" # Endless build errors
-        )
+        # # List of packages to check and install if needed
+        # # These packages are unavailable in nixpkgs
+        # PACKAGES_TO_INSTALL=(
+        #   # "NMA" # Now using our custom build
+        #   # "kableExtra" # Now using our custom build
+        #   # "PRISMA2020" # Now using our custom build
+        # )
 
-        # Create a timestamp file to track last successful installation
-        INSTALL_TIMESTAMP="$HOME/.local/share/R/library/.last_install_timestamp"
-        CURRENT_TIME=$(date +%s)
+        # # Create a timestamp file to track last successful installation
+        # INSTALL_TIMESTAMP="$HOME/.local/share/R/library/.last_install_timestamp"
+        # CURRENT_TIME=$(date +%s)
 
-        # Only check for installations if timestamp file doesn't exist or is older than 1 day
-        # Use rm -f ~/.local/share/R/library/.last_install_timestamp to force reinstallation
-        if [ ! -f "$INSTALL_TIMESTAMP" ] || [ $((CURRENT_TIME - $(cat "$INSTALL_TIMESTAMP"))) -gt 86400 ]; then
-          echo "Checking for additional R packages..."
-          for pkg in "''${PACKAGES_TO_INSTALL[@]}"; do
-            if ! R --quiet -e "suppressWarnings(library('$pkg', quietly=TRUE, character.only=TRUE))" 2>/dev/null; then
-              echo "Installing $pkg package..."
-              R --quiet -e "install.packages('$pkg', lib=Sys.getenv('R_LIBS_USER'), repos='https://cran.rstudio.com/', quiet=TRUE)"
-              if [ $? -eq 0 ]; then
-                echo "$pkg package installed successfully."
-              else
-                echo "Failed to install $pkg package."
-              fi
-            else
-              echo "$pkg package is already installed."
-            fi
-          done
+        # # Only check for installations if timestamp file doesn't exist or is older than 1 day
+        # # Use rm -f ~/.local/share/R/library/.last_install_timestamp to force reinstallation
+        # if [ ! -f "$INSTALL_TIMESTAMP" ] || [ $((CURRENT_TIME - $(cat "$INSTALL_TIMESTAMP"))) -gt 86400 ]; then
+        #   echo "Checking for additional R packages..."
+        #   for pkg in "''${PACKAGES_TO_INSTALL[@]}"; do
+        #     if ! R --quiet -e "suppressWarnings(library('$pkg', quietly=TRUE, character.only=TRUE))" 2>/dev/null; then
+        #       echo "Installing $pkg package..."
+        #       R --quiet -e "install.packages('$pkg', lib=Sys.getenv('R_LIBS_USER'), repos='https://cran.rstudio.com/', quiet=TRUE)"
+        #       if [ $? -eq 0 ]; then
+        #         echo "$pkg package installed successfully."
+        #       else
+        #         echo "Failed to install $pkg package."
+        #       fi
+        #     else
+        #       echo "$pkg package is already installed."
+        #     fi
+        #   done
 
           # Check and install GitHub packages if needed
           if ! R --quiet -e "suppressWarnings(library('dmetar', quietly=TRUE, character.only=TRUE))" 2>/dev/null; then
