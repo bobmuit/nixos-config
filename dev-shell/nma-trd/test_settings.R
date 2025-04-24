@@ -39,27 +39,23 @@ meta_result <- metacont(
 print(meta_result)
 
 # Network meta-analysis preparation
-net_data <- netmeta::pairwise(
-    treat = treatment,
-    control = control,
-    n.treat = n_treatment,
-    n.cont = n_control,
-    mean.treat = mean_treatment,
-    mean.cont = mean_control,
-    sd.treat = sd_treatment,
-    sd.cont = sd_control,
-    studlab = study,
-    data = data
+# Instead of using pairwise, we'll use the netmeta function directly
+# with the appropriate data format
+net_data <- data.frame(
+    studlab = rep(data$study, 2),
+    treat = c(data$treatment, data$control),
+    n = c(data$n_treatment, data$n_control),
+    mean = c(data$mean_treatment, data$mean_control),
+    sd = c(data$sd_treatment, data$sd_control)
 )
 
 # Perform network meta-analysis
 net_result <- netmeta(
-    TE = TE,
-    seTE = seTE,
-    treat1 = treat1,
-    treat2 = treat2,
-    studlab = studlab,
-    data = net_data
+    TE = effect_size,
+    seTE = pooled_sd/sqrt(n_treatment + n_control),
+    treat = treatment,
+    studlab = study,
+    data = data_processed
 )
 
 # Print network meta-analysis results
