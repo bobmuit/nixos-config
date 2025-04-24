@@ -73,11 +73,8 @@
         nodejs.libv8
         # Add more
 
-        # texliveMedium
+        # Latex support
         texlive.combined.scheme-medium
-        # (texlive.combine {
-        #   inherit (texlive) scheme-medium;
-        # })
       ];
     
       shellHook = ''
