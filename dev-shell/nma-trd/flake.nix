@@ -74,6 +74,7 @@
         # Add more
 
         # texliveMedium
+        texlive.combined.scheme-medium
         # (texlive.combine {
         #   inherit (texlive) scheme-medium;
         # })
@@ -87,7 +88,6 @@
 
         echo "R development environment loaded!"
         # Set up a writable user library path
-
         export R_LIBS_USER="$HOME/.local/share/R/library"
         mkdir -p "$R_LIBS_USER"
         export R_PROFILE_USER=$PWD/.Rprofile
@@ -117,34 +117,34 @@
         }
         EOF
 
-        # List of packages to check and install if needed
-        # These packages are unavailable in nixpkgs
-        PACKAGES_TO_INSTALL=(
-          "NMA"
-          "PRISMA2020"
-          "kableExtra"
-        )
+        # # List of packages to check and install if needed
+        # # These packages are unavailable in nixpkgs
+        # PACKAGES_TO_INSTALL=(
+        #   "NMA"
+        #   "PRISMA2020"
+        #   "kableExtra"
+        # )
 
-        # Check and install packages if they're not already installed
-        echo "Checking for additional R packages..."
-        for pkg in "''${PACKAGES_TO_INSTALL[@]}"; do
-          if ! R --quiet -e "library('$pkg')" 2>/dev/null; then
-            echo "Installing $pkg package (this will only happen once)..."
-            R --quiet -e "install.packages('$pkg', lib=Sys.getenv('R_LIBS_USER'), repos='https://cran.rstudio.com/')"
-            echo "$pkg package installed successfully."
-          else
-            echo "$pkg package is already installed."
-          fi
-        done
+        # # Check and install packages if they're not already installed
+        # echo "Checking for additional R packages..."
+        # for pkg in "''${PACKAGES_TO_INSTALL[@]}"; do
+        #   if ! R --quiet -e "library('$pkg')" 2>/dev/null; then
+        #     echo "Installing $pkg package (this will only happen once)..."
+        #     R --quiet -e "install.packages('$pkg', lib=Sys.getenv('R_LIBS_USER'), repos='https://cran.rstudio.com/')"
+        #     echo "$pkg package installed successfully."
+        #   else
+        #     echo "$pkg package is already installed."
+        #   fi
+        # done
 
-        # Check and install GitHub packages if needed
-        if ! R --quiet -e "library('dmetar')" 2>/dev/null; then
-          echo "Installing dmetar from GitHub (this will only happen once)..."
-          R --quiet -e "if (!requireNamespace('remotes', quietly = TRUE)) install.packages('remotes', lib=Sys.getenv('R_LIBS_USER'), repos='https://cloud.r-project.org'); remotes::install_github('MathiasHarrer/dmetar', lib=Sys.getenv('R_LIBS_USER'))"
-          echo "dmetar package installed successfully."
-        else
-          echo "dmetar package is already installed."
-        fi
+        # # Check and install GitHub packages if needed
+        # if ! R --quiet -e "library('dmetar')" 2>/dev/null; then
+        #   echo "Installing dmetar from GitHub (this will only happen once)..."
+        #   R --quiet -e "if (!requireNamespace('remotes', quietly = TRUE)) install.packages('remotes', lib=Sys.getenv('R_LIBS_USER'), repos='https://cloud.r-project.org'); remotes::install_github('MathiasHarrer/dmetar', lib=Sys.getenv('R_LIBS_USER'))"
+        #   echo "dmetar package installed successfully."
+        # else
+        #   echo "dmetar package is already installed."
+        # fi
 
         # Don't automatically start R
         echo "To start R, type 'R' at the prompt."
