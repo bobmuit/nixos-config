@@ -1,19 +1,19 @@
 {
   "r.rterm.linux": "$${toString ./.}/cursor-r-wrapper.sh",
-  "r.rpath.linux": "/nix/store/wwixvds3h13vnpg37sy7a7bxdh9c21li-R-4.4.3-wrapper/bin/R",
+  "r.rpath.linux": "/nix/store/9akw41vydf6307xsxi4xjn53prn9xnf6-R-4.4.3-wrapper/bin/R",
   "r.lsp.enabled": true,
   "r.alwaysUseActiveTerminal": true,
   "r.bracketedPaste": true,
   "r.sessionWatcher": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "r-lsp.r-lsp",
-  "r.lsp.path": "/nix/store/wwixvds3h13vnpg37sy7a7bxdh9c21li-R-4.4.3-wrapper/bin/R",
+  "r.lsp.path": "/nix/store/9akw41vydf6307xsxi4xjn53prn9xnf6-R-4.4.3-wrapper/bin/R",
   "r.lsp.diagnostics": true,
   "r.lsp.completion": true,
   "r.lsp.hover": true,
   "r.lsp.signature": true,
   "r.libPaths": [
-    "/nix/store/wwixvds3h13vnpg37sy7a7bxdh9c21li-R-4.4.3-wrapper/lib/R/library",
+    "/nix/store/9akw41vydf6307xsxi4xjn53prn9xnf6-R-4.4.3-wrapper/lib/R/library",
     "$HOME/.local/share/R/library"
   ]
 }

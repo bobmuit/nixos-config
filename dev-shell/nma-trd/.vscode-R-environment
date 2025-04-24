@@ -1,3 +1,3 @@
 # R environment marker file for VSCode
-R_HOME=/nix/store/wwixvds3h13vnpg37sy7a7bxdh9c21li-R-4.4.3-wrapper/lib/R
-R_BINARY=/nix/store/wwixvds3h13vnpg37sy7a7bxdh9c21li-R-4.4.3-wrapper/bin/R
+R_HOME=/nix/store/9akw41vydf6307xsxi4xjn53prn9xnf6-R-4.4.3-wrapper/lib/R
+R_BINARY=/nix/store/9akw41vydf6307xsxi4xjn53prn9xnf6-R-4.4.3-wrapper/bin/R

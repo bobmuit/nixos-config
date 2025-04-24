@@ -10,6 +10,58 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
 
+    # Create a custom kableExtra package
+    kableExtra = pkgs.rPackages.buildRPackage {
+      name = "kableExtra-1.4.0";
+      pname = "kableExtra";
+      version = "1.4.0";
+      src = pkgs.fetchurl {
+        url = "https://cran.r-project.org/src/contrib/kableExtra_1.4.0.tar.gz";
+        sha256 = "02blaamz6xkdwgyvw6akjhn5fvwy8l24k7nwqj2id6g8qagwrqlg";
+      };
+      nativeBuildInputs = with pkgs; [
+        pkg-config
+      ];
+      propagatedBuildInputs = with pkgs.rPackages; [
+        # Required imports
+        knitr
+        magrittr
+        stringr
+        xml2
+        rmarkdown
+        scales
+        viridisLite
+        htmltools
+        rstudioapi
+        digest
+        svglite
+        
+        # Suggested packages
+        magick
+        tinytex
+        formattable
+        sparkline
+        webshot2
+        
+        # Additional dependencies
+        rvest
+        readr
+        rlang
+        dplyr
+        png
+        jpeg
+        base64enc
+        highr
+        evaluate
+        glue
+      ];
+      meta = {
+        homepage = "https://cran.r-project.org/package=kableExtra";
+        license = pkgs.lib.licenses.mit;
+        platforms = pkgs.lib.platforms.all;
+      };
+    };
+
     # Create a custom R with necessary packages bundled
     rWithPackages = pkgs.rWrapper.override {
       packages = with pkgs.rPackages; [
@@ -45,11 +97,9 @@
         rmarkdown
         knitr
         tinytex
-        # kableExtra # Not available in nixpkgs
-
-        # Other Tools
-        # PRISMA2020 # Not available in nixpkgs
-        RISmed
+      ] ++ [
+        # Add our custom kableExtra package
+        kableExtra
       ];
     };
 
@@ -177,8 +227,8 @@
         # These packages are unavailable in nixpkgs
         PACKAGES_TO_INSTALL=(
           "NMA"
+          # "kableExtra" # Now using our custom build
           # "PRISMA2020" # Endless build errors
-          # "kableExtra" # Endless build errors
         )
 
         # Create a timestamp file to track last successful installation
