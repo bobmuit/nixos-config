@@ -10,6 +10,7 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
 
+    # Building packages from CRAN unavailable in nixpkgs
     # Create a custom kableExtra package
     kableExtra = pkgs.rPackages.buildRPackage {
       name = "kableExtra-1.4.0";
@@ -200,7 +201,6 @@
         echo "R development environment loaded!"
         
         # Set up R environment variables
-        export R_HOME=${rWithPackages}/lib/R
         export R_LIBS_USER="$HOME/.local/share/R/library"
         export R_LIBS_SITE="${rWithPackages}/lib/R/library"
         export R_PROFILE_USER=$PWD/.Rprofile
@@ -209,32 +209,6 @@
         
         # Create necessary directories
         mkdir -p "$R_LIBS_USER"
-        
-        # Install jsonlite in user library if not already installed
-        echo "Ensuring jsonlite is installed in user library..."
-        R --quiet -e 'if (!requireNamespace("jsonlite", quietly = TRUE)) { 
-          install.packages("jsonlite", 
-                          lib=Sys.getenv("R_LIBS_USER"), 
-                          repos="https://cloud.r-project.org", 
-                          quiet=TRUE,
-                          dependencies=TRUE) 
-        }'
-        
-        # Verify jsonlite installation
-        echo "Verifying jsonlite installation..."
-        R --quiet -e 'if (!requireNamespace("jsonlite", quietly = TRUE)) { 
-          stop("Failed to install jsonlite package") 
-        } else { 
-          cat("jsonlite package is installed and available\n") 
-        }'
-        
-        # Force install jsonlite in user library to ensure it's available
-        echo "Force installing jsonlite in user library..."
-        R --quiet -e 'install.packages("jsonlite", 
-                                      lib=Sys.getenv("R_LIBS_USER"), 
-                                      repos="https://cloud.r-project.org", 
-                                      quiet=TRUE,
-                                      dependencies=TRUE)'
         
         # Create a file that VSCode R extension can use to detect R
         mkdir -p .vscode
@@ -293,51 +267,28 @@
         }
         EOF
 
-        # # List of packages to check and install if needed
-        # # These packages are unavailable in nixpkgs
-        # PACKAGES_TO_INSTALL=(
-        #   # "NMA" # Now using our custom build
-        #   # "kableExtra" # Now using our custom build
-        #   # "PRISMA2020" # Now using our custom build
-        # )
+        # Create a timestamp file to track last successful installation
+        INSTALL_TIMESTAMP="$HOME/.local/share/R/library/.last_install_timestamp"
+        CURRENT_TIME=$(date +%s)
 
-        # # Create a timestamp file to track last successful installation
-        # INSTALL_TIMESTAMP="$HOME/.local/share/R/library/.last_install_timestamp"
-        # CURRENT_TIME=$(date +%s)
-
-        # # Only check for installations if timestamp file doesn't exist or is older than 1 day
-        # # Use rm -f ~/.local/share/R/library/.last_install_timestamp to force reinstallation
-        # if [ ! -f "$INSTALL_TIMESTAMP" ] || [ $((CURRENT_TIME - $(cat "$INSTALL_TIMESTAMP"))) -gt 86400 ]; then
-        #   echo "Checking for additional R packages..."
-        #   for pkg in "''${PACKAGES_TO_INSTALL[@]}"; do
-        #     if ! R --quiet -e "suppressWarnings(library('$pkg', quietly=TRUE, character.only=TRUE))" 2>/dev/null; then
-        #       echo "Installing $pkg package..."
-        #       R --quiet -e "install.packages('$pkg', lib=Sys.getenv('R_LIBS_USER'), repos='https://cran.rstudio.com/', quiet=TRUE)"
-        #       if [ $? -eq 0 ]; then
-        #         echo "$pkg package installed successfully."
-        #       else
-        #         echo "Failed to install $pkg package."
-        #       fi
-        #     else
-        #       echo "$pkg package is already installed."
-        #     fi
-        #   done
-
+        # Only check for installations if timestamp file doesn't exist or is older than 1 day
+        if [ ! -f "$INSTALL_TIMESTAMP" ] || [ $((CURRENT_TIME - $(cat "$INSTALL_TIMESTAMP"))) -gt 86400 ]; then
           # Check and install GitHub packages if needed
           if ! R --quiet -e "suppressWarnings(library('dmetar', quietly=TRUE, character.only=TRUE))" 2>/dev/null; then
             echo "Installing dmetar from GitHub..."
             R --quiet -e "if (!requireNamespace('remotes', quietly = TRUE)) install.packages('remotes', lib=Sys.getenv('R_LIBS_USER'), repos='https://cloud.r-project.org', quiet=TRUE); remotes::install_github('MathiasHarrer/dmetar', lib=Sys.getenv('R_LIBS_USER'), quiet=TRUE)"
             if [ $? -eq 0 ]; then
               echo "dmetar package installed successfully."
+              # Update timestamp after successful installation
+              echo "$CURRENT_TIME" > "$INSTALL_TIMESTAMP"
             else
               echo "Failed to install dmetar package."
             fi
           else
             echo "dmetar package is already installed."
+            # Update timestamp since package is already installed
+            echo "$CURRENT_TIME" > "$INSTALL_TIMESTAMP"
           fi
-
-          # Update timestamp after successful installation
-          echo "$CURRENT_TIME" > "$INSTALL_TIMESTAMP"
         else
           echo "Package installation check skipped (last check was less than 24 hours ago)"
         fi
