@@ -161,6 +161,13 @@
     zotero
     teams-for-linux
     
+    # Coding
+    # N.B. Manage packages through flake.nix in project folder (dev env)
+    pkgs-unstable.code-cursor
+    R
+    rPackages.languageserver
+    nixd
+
     # Security
     bitwarden-desktop
     tailscale
