@@ -200,6 +200,9 @@
 
     # Browsers
     ungoogled-chromium
+
+    # Flatpak GUI
+    gnome-software
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
