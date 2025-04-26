@@ -91,6 +91,28 @@
     ];
   };
 
+  # Add photo folder on Synology as network share
+  fileSystems."/mnt/synology/photo" = {
+    device = "//192.168.1.180/photo";  # Replace with your server IP and share
+    fsType = "cifs";
+    options = [
+      "credentials=//home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
+      "rw"
+      "nofail" # Boot even if share fails to mount
+      "noauto"  # Prevents automatic mounting at boot
+      "x-systemd.automount"  # Mounts only when accessed
+      "x-systemd.requires=network-online.target"  # Ensures network is up before mounting
+      "x-systemd.idle-timeout=600"  # Unmounts after 10 minutes of inactivity
+      "iocharset=utf8"
+      "vers=3.0"  # Adjust based on your server's supported SMB version
+      "uid=1000"
+      "gid=100"
+      "file_mode=0775"
+      "dir_mode=0775"
+      "noperm"            # Ignore server permissions
+    ];
+  };
+
   # Add bob-storage folder on Synology as network share
   #fileSystems."/mnt/nixos-pi/home" = {
   #  device = "//192.168.1.63/home";  # Replace with your server IP and share
