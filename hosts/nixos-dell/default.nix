@@ -152,8 +152,11 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
         
-    # System
+    # Desktop
     gnomeExtensions.dash-to-dock
+    gnome-menus
+
+    # Home-manager
     home-manager
 
     # Work
