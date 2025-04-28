@@ -32,20 +32,20 @@
   };
 
   # Add media folder on Synology as network share
-  fileSystems."/mnt/synology/media" = {
-    device = "//192.168.1.180/media";  # Replace with your server IP and share
-    fsType = "cifs";
-    options = [
-      "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
-      "rw"
-      "nofail" # Boot even if share fails to mount
-      "x-systemd.automount"  # Mounts only when accessed
-      "x-systemd.requires=network-online.target"  # Ensures network is up before mounting
-      "x-systemd.idle-timeout=600"  # Unmounts after 10 minutes of inactivity
-      "iocharset=utf8"
-      "vers=3.0"  # Adjust based on your server's supported SMB version
-    ];
-  };
+  # fileSystems."/mnt/synology/media" = {
+  #   device = "//192.168.1.180/usbshare1/media";  # Replace with your server IP and share
+  #   fsType = "cifs";
+  #   options = [
+  #     "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
+  #     "rw"
+  #     "nofail" # Boot even if share fails to mount
+  #     "x-systemd.automount"  # Mounts only when accessed
+  #     "x-systemd.requires=network-online.target"  # Ensures network is up before mounting
+  #     "x-systemd.idle-timeout=600"  # Unmounts after 10 minutes of inactivity
+  #     "iocharset=utf8"
+  #     "vers=3.0"  # Adjust based on your server's supported SMB version
+  #   ];
+  # };
 
   # Add marloes-bob folder on Synology as network share
   fileSystems."/mnt/synology/marloes-bob" = {
