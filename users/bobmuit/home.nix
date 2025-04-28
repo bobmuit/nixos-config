@@ -15,9 +15,6 @@
   imports = [
     ../../modules/home-manager/programs/browsers.nix
     ../../modules/home-manager/programs/shells.nix
-
-    # Not using coding.nix, managed by dev shell
-    # ../../modules/home-manager/programs/coding.nix
   ];
 
   # Packages that should be installed to the user profile.
@@ -25,13 +22,32 @@
     # Desktop
     gnomeExtensions.applications-menu
 
-    # Coding
-    # N.B. Manage packages through flake.nix in project folder (dev env)
-    R
-    rPackages.languageserver
-    
-    # rstudio
-    nixd
+    # Prevent dev-shells from being garbage collected
+    # Run 'nix-dev' to enable dev-shell flake and create profile
+    (pkgs.writeShellScriptBin "nix-dev" ''
+        set -euo pipefail
+
+        PROFILE_DIR="$HOME/.nix-devenvs"
+        mkdir -p "$PROFILE_DIR"
+
+        # Try to get Git project name
+        if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+          GIT_ROOT=$(git rev-parse --show-toplevel)
+          PROJECT_NAME=$(basename "$GIT_ROOT")
+        else
+          PROJECT_NAME="no-git"
+        fi
+
+        # Add short hash to the project name (for uniqueness)
+        PROJECT_HASH=$(echo "$PWD" | sha256sum | cut -c1-8)
+
+        # Combine git project name and hash
+        PROFILE_PATH="$PROFILE_DIR/$PROJECT_NAME-$PROJECT_HASH"
+
+        echo "Launching nix develop with profile: $PROFILE_PATH"
+        exec nix develop --profile "$PROFILE_PATH" "$@"
+    '')
+
   ];
 
   # VSCodium settings
@@ -71,11 +87,6 @@
     enable = true;
     userName = "Bob Muit";
     userEmail = "bob@bobmuit.nl";
-  };
-
-    # Universal justfile
-  home.sessionVariables = {
-    JUSTFILE = "/home/bobmuit/nixos-config/users/bobmuit/justfile"; # not working
   };
 
   # Joplin settings
