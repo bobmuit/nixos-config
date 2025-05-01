@@ -71,7 +71,7 @@
   # networking.nameservers = ["100.104.67.42" "192.168.1.2"]; 
 
   # Set DNS to common nameservers, bypassing pi-hole
-  networking.nameservers = ["1.1.1.1 8.8.8.8"];
+  networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
