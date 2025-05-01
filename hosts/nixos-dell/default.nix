@@ -63,6 +63,7 @@
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client"; # allow exit node use
+    extraUpFlags = [ "--accept-routes" ]; # accept subnet routing
   };
 
   # Set DNS nameservers to a combination of
