@@ -115,6 +115,7 @@
       enabled-extensions = [
         "dash-to-dock@micxgx.gmail.com"
         "applications-menu@gnome-shell-extensions.gcampax.github.com"
+        "status-icons@gnome-shell-extensions.gcampax.github.com"  # Add the status-icons extension
       ];
     };
 
