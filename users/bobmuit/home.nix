@@ -82,6 +82,15 @@
   }
 '';
 
+  # Autostart SynologyDrive on startup
+  home.file.".config/autostart/synology-drive.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=Synology Drive
+    Exec=/run/current-system/sw/bin/synology-drive
+    X-GNOME-Autostart-enabled=true
+  '';
+
   # Git settings
   programs.git = {
     enable = true;
