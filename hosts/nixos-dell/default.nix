@@ -173,7 +173,7 @@
     nixd
 
     # Security
-    bitwarden-desktop
+    pkgs-unstable.bitwarden-desktop
     tailscale
     
     # Homelab
