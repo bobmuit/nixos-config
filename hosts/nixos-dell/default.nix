@@ -170,6 +170,9 @@
     ];
   };
 
+  # Disable root login
+  users.users.root.hashedPassword = "!";  # disables login with password
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
