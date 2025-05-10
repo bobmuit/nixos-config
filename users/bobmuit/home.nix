@@ -109,13 +109,33 @@
       button-layout = ":minimize,maximize,close";
     };
     
-    # Enable extensions
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+
+    
     "org/gnome/shell" = {
+      # Enable extensions
       disable-user-extensions = false;
       enabled-extensions = [
         "dash-to-dock@micxgx.gmail.com"
         "applications-menu@gnome-shell-extensions.gcampax.github.com"
-        "status-icons@gnome-shell-extensions.gcampax.github.com"  # Add the status-icons extension
+        "status-icons@gnome-shell-extensions.gcampax.github.com"
+      ];
+
+      # Arrange favourite apps
+      favorite-apps = [
+        "org.gnome.Nautilus.desktop"
+        "protonmail-desktop.desktop"
+        "kuro.desktop"
+        "joplin-desktop.desktop"
+        "firefox.desktop"
+        "bitwarden.desktop"
+        "codium.desktop"
+        "spotify.desktop"
+        "vmware-view.desktop"
+        "teams-for-linux.desktop"
+        "zotero.desktop"
       ];
     };
 
