@@ -28,6 +28,30 @@
     download-buffer-size = 104857600; # 100 MB (or adjust as needed)
   };
 
+  # Btrfs filesystem
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nixos-root";
+    fsType = "btrfs";
+    options = [ "subvol=@" "compress=zstd" ];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-label/nixos-root";
+    fsType = "btrfs";
+    options = [ "subvol=@home" "compress=zstd" ];
+  };
+
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-label/nixos-root";
+    fsType = "btrfs";
+    options = [ "subvol=@nix" "compress=zstd" "noatime" ];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/EFI";
+    fsType = "vfat";
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
