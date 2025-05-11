@@ -58,21 +58,37 @@
     fsType = "vfat";
   };
 
-  # Bootloader.
+  # Enable swap
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      options = [ "noatime" "compress=no" ];
+    }
+  ];
+
+  # Create swapfile
+  systemd.services.createSwapfile = {
+    description = "Create swapfile";
+    wantedBy = [ "multi-user.target" ];
+
+    script = ''
+      if [ ! -f /swap/swapfile ]; then
+        touch /swap/swapfile
+        chattr +C /swap/swapfile
+        fallocate -l 33529M /swap/swapfile
+        chmod 600 /swap/swapfile
+        mkswap /swap/swapfile
+      fi
+    '';
+  };
+
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Disable Plymouth for faster boot times
   boot.plymouth.enable = false;
   # boot.plymouth.theme = "spinner";
-
-    # Enable swap
-    swapDevices = [
-        {
-            device = "/swapfile";
-            size = 33529; # in MB, optional if already created
-        }
-    ];
 
   networking.hostName = "nixos-dell"; # Define your hostname.
   networking.wireless.enable = false;  # Enables wireless support via wpa_supplicant.
