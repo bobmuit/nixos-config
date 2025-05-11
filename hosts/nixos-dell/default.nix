@@ -44,7 +44,13 @@
   fileSystems."/nix" = {
     device = "/dev/disk/by-label/nixos-root";
     fsType = "btrfs";
-    options = [ "subvol=@nix" "compress=zstd" "noatime" "ssd" "relatime" ];
+    options = [ "subvol=@nix" "compress=zstd" "noatime" "ssd" ];
+  };
+
+  fileSystems."/swap" = {
+    device = "/dev/disk/by-label/nixos-root";
+    fsType = "btrfs";
+    options = [ "subvol=@swap" "noatime" "compress=no" ];
   };
 
   fileSystems."/boot" = {
@@ -64,7 +70,7 @@
     swapDevices = [
         {
             device = "/swapfile";
-            size = 4096; # in MB, optional if already created
+            size = 33529; # in MB, optional if already created
         }
     ];
 
