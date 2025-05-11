@@ -32,19 +32,19 @@
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos-root";
     fsType = "btrfs";
-    options = [ "subvol=@" "compress=zstd" ];
+    options = [ "subvol=@" "compress=zstd" "ssd" "relatime" ];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-label/nixos-root";
     fsType = "btrfs";
-    options = [ "subvol=@home" "compress=zstd" ];
+    options = [ "subvol=@home" "compress=zstd" "ssd" "relatime" ];
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-label/nixos-root";
     fsType = "btrfs";
-    options = [ "subvol=@nix" "compress=zstd" "noatime" ];
+    options = [ "subvol=@nix" "compress=zstd" "noatime" "ssd" "relatime" ];
   };
 
   fileSystems."/boot" = {
