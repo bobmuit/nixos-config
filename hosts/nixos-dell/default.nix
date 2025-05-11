@@ -204,7 +204,6 @@
         
     # Desktop
     gnomeExtensions.dash-to-dock
-    gnome-menus
 
     # Home-manager
     home-manager

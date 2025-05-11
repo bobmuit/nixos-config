@@ -19,9 +19,6 @@
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    # Desktop
-    gnomeExtensions.applications-menu
-
     # Prevent dev-shells from being garbage collected
     # Run 'nix-dev' to enable dev-shell flake and create profile
     (pkgs.writeShellScriptBin "nix-dev" ''
@@ -99,8 +96,21 @@
   };
 
   # Joplin settings
-  programs.joplin-desktop.enable = true;
-  # TODO add configuration from Win10
+  programs.joplin-desktop = {
+    enable = true;
+    sync = {
+      target = "joplin-server";
+      interval = "5m";
+    };
+    extraConfig = {
+      "sync.target" = 9;
+      "sync.9.path" = "http://192.168.1.180:22300";
+      "sync.9.username" = "bob@bobmuit.nl";
+      "locale" = "en_GB";
+      "theme" = 2;
+      "themeAutoDetect" = true;
+    };
+  };
 
   # Gnome settings
   dconf.settings = {
@@ -113,13 +123,11 @@
       color-scheme = "prefer-dark";
     };
 
-    
     "org/gnome/shell" = {
       # Enable extensions
       disable-user-extensions = false;
       enabled-extensions = [
         "dash-to-dock@micxgx.gmail.com"
-        "applications-menu@gnome-shell-extensions.gcampax.github.com"
         "status-icons@gnome-shell-extensions.gcampax.github.com"
       ];
 
