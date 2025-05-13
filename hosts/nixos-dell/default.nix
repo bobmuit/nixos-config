@@ -29,6 +29,10 @@
   };
 
   # Btrfs filesystem
+  # Important to create the btrfs partition with correct label and subvolumes
+  # when reinstalling. 
+  # TODO: Reinstall with LUKS2 encryption
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos-root";
     fsType = "btrfs";
