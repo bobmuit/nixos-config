@@ -155,6 +155,9 @@
   systemd.user.services.gnome-software-service.enable = false; # updates by Nix
   systemd.user.services.gnome-software-daemon.enable = false;
 
+  # Enable i3 window manager
+  services.xserver.windowManager.i3.enable = true;
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -206,8 +209,15 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
         
-    # Desktop
+    # Gnome
     gnomeExtensions.dash-to-dock
+
+    # i3
+    i3 # i3 window manager
+    i3status # optional: system status bar
+    rofi # optional: app launcher
+    i3lock # optional: lock screen
+    feh # optional: wallpaper setting
 
     # Home-manager
     home-manager
