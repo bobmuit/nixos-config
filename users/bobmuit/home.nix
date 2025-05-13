@@ -95,6 +95,13 @@
     userEmail = "bob@bobmuit.nl";
   };
 
+  # Clone nixos-config git repo
+  home.activation.cloneNixosConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -d "${config.home.homeDirectory}/nixos-config/.git" ]; then
+      git clone https://github.com/bobmuit/nixos-config.git "${config.home.homeDirectory}/nixos-config"
+    fi
+  '';
+
   # Joplin settings
   programs.joplin-desktop = {
     enable = true;
@@ -134,7 +141,7 @@
       # Arrange favourite apps
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
-        "protonmail-desktop.desktop"
+        "proton-mail.desktop"
         "kuro.desktop"
         "joplin-desktop.desktop"
         "firefox.desktop"
