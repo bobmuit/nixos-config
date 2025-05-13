@@ -212,13 +212,6 @@
     # Gnome
     gnomeExtensions.dash-to-dock
 
-    # i3
-    i3 # i3 window manager
-    i3status # optional: system status bar
-    rofi # optional: app launcher
-    i3lock # optional: lock screen
-    feh # optional: wallpaper setting
-
     # Home-manager
     home-manager
 
