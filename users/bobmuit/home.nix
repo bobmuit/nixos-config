@@ -15,7 +15,6 @@
   imports = [
     ../../modules/home-manager/programs/browsers.nix
     ../../modules/home-manager/programs/shells.nix
-    ../../modules/home-manager/programs/i3.nix
   ];
 
   # Packages that should be installed to the user profile.
