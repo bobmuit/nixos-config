@@ -52,6 +52,10 @@
               url = "https://chatgpt.com/";
             }
             {
+              name = "Gemini";
+              url = "https://gemini.google.com/app";
+            }
+            {
               name = "GitHub";
               url = "https://github.com/";
             }
@@ -59,6 +63,8 @@
               name = "NixOS Discourse";
               url = "https://discourse.nixos.org/";
             }
+
+            
           ];
         }
       ];
