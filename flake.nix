@@ -12,8 +12,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, firefox-addons, nixos-hardware, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, firefox-addons, nixos-hardware, sops-nix, ... }@inputs:
     let
       system = "x86_64-linux";
       aarch64-system = "aarch64-linux"; # For the Raspberry Pi
