@@ -15,6 +15,9 @@
 
       # Include samba shares
       ../../modules/nixos/services/smb-client/default.nix
+
+      # Sops-nix
+      inputs.sops-nix.nixosModules.sops
     ];
 
   nix.settings = {
@@ -214,6 +217,9 @@
 
     # Home-manager
     home-manager
+
+    # Sops-nix
+    sops
 
     # Work
     vmware-horizon-client
