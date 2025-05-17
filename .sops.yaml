@@ -1,0 +1,7 @@
+keys:
+  - &bob age18zyqp8ldn28ggxv0rp4gjfvnpedf0hvxhysyhqe5xdpf0k0kaqxqg3mrlx
+creation_rules:
+  - path_regex: secrets/nixos-dell/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+      age:
+      - *bob
