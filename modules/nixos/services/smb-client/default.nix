@@ -13,9 +13,10 @@
   }; 
 
   sops.secrets."smb-credentials" = {
-    sopsFile = ./secrets/nixos-dell/samba-synology.ini;
+    sopsFile = ../../../../secrets/nixos-dell/samba-synology.ini;
     owner = "root";
     group = "root";
+    format = "binary";
     mode = "0600"; # Very important!
     path = "/etc/samba/smb-credentials";
   };
