@@ -8,3 +8,4 @@ pihole-credentials
 .env
 *credentials*
 smb-credentials-syno-marloes
+keys.txt
