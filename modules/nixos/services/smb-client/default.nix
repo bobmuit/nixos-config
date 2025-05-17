@@ -12,6 +12,14 @@
     package = pkgs.samba;
   }; 
 
+  sops.secrets."smb-credentials" = {
+    sopsFile = ./secrets/nixos-dell/samba-synology.ini;
+    owner = "root";
+    group = "root";
+    mode = "0600"; # Very important!
+    path = "/etc/samba/smb-credentials";
+  };
+
   # Add docker folder on Synology as network share
   fileSystems."/mnt/synology/docker" = {
     device = "//192.168.1.180/docker";  # Replace with your server IP and share
@@ -52,7 +60,7 @@
     device = "//192.168.1.180/marloes-bob";  # Replace with your server IP and share
     fsType = "cifs";
     options = [
-      "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
+      "credentials=/etc/samba/smb-credentials"
       "rw"
       "nofail" # Boot even if share fails to mount
       "noauto"  # Prevents automatic mounting at boot
