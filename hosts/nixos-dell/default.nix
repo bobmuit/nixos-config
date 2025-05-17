@@ -31,6 +31,8 @@
     download-buffer-size = 104857600; # 100 MB (or adjust as needed)
   };
 
+  sops.age.keyFile = "/home/bobmuit/.config/sops/age/key.txt";
+
   # Btrfs filesystem
   # Important to create the btrfs partition with correct label and subvolumes
   # when reinstalling. 
