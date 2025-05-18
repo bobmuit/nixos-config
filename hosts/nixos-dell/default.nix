@@ -16,6 +16,9 @@
       # Include samba shares
       ../../modules/nixos/services/smb-client/default.nix
 
+      # Include samba credentials
+      # ../../secrets/nixos-dell/samba-synology.nix
+
       # Sops-nix
       inputs.sops-nix.nixosModules.sops
     ];
@@ -31,7 +34,9 @@
     download-buffer-size = 104857600; # 100 MB (or adjust as needed)
   };
 
+  # Defining sops-nix keyfile
   sops.age.keyFile = "/etc/sops/age/key.txt";
+  environment.variables.SOPS_AGE_KEY_FILE = "/etc/sops/age/key.txt";
 
   # Btrfs filesystem
   # Important to create the btrfs partition with correct label and subvolumes

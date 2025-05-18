@@ -12,14 +12,23 @@
     package = pkgs.samba;
   }; 
 
-  sops.secrets."smb-credentials" = {
+  sops.secrets."samba-synology" = {
     sopsFile = ../../../../secrets/nixos-dell/samba-synology.ini;
     owner = "root";
     group = "root";
-    format = "binary";
+    format = "ini";
     mode = "0600"; # Very important!
-    path = "/etc/samba/smb-credentials";
+    path = "/etc/samba/samba-synology.ini";
   };
+
+  # Create the mount directories
+  systemd.tmpfiles.rules = [
+    "d /mnt/synology 0755 root root -"
+    "d /mnt/synology/docker 0755 root root -"
+    "d /mnt/synology/marloes-bob 0755 root root -"
+    "d /mnt/synology/bob-storage 0755 root root -"
+    "d /mnt/synology/photo 0755 root root -"
+  ];
 
   # Add docker folder on Synology as network share
   fileSystems."/mnt/synology/docker" = {
@@ -61,7 +70,7 @@
     device = "//192.168.1.180/marloes-bob";  # Replace with your server IP and share
     fsType = "cifs";
     options = [
-      "credentials=/etc/samba/smb-credentials"
+      "credentials=/etc/samba/samba-synology.ini"
       "rw"
       "nofail" # Boot even if share fails to mount
       "noauto"  # Prevents automatic mounting at boot
