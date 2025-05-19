@@ -22,13 +22,13 @@
   };
 
   # Create the mount directories
-  systemd.tmpfiles.rules = [
-    "d /mnt/synology 0755 root root -"
-    "d /mnt/synology/docker 0755 root root -"
-    "d /mnt/synology/marloes-bob 0755 root root -"
-    "d /mnt/synology/bob-storage 0755 root root -"
-    "d /mnt/synology/photo 0755 root root -"
-  ];
+  # systemd.tmpfiles.rules = [
+  #   "d /mnt/synology 0755 root root -"
+  #   "d /mnt/synology/docker 0755 root root -"
+  #   "d /mnt/synology/marloes-bob 0755 root root -"
+  #   "d /mnt/synology/bob-storage 0755 root root -"
+  #   "d /mnt/synology/photo 0755 root root -"
+  # ];
 
   # Add docker folder on Synology as network share
   fileSystems."/mnt/synology/docker" = {
