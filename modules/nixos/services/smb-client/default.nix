@@ -13,7 +13,7 @@
   }; 
 
   sops.secrets."samba-synology" = {
-    sopsFile = ../../../../secrets/nixos-dell/samba-synology.ini;
+    sopsFile = ../../../../secrets/nixos-dell/samba-synology.env;
     owner = "root";
     group = "root";
     format = "ini";
