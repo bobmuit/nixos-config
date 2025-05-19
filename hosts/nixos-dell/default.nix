@@ -34,10 +34,6 @@
     download-buffer-size = 104857600; # 100 MB (or adjust as needed)
   };
 
-  # Defining sops-nix keyfile
-  sops.age.keyFile = "/etc/sops/age/key.txt";
-  environment.variables.SOPS_AGE_KEY_FILE = "/etc/sops/age/key.txt";
-
   # Btrfs filesystem
   # Important to create the btrfs partition with correct label and subvolumes
   # when reinstalling. 
@@ -224,9 +220,6 @@
 
     # Home-manager
     home-manager
-
-    # Sops-nix
-    sops
 
     # Work
     vmware-horizon-client
