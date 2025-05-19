@@ -1,11 +1,6 @@
 result/
 result
 logs/
-wg-conf/
-smb-credentials-syno
 smb-credentials-nixos-pi
 pihole-credentials
-.env
-*credentials*
-smb-credentials-syno-marloes
 keys.txt

@@ -37,8 +37,12 @@
           ./hosts/nixos-dell
           nixos-hardware.nixosModules.dell-latitude-7490
           sops-nix.nixosModules.sops
+
           home-manager.nixosModules.home-manager
           {
+            # Pass sops-nix secretsDir as argument to all modules
+            _module.args.secretsDir = ./secrets/nixos-dell;
+
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             # Enable backups

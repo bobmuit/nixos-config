@@ -12,30 +12,12 @@
     package = pkgs.samba;
   }; 
 
-  sops.secrets."samba-synology" = {
-    sopsFile = ../../../../secrets/nixos-dell/samba-synology.env;
-    owner = "root";
-    group = "root";
-    format = "ini";
-    mode = "0600"; # Very important!
-    path = "/etc/samba/samba-synology.ini";
-  };
-
-  # Create the mount directories
-  # systemd.tmpfiles.rules = [
-  #   "d /mnt/synology 0755 root root -"
-  #   "d /mnt/synology/docker 0755 root root -"
-  #   "d /mnt/synology/marloes-bob 0755 root root -"
-  #   "d /mnt/synology/bob-storage 0755 root root -"
-  #   "d /mnt/synology/photo 0755 root root -"
-  # ];
-
   # Add docker folder on Synology as network share
   fileSystems."/mnt/synology/docker" = {
     device = "//192.168.1.180/docker";  # Replace with your server IP and share
     fsType = "cifs";
     options = [
-      "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
+      "credentials=/etc/samba/samba-synology.ini"
       "rw"
       "nofail" # Boot even if share fails to mount
       "noauto"  # Prevents automatic mounting at boot
@@ -54,7 +36,7 @@
   #   device = "//192.168.1.180/usbshare1/media";  # Replace with your server IP and share
   #   fsType = "cifs";
   #   options = [
-  #     "credentials=/home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
+  #     "credentials=/etc/samba/samba-synology.ini"
   #     "rw"
   #     "nofail" # Boot even if share fails to mount
   #     "x-systemd.automount"  # Mounts only when accessed
@@ -92,7 +74,7 @@
     device = "//192.168.1.180/bob-storage";  # Replace with your server IP and share
     fsType = "cifs";
     options = [
-      "credentials=//home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
+      "credentials=//etc/samba/samba-synology.ini"
       "rw"
       "nofail" # Boot even if share fails to mount
       "noauto"  # Prevents automatic mounting at boot
@@ -114,7 +96,7 @@
     device = "//192.168.1.180/photo";  # Replace with your server IP and share
     fsType = "cifs";
     options = [
-      "credentials=//home/bobmuit/nixos-config/modules/nixos/services/smb-client/smb-credentials-syno"
+      "credentials=//etc/samba/samba-synology.ini"
       "rw"
       "nofail" # Boot even if share fails to mount
       "noauto"  # Prevents automatic mounting at boot

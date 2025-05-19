@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, pkgs-unstable, inputs, ... }:
+{ config, pkgs, pkgs-unstable, inputs, secretsDir, ... }:
 
 {
   imports =
@@ -16,8 +16,8 @@
       # Include samba shares
       ../../modules/nixos/services/smb-client/default.nix
 
-      # Include samba credentials
-      # ../../secrets/nixos-dell/samba-synology.nix
+      # Include sops-nix secrets
+      ../../secrets/nixos-dell
 
       # Sops-nix
       inputs.sops-nix.nixosModules.sops
