@@ -68,6 +68,32 @@
     fsType = "vfat";
   };
 
+  # Snapshot location for root
+  fileSystems."/.snapshots" = {
+    device = "/dev/disk/by-label/nixos-root";
+    fsType = "btrfs";
+    options = [ "subvol=@/.snapshots" "compress=zstd" "ssd" "noatime" ];
+  };
+
+  # Btrfs automated snapshots
+  services.snapper = {
+    configs = {
+      root = {
+        SUBVOLUME = "/";
+        ALLOW_USERS = [ "bobmuit" ];
+        TIMELINE_CREATE = true;
+        TIMELINE_CLEANUP = true;
+        TIMELINE_LIMIT_HOURLY = "6";
+        TIMELINE_LIMIT_DAILY  = "7";
+        TIMELINE_LIMIT_WEEKLY = "2";
+        TIMELINE_LIMIT_MONTHLY = "1";
+      };
+    };
+  };
+
+  systemd.timers.snapper-timeline.enable = true;
+  systemd.timers.snapper-cleanup.enable = true;
+
   # Enable swap
   swapDevices = [
     {
