@@ -268,6 +268,11 @@
 
     # Flatpak GUI
     gnome-software
+
+    # Managing btrfs snapshots
+    snapper
+
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
