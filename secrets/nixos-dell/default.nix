@@ -7,6 +7,8 @@
   ];
 
   # Defining sops-nix keyfile
+  # Please note that this is a file you have to manually add to this location
+  # This file is currently backed up in Bitwarden
   sops.age.keyFile = "/etc/sops/age/key.txt";
 
   # Making the location of the keyfile available in the shell
