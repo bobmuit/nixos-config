@@ -164,6 +164,17 @@
       dash-max-icon-size = 32; # Set the maximum icon size
       panel-mode = true; # Enable panel mode to stretch horizontally
     };
+
+    # Disable unneccessary Gnome services
+    "org/gnome/settings-daemon/plugins/print-notifications" = {
+      active = "false";
+    };
+    "org/gnome/settings-daemon/plugins/smartcard" = {
+      active = "false";
+    };
+    "org/gnome/settings-daemon/plugins/wacom" = {
+      active = "false";
+    };
   };
 
   # This value determines the home Manager release that your
