@@ -69,6 +69,7 @@
       "r.lsp.enabled" = true;
       "r.lsp.args" = ["--vanilla"]; # Optional: Prevent loading user profiles
       "r.lsp.diagnostics" = true; # Enable linting for R code
+      "editor.wordWrap" = "on";
     };
   };
 
