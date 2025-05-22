@@ -187,9 +187,6 @@
   systemd.user.services.gnome-software-service.enable = false; # updates by Nix
   systemd.user.services.gnome-software-daemon.enable = false;
 
-  # Enable i3 window manager
-  services.xserver.windowManager.i3.enable = true;
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
