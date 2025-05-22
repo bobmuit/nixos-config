@@ -15,61 +15,62 @@
       isDefault = true;
       
       # Add bookmark toolbar
-      bookmarks = [
-        {
-          toolbar = true;         # Show in toolbar (optional)
-          bookmarks = [
-            {
-              name = "Heimdall";
-              url = "http://192.168.1.180:8056/";
-            }
-            {
-              name = "FreshRSS";
-              url = "http://192.168.1.180:8057/";
-            }
-            {
-              name = "Home Assistant";
-              url = "http://192.168.1.180:8123/";
-            }
-            {
-              name = "Paperless";
-              url = "http://192.168.1.180:8777/";
-            }
-            {
-              name = "Calibre";
-              url = "http://192.168.1.180:8083/";
-            }
-            {
-              name = "Perplexity";
-              url = "https://www.perplexity.ai/";
-            }
-            {
-              name = "Claude";
-              url = "https://claude.ai/";
-            }
-            {
-              name = "ChatGPT";
-              url = "https://chatgpt.com/";
-            }
-            {
-              name = "Gemini";
-              url = "https://gemini.google.com/app";
-            }
-            {
-              name = "GitHub";
-              url = "https://github.com/";
-            }
-            {
-              name = "NixOS Discourse";
-              url = "https://discourse.nixos.org/";
-            }
+      bookmarks = {
+        force = true;
+        settings = [
+          {
+            toolbar = true; # Show in bookmark toolbar
+            bookmarks = [
+              {
+                name = "Heimdall";
+                url = "http://192.168.1.180:8056/";
+              }
+              {
+                name = "FreshRSS";
+                url = "http://192.168.1.180:8057/";
+              }
+              {
+                name = "Home Assistant";
+                url = "http://192.168.1.180:8123/";
+              }
+              {
+                name = "Paperless";
+                url = "http://192.168.1.180:8777/";
+              }
+              {
+                name = "Calibre";
+                url = "http://192.168.1.180:8083/";
+              }
+              {
+                name = "Perplexity";
+                url = "https://www.perplexity.ai/";
+              }
+              {
+                name = "Claude";
+                url = "https://claude.ai/";
+              }
+              {
+                name = "ChatGPT";
+                url = "https://chatgpt.com/";
+              }
+              {
+                name = "Gemini";
+                url = "https://gemini.google.com/app";
+              }
+              {
+                name = "GitHub";
+                url = "https://github.com/";
+              }
+              {
+                name = "NixOS Discourse";
+                url = "https://discourse.nixos.org/";
+              }
+            ];
+          }
+        ];
+      };
 
-            
-          ];
-        }
-      ];
-
-      extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+      extensions.packages = with inputs.firefox-addons.packages.${pkgs.system}; [
         ublock-origin        
         privacy-badger       
         bitwarden            
@@ -202,7 +203,7 @@
 
       search = {
         force = true;
-        default = "DuckDuckGo";
+        default = "ddg";
         engines = {
           "Nix Packages" = {
             urls = [{
@@ -232,7 +233,7 @@
             urls = [{
               template = "https://home-manager-options.extranix.com/?query={searchTerms}";
             }];
-            iconUpdateURL = "https://nixos.wiki/favicon.png";
+            icon = "https://nixos.wiki/favicon.png";
             updateInterval = 24 * 60 * 60 * 1000;
             definedAliases = [ "@hm" ];
           };
@@ -241,15 +242,15 @@
             urls = [{
               template = "https://www.protondb.com/search?q={searchTerms}";
             }];
-            iconUpdateURL = "https://www.protondb.com/favicon.ico";
+            icon = "https://www.protondb.com/favicon.ico";
             updateInterval = 24 * 60 * 60 * 1000;
             definedAliases = [ "@proton" ];
           };
-          "DuckDuckGo".metaData.hidden = false;
-          "Google".metaData.hidden = true;
-          "Amazon.com".metaData.hidden = true;
-          "Bing".metaData.hidden = true;
-          "eBay".metaData.hidden = true;
+          "ddg".metaData.hidden = false;
+          "google".metaData.hidden = true;
+          "amazondotcom-us".metaData.hidden = true;
+          "bing".metaData.hidden = true;
+          "ebay".metaData.hidden = true;
           "Twitter".metaData.hidden = true;
           "Wikipedia".metaData.hidden = false;
         };

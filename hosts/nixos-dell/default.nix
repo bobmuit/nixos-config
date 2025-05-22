@@ -197,7 +197,7 @@
   services.printing.enable = false;
 
   # Disable PulseAudio (replaced by PipeWire)
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
 
   # Enable real-time privileges (recommended)
   security.rtkit.enable = true;
