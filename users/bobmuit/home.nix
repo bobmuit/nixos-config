@@ -13,8 +13,9 @@
 
   # Imported modules
   imports = [
-    ../../modules/home-manager/programs/browsers.nix
+    ../../modules/home-manager/programs/firefox.nix
     ../../modules/home-manager/programs/shells.nix
+    ../../modules/home-manager/programs/vscode.nix
   ];
 
   # Packages that should be installed to the user profile.
@@ -46,32 +47,6 @@
     '')
 
   ];
-
-  # VSCodium settings
-  programs.vscode = {
-    enable = true;
-    package = pkgs.vscodium;
-    extensions = with pkgs.vscode-extensions; [
-      jnoortheen.nix-ide # Nix language support extension
-      reditorsupport.r # R Language
-      redhat.vscode-yaml # YAML support extension
-      yzhang.markdown-all-in-one # Markdown All in One
-      # insert-unicode not available in nixpkgs
-    ];
-    userSettings = {
-      # Nix settings
-      "nix.enableLanguageServer" = true;
-      "nix.serverPath" = "nixd";
-      # R settings
-      "r.rterm.linux" = "${pkgs.R}/bin/R"; # Absolute path to R
-      "r.rpath.linux" = "${pkgs.R}/bin/R";
-      "r.lsp.path" = "${pkgs.rPackages.languageserver}/library/languageserver";
-      "r.lsp.enabled" = true;
-      "r.lsp.args" = ["--vanilla"]; # Optional: Prevent loading user profiles
-      "r.lsp.diagnostics" = true; # Enable linting for R code
-      "editor.wordWrap" = "on";
-    };
-  };
 
   # This will make R automatically load the language server when running interactively.
   home.file.".Rprofile".text = ''
