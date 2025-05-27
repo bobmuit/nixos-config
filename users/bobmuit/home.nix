@@ -16,6 +16,9 @@
     ../../modules/home-manager/programs/firefox.nix
     ../../modules/home-manager/programs/shells.nix
     ../../modules/home-manager/programs/vscode.nix
+    ../../modules/home-manager/programs/joplin.nix
+
+    ../../modules/home-manager/services/gnome.nix
   ];
 
   # Packages that should be installed to the user profile.
@@ -77,81 +80,6 @@
       git clone https://github.com/bobmuit/nixos-config.git "${config.home.homeDirectory}/nixos-config"
     fi
   '';
-
-  # Joplin settings
-  programs.joplin-desktop = {
-    enable = true;
-    sync = {
-      target = "joplin-server";
-      interval = "5m";
-    };
-    extraConfig = {
-      "sync.target" = 9;
-      "sync.9.path" = "http://192.168.1.180:22300";
-      "sync.9.username" = "bob@bobmuit.nl";
-      "locale" = "en_GB";
-      "theme" = 2;
-      "themeAutoDetect" = true;
-    };
-  };
-
-  # Gnome settings
-  dconf.settings = {
-    # Enable minimize and maximize buttons in gnome
-    "org/gnome/desktop/wm/preferences" = {
-      button-layout = ":minimize,maximize,close";
-    };
-    
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
-
-    "org/gnome/shell" = {
-      # Enable extensions
-      disable-user-extensions = false;
-      enabled-extensions = [
-        "dash-to-dock@micxgx.gmail.com"
-        "status-icons@gnome-shell-extensions.gcampax.github.com"
-      ];
-
-      # Arrange favourite apps
-      favorite-apps = [
-        "org.gnome.Nautilus.desktop"
-        "proton-mail.desktop"
-        "kuro.desktop"
-        "joplin-desktop.desktop"
-        "firefox.desktop"
-        "bitwarden.desktop"
-        "codium.desktop"
-        "spotify.desktop"
-        "vmware-view.desktop"
-        "teams-for-linux.desktop"
-        "zotero.desktop"
-      ];
-    };
-
-    # Dash-to-dock settings
-    "org/gnome/shell/extensions/dash-to-dock" = {
-      dock-position = "BOTTOM"; # Position the dock at the bottom
-      dock-fixed = true; # Prevent the dock from auto-hiding
-      extend-height = true; # Stretch the dock vertically
-      intellihide-mode = "NONE"; # Disable intelligent auto-hide
-      height-fraction = 1.0; # Set the height fraction to 1.0 for full height
-      dash-max-icon-size = 32; # Set the maximum icon size
-      panel-mode = true; # Enable panel mode to stretch horizontally
-    };
-
-    # Disable unneccessary Gnome services
-    "org/gnome/settings-daemon/plugins/print-notifications" = {
-      active = "false";
-    };
-    "org/gnome/settings-daemon/plugins/smartcard" = {
-      active = "false";
-    };
-    "org/gnome/settings-daemon/plugins/wacom" = {
-      active = "false";
-    };
-  };
 
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage

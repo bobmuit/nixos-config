@@ -11,7 +11,7 @@ let
     vscodeExtUniqueId = "mblode.zotero";
     publisher = "mblode";
     name = "zotero";
-    sha256 = "sha256-YN7CJqlE1otroS94LMNEZGbK/xKEY9jeJlbjqa0NBQc="; # replace with actual hash
+    sha256 = "sha256-YN7CJqlE1otroS94LMNEZGbK/xKEY9jeJlbjqa0NBQc="; 
   };
 in
 {
