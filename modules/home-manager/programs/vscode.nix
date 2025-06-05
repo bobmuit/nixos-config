@@ -23,8 +23,9 @@ in
       jnoortheen.nix-ide
       reditorsupport.r
       redhat.vscode-yaml
-      yzhang.markdown-all-in-one
-    ] ++ [ zotero-ext ];
+      yzhang.markdown-all-in-one];
+    # ] ++ [ zotero-ext ];
+
 
     profiles.default.userSettings = {
       "nix.enableLanguageServer" = true;
