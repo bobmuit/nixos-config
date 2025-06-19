@@ -23,7 +23,10 @@
     helix       # Fast, modal text editor inspired by Kakoune and built with Rust  
 
     # Networking
-    dnsutils  # Collection of command-line tools for DNS queries, including dig, nslookup, and host.
+    dnsutils  # Collection of command-line tools for DNS queries, including dig, nslookup, and host
+
+    # Nix utilities
+    comma      # Nix utility that lets you run any package temporarily by prefixing its name with a comma
 
   ];
 
