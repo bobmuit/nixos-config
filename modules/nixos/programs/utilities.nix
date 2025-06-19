@@ -7,6 +7,7 @@
     # Basic utilities
     git        # Distributed version control system  
     lazygit    # Terminal-based Git UI for easy navigation  
+    bat         # `cat` clone with syntax highlighting, Git integration, and paging
     delta      # Enhanced `git diff` viewer with syntax highlighting  
     bottom     # Modern, fast system monitor (alternative to htop)  
     just       # Handy command runner, a modern alternative to Makefiles  
