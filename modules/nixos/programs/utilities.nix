@@ -24,10 +24,6 @@
 
     # Networking
     dnsutils  # Collection of command-line tools for DNS queries, including dig, nslookup, and host
-
-    # Nix utilities
-    comma      # Nix utility that lets you run any package temporarily by prefixing its name with a comma
-
   ];
 
   # Set default editor to Helix
