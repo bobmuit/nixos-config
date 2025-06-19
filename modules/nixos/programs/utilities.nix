@@ -19,6 +19,9 @@
     tldr        # Simplified man pages with practical examples  
     tmux         # Terminal multiplexer for managing multiple terminal sessions  
     ncdu          # Disk usage analyzer with a user-friendly interface  
+    yazi        # Blazing fast terminal file manager with vim-like keybindings  
+    zellij      # Modern terminal workspace with built-in multiplexing and layout support  
+    helix       # Fast, modal text editor inspired by Kakoune and built with Rust  
 
     # Networking
     dnsutils  # Collection of command-line tools for DNS queries, including dig, nslookup, and host.
