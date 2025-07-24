@@ -278,12 +278,7 @@
     signal-desktop
 
     # Productivity
-    libreoffice-fresh
-    hunspell
-    hunspellDicts.nl_NL
-    hunspellDicts.en_US # For English (US)
-  # hunspellDicts.en_GB # For English (UK), 
-
+    onlyoffice-bin
     kuro #Microsoft To Do
 
     # Browsers
@@ -294,8 +289,6 @@
 
     # Managing btrfs snapshots
     snapper
-
-
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
