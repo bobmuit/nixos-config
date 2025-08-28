@@ -177,21 +177,22 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.wayland = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.displayManager.gdm.wayland = true;
+  services.desktopManager.gnome.enable = true;
 
   # Disable unnecessary GNOME services
   systemd.user.services.gnome-remote-desktop.enable = false; # not using RDP
   systemd.user.services.gnome-software-service.enable = false; # updates by Nix
   systemd.user.services.gnome-software-daemon.enable = false;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
 
   # Disable CUPS to print documents.
   services.printing.enable = false;
@@ -245,19 +246,19 @@
     home-manager
 
     # Work
-    vmware-horizon-client
+    omnissa-horizon-client
     zotero
     teams-for-linux
     
     # Coding
     # N.B. Manage packages through flake.nix in project folder (dev env)
-    pkgs-unstable.code-cursor
+    code-cursor
     R
     rPackages.languageserver
     nixd
 
     # Security
-    pkgs-unstable.bitwarden-desktop
+    bitwarden-desktop
     tailscale
     
     # Homelab
@@ -267,7 +268,7 @@
     # Proton
     protonvpn-cli_2
     protonvpn-gui
-    pkgs-unstable.protonmail-desktop
+    protonmail-desktop
 
     # Media 
     spotify
