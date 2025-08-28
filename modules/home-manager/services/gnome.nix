@@ -24,13 +24,15 @@
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
         "proton-mail.desktop"
+        "protonvpn-app.desktop"
         "kuro.desktop"
         "joplin-desktop.desktop"
+        "onlyoffice-desktopeditors.desktop"
         "firefox.desktop"
         "bitwarden.desktop"
         "codium.desktop"
         "spotify.desktop"
-        "vmware-view.desktop"
+        "horizon-client.desktop"
         "teams-for-linux.desktop"
         "zotero.desktop"
       ];
@@ -58,4 +60,14 @@
       active = "false";
     };
   };
+
+  # Add favorites to Nautilus
+  xdg.configFile."gtk-3.0/bookmarks".text = ''
+    file:///home/bobmuit/Drive/Projects
+    file:///home/bobmuit/Drive/Areas
+    file:///home/bobmuit/Drive/Resources
+    file:///home/bobmuit/Drive/Archives
+    file:///home/bobmuit/Downloads
+  '';
+
 }
