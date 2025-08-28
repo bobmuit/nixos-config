@@ -281,6 +281,10 @@
     # Productivity
     onlyoffice-bin
     kuro #Microsoft To Do
+    libreoffice-fresh
+    hunspell
+    hunspellDicts.nl_NL
+    hunspellDicts.en_US
 
     # Browsers
     ungoogled-chromium
