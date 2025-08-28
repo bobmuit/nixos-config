@@ -68,6 +68,10 @@
     file:///home/bobmuit/Drive/Resources
     file:///home/bobmuit/Drive/Archives
     file:///home/bobmuit/Downloads
+    file:///mnt/synology/marloes-bob/Documenten Shared Documents
+    file:///mnt/synology/bob-storage Network Storage
+    file:///mnt/synology/photo Photos
+    file:///mnt/synology/marloes-bob/paperless-inbox Paperless Inbox
   '';
 
 }
