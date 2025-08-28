@@ -1,7 +1,7 @@
 {
   description = "NixOS configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     sops-nix = {
@@ -24,11 +24,12 @@
     in {
 
       # Laptop Bob configuration
-      nixosConfigurations.nixos-dell = nixpkgs.lib.nixosSystem {
+      # Please note that this system is running unstable for default packages
+      nixosConfigurations.nixos-dell = inputs.nixpkgs-unstable.lib.nixosSystem {
         inherit system;
         specialArgs = {
           inherit inputs;
-          pkgs-unstable = import nixpkgs-unstable {
+          pkgs-stable = import nixpkgs {
             inherit system;
             config.allowUnfree = true; # Optional: enable unfree packages
           };
@@ -46,11 +47,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             # Enable backups
-            home-manager.backupFileExtension = "backup";
+            home-manager.backupFileExtension = "backup-$(date +%Y%m%d-%H%M%S)";
             home-manager.users.bobmuit = import ./users/bobmuit/home.nix; # Adjust to match your username
             home-manager.extraSpecialArgs = { inherit inputs; };
           }
-
         ];
       };
       
