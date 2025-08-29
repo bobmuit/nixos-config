@@ -30,7 +30,6 @@
         "onlyoffice-desktopeditors.desktop"
         "firefox.desktop"
         "bitwarden.desktop"
-        "codium.desktop"
         "spotify.desktop"
         "horizon-client.desktop"
         "teams-for-linux.desktop"

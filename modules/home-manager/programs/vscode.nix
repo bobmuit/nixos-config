@@ -1,31 +1,11 @@
 { config, pkgs, ... }:
-
-let
-  vscode-utils = pkgs.vscode-utils;
-
-  zotero-ext = vscode-utils.extensionFromVscodeMarketplace {
-    pname = "zotero";
-    version = "0.1.11";
-    vscodeExtPublisher = "mblode";
-    vscodeExtName = "zotero";
-    vscodeExtUniqueId = "mblode.zotero";
-    publisher = "mblode";
-    name = "zotero";
-    sha256 = "sha256-YN7CJqlE1otroS94LMNEZGbK/xKEY9jeJlbjqa0NBQc="; 
-  };
-in
 {
   programs.vscode = {
     enable = true;
-    package = pkgs.vscodium;
-
-    profiles.default.extensions = with pkgs.vscode-extensions; [
-      jnoortheen.nix-ide
-      reditorsupport.r
-      redhat.vscode-yaml
-      yzhang.markdown-all-in-one];
-    # ] ++ [ zotero-ext ];
-
+    package = pkgs.vscode;
+    
+    # Manage extensions through VSCode itself instead of through Nix
+    mutableExtensionsDir = true;
 
     profiles.default.userSettings = {
       "nix.enableLanguageServer" = true;

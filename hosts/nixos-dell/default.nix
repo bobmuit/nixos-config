@@ -31,7 +31,7 @@
     auto-optimise-store = true; 
 
     # Increase download buffer size
-    download-buffer-size = 524288000; # 100 MB (or adjust as needed)
+    download-buffer-size = 524288000;
   };
 
   # Btrfs filesystem
