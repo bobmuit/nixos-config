@@ -69,6 +69,21 @@
           nixos-hardware.nixosModules.raspberry-pi-4
         ];
       };
+
+      # Nixos-asus
+      nixosConfigurations.nixos-asus = nixpkgs.lib.nixosSystem {
+        system = system;
+        specialArgs = {
+          inherit inputs;
+          pkgs-unstable = import nixpkgs-unstable {
+            system = system;
+            config.allowUnfree = true;
+          };
+        };
+        modules = [
+          ./hosts/nixos-asus
+        ];
+      };
       
       # Home manager configurations
       homeConfigurations.bobmuit = home-manager.lib.homeManagerConfiguration {
