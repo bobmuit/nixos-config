@@ -8,7 +8,21 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+      # Include CLI utilities
+      ../../modules/nixos/programs/utilities.nix
     ];
+
+    nix.settings = {
+      # Enable flakes and the accompanying new nix command-line tool
+      experimental-features = [ "nix-command" "flakes" ];
+
+      # Auto deduplicate nix store
+      auto-optimise-store = true; 
+
+      # Allow unsigned builds (for remote builds)
+      require-sigs = false;
+    };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -54,6 +68,9 @@
     description = "bobmuit";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc0lUn+zcewulF+LE8+j87Gb3lKVZkBHZcoPRmpsV0j bob@bobmuit.nl"
+  ];
   };
 
   # Allow unfree packages

@@ -42,3 +42,6 @@ pi:
 
 deploypi:
     nixos-rebuild switch --flake .#nixos-pi --target-host nixos@192.168.1.63 --sudo
+
+deployasus:
+    nixos-rebuild switch --flake .#nixos-asus --target-host bobmuit@nixos-asus --use-remote-sudo
