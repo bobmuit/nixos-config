@@ -4,3 +4,4 @@ logs/
 smb-credentials-nixos-pi
 pihole-credentials
 keys.txt
+nixos-config.code-workspace
