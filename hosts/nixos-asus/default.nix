@@ -13,18 +13,29 @@
       ../../modules/nixos/programs/utilities.nix
     ];
 
-    nix.settings = {
-      # Enable flakes and the accompanying new nix command-line tool
-      experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    # Enable flakes and the accompanying new nix command-line tool
+    experimental-features = [ "nix-command" "flakes" ];
 
-      # Auto deduplicate nix store
-      auto-optimise-store = true; 
+    # Auto deduplicate nix store
+    auto-optimise-store = true; 
 
-      # Allow unsigned builds (for remote builds)
-      require-sigs = false;
+    # Allow unsigned builds (for remote builds)
+    require-sigs = false;
+  };
+
+  # Turn off backlight after idle
+  systemd.services."tty-powerdown" = {
+    description = "Turn off backlight after idle";
+    serviceConfig = {
+      ExecStart = "${pkgs.util-linux}/bin/setterm --blank 1 --powerdown 2";
+      StandardInput = "tty";
+      TTYPath = "/dev/tty1";
     };
+    wantedBy = [ "multi-user.target" ];
+  };
 
-  # Bootloader.
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -70,7 +81,7 @@
     packages = with pkgs; [];
     openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGc0lUn+zcewulF+LE8+j87Gb3lKVZkBHZcoPRmpsV0j bob@bobmuit.nl"
-  ];
+    ];
   };
 
   # Allow unfree packages
@@ -93,10 +104,10 @@
 
   # List services that you want to enable:
 
-    services.tailscale.enable = true;
+  services.tailscale.enable = true;
 
   # Enable the OpenSSH daemon.
-    services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -112,4 +123,10 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
 
+  # Automatic Garbage Collection
+  nix.gc = {
+  	automatic = true;
+	  dates = "weekly";
+	  options = "--delete-older-than 31d";
+  };
 }
