@@ -82,6 +82,15 @@
         };
         modules = [
           ./hosts/nixos-asus
+          ({ config, pkgs, ... }: {
+            nixpkgs.overlays = [
+              (final: prev: {
+                tailscale = prev.tailscale.overrideAttrs (old: {
+                  doCheck = false;
+                });
+              })
+            ];
+          })
         ];
       };
       
