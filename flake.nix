@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs"; # Keep nixpkgs consistent between flake and home-manager
     };
     firefox-addons = {
@@ -24,11 +24,12 @@
     in {
 
       # Laptop Bob configuration
-      nixosConfigurations.nixos-dell = nixpkgs.lib.nixosSystem {
+      # Please note that this system is running unstable for default packages
+      nixosConfigurations.nixos-dell = inputs.nixpkgs-unstable.lib.nixosSystem {
         inherit system;
         specialArgs = {
           inherit inputs;
-          pkgs-unstable = import nixpkgs-unstable {
+          pkgs-stable = import nixpkgs {
             inherit system;
             config.allowUnfree = true; # Optional: enable unfree packages
           };
@@ -46,11 +47,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             # Enable backups
-            home-manager.backupFileExtension = "backup";
+            home-manager.backupFileExtension = "backup-$(date +%Y%m%d-%H%M%S)";
             home-manager.users.bobmuit = import ./users/bobmuit/home.nix; # Adjust to match your username
             home-manager.extraSpecialArgs = { inherit inputs; };
           }
-
         ];
       };
       
@@ -67,6 +67,21 @@
         modules = [
           ./hosts/nixos-pi
           nixos-hardware.nixosModules.raspberry-pi-4
+        ];
+      };
+
+      # Nixos-asus
+      nixosConfigurations.nixos-asus = nixpkgs.lib.nixosSystem {
+        system = system;
+        specialArgs = {
+          inherit inputs;
+          pkgs-unstable = import nixpkgs-unstable {
+            system = system;
+            config.allowUnfree = true;
+          };
+        };
+        modules = [
+          ./hosts/nixos-asus
         ];
       };
       
