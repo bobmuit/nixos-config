@@ -277,6 +277,7 @@
 
     # Chat
     signal-desktop
+    whatsapp-for-linux
 
     # Productivity
     onlyoffice-bin
