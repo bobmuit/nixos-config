@@ -18,7 +18,11 @@ build:
 test:
     nixos-rebuild test --flake ~/nixos-config#nixos-dell --sudo
 
+boot:
+    nixos-rebuild boot --flake .#nixos-dell --sudo
+
 update:
+    sudo snapper -c root create --type single --description "Before system update"
     nix flake update
 
 clean:
