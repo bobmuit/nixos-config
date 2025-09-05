@@ -82,6 +82,14 @@
         };
         modules = [
           ./hosts/nixos-asus
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup-$(date +%Y%m%d-%H%M%S)";
+            home-manager.users.bobmuit = import ./users/bobmuit/core.nix;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
           ({ config, pkgs, ... }: {
             nixpkgs.overlays = [
               (final: prev: {
@@ -94,11 +102,5 @@
         ];
       };
       
-      # Home manager configurations
-      homeConfigurations.bobmuit = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { inherit system; };
-        modules = [ ./users/bobmuit/home.nix ];
-        extraSpecialArgs = { inherit inputs; };
-      };
     };
 }

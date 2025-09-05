@@ -84,6 +84,20 @@
     ];
   };
 
+  security.sudo = {
+    enable = true;
+    extraRules = [
+      {
+        users = [ "bobmuit" ];
+        commands = [
+          # nodig voor het activeren van nieuwe systeemgeneraties
+          { command = "/run/current-system/sw/bin/switch-to-configuration"; options = [ "NOPASSWD" ]; }
+          { command = "/run/current-system/sw/bin/nixos-rebuild"; options = [ "NOPASSWD" ]; }
+        ];
+      }
+    ];
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 

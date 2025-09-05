@@ -6,8 +6,6 @@ set shell := ["bash", "-cu"]
 deploy:
     nixos-rebuild switch --flake ~/nixos-config#nixos-dell --sudo
 
-deployhm: 
-    home-manager switch --flake ~/nixos-config#bobmuit
 
 debug:
     nixos-rebuild switch --flake ~/nixos-config#nixos-dell --sudo --show-trace --verbose
