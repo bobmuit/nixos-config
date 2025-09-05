@@ -40,6 +40,7 @@
       alias j=just
       alias ls="eza"
       alias ll="eza --long --all --git"
+      alias lg="lazygit"
 
       # Just completions in Fish
       just --completions fish | source
@@ -60,7 +61,36 @@
   programs.starship = {
     enable = true;
     settings = {
-      command_timeout = 10000; # 10 seconds timeout
+      format = "$hostname in $directory$git_branch$git_status\n$character";
+      command_timeout = 10000;
+      
+      hostname = {
+        ssh_only = false;
+        format = "[$hostname]($style)";
+        style = "red";
+      };
+      
+      directory = {
+        format = "[$path]($style)";
+        style = "blue";
+        truncation_length = 1;
+        truncate_to_repo = true;
+      };
+      
+      git_branch = {
+        format = " on [$symbol$branch]($style)";
+      };
+      
+      git_status = {
+        format = "[ $all_status$ahead_behind ]($style)";
+        style = "red";
+      };
+      
+      character = {
+        success_symbol = "[❯](green) ";
+        error_symbol = "[❯](red) ";     # Keep red for errors, or change to green too
+        vicmd_symbol = "[❮](green) ";
+      };
     };
   };
 
